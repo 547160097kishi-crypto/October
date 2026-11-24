@@ -18,6 +18,7 @@ import {
   setFogIntensity,
   setFogColors,
   tickFog,
+  TOON_SUN,
   type ToonPalette
 } from './toonMaterial'
 import { MoebiusOutline } from './outlinePass'
@@ -124,12 +125,12 @@ scene.add(sky)
 // 太阳（motorbike lightsConfig：白光强度 3；Toon shader 里 3 × 1/π ≈ 0.955 → 受光面 ≈ directColor）
 // ---------------------------------------------------------------------------
 const SUN_DIR = new THREE.Vector3(-0.55, 0.75, 0.45).normalize()
-const sun = new THREE.DirectionalLight(0xffffff, 3)
+const sun = new THREE.DirectionalLight(0xffffff, TOON_SUN)
 sun.castShadow = true
 const IS_MOBILE = matchMedia('(pointer: coarse)').matches || Math.min(window.innerWidth, window.innerHeight) < 640
 sun.shadow.mapSize.setScalar(IS_MOBILE ? 2048 : 4096)
 sun.shadow.bias = -0.0004
-sun.shadow.normalBias = 0.04
+sun.shadow.normalBias = 0.03
 const SHADOW_HALF = 45
 Object.assign(sun.shadow.camera, { left: -SHADOW_HALF, right: SHADOW_HALF, top: SHADOW_HALF, bottom: -SHADOW_HALF, near: 1, far: 400 })
 scene.add(sun, sun.target)
@@ -189,6 +190,9 @@ function materialFor(key: string, palette: ToonPalette, doubleSide: boolean) {
   let mat = materialCache.get(cacheKey)
   if (!mat) {
     mat = createToonMaterial({ palette, gradientMap, side: doubleSide ? THREE.DoubleSide : THREE.FrontSide })
+    // three 默认只把背面画进阴影贴图；车身、建筑很多是不封闭的单层面片，会漏光成一团淡淡的条纹影子。
+    // 双面投射 + 阴影二值化后，阴影是实心色块
+    mat.shadowSide = THREE.DoubleSide
     mat.name = cacheKey
     materialCache.set(cacheKey, mat)
     toonMaterials.push({ mat, palette })

@@ -261,6 +261,16 @@ const TOON_COMMON = /* glsl */ `
       `
 
 /** 原站 lights_toon_pars_fragment 整段替换（直射/间接都不走物理 BRDF，只输出灰度） */
+/**
+ * 阴影色阶：太阳强度（与场景里 DirectionalLight.intensity 一致）与阴影落入的色带值。
+ * 46/255 = three-tone.png 最暗一阶 → 阴影与背光面同色。
+ */
+export const TOON_SUN = 3
+export const TOON_SHADOW_DEFINES = {
+  TOON_SUN_INTENSITY: TOON_SUN.toFixed(1),
+  TOON_SHADOW_BAND: (46 / 255).toFixed(4)
+}
+
 const TOON_LIGHTS_PARS = /* glsl */ `varying vec3 vViewPosition;
 
 struct ToonMaterial {
@@ -268,9 +278,18 @@ struct ToonMaterial {
 };
 
 void RE_Direct_Toon( const in IncidentLight directLight, const in vec3 geometryPosition, const in vec3 geometryNormal, const in vec3 geometryViewDir, const in vec3 geometryClearcoatNormal, const in ToonMaterial material, inout ReflectedLight reflectedLight ) {
-  vec3 irradiance = getGradientIrradiance( geometryNormal, directLight.direction ) * directLight.color;
+  // 十月：把「梯度色带」与「阴影」拆开处理。
+  // 原站写法是 gradient × directLight.color，而 three 已把 PCF 阴影（0~1 连续值）乘进 color，
+  // 结果阴影是一团软边灰阶、自阴影出现渐变碎块，与三阶色带对不上。
+  // 这里：阴影 → 二值化（fwidth 做 1px 抗锯齿硬边）；在阴影里的像素直接落到梯度贴图最暗一阶。
+  float band = getGradientIrradiance( geometryNormal, directLight.direction ).r;
+  float lit = clamp( directLight.color.r / TOON_SUN_INTENSITY, 0.0, 1.0 );
+  float aa = max( fwidth( lit ), 1e-3 );
+  float inLight = smoothstep( 0.5 - aa, 0.5 + aa, lit );
+  band = mix( TOON_SHADOW_BAND, band, inLight );
+  vec3 irradiance = vec3( band * TOON_SUN_INTENSITY );
   // directColor is white
-  reflectedLight.directDiffuse += irradiance * BRDF_Lambert( vec3(1.0) ); 
+  reflectedLight.directDiffuse += irradiance * BRDF_Lambert( vec3(1.0) );
 }
 
 void RE_IndirectDiffuse_Toon( const in vec3 irradiance, const in vec3 geometryPosition, const in vec3 geometryNormal, const in vec3 geometryViewDir, const in vec3 geometryClearcoatNormal, const in ToonMaterial material, inout ReflectedLight reflectedLight ) {
@@ -319,7 +338,7 @@ export function createToonMaterial(opts: ToonMaterialOptions): THREE.MeshToonMat
     vertexColors: opts.vertexColors ?? false
   })
   // 原站：需要 vUv（random/mapFunc 用到），显式打开 USE_UV
-  mat.defines = { ...(mat.defines ?? {}), USE_UV: '' }
+  mat.defines = { ...(mat.defines ?? {}), USE_UV: '', ...TOON_SHADOW_DEFINES }
 
   const palette = opts.palette
   mat.onBeforeCompile = (shader) => {
