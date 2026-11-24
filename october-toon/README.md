@@ -41,6 +41,7 @@ npm run preview    # 预览生产构建
 | `dusk` | 暮色 0～1 | `?stage&dusk=0.6` |
 | `fog` | 雾 0～3，默认 1 | `?stage&fog=1.5` |
 | `speed` | 播放速度，默认 1 | `?stage&speed=0.8` |
+| `dust` | 车后扬尘浓度，默认 1，0 = 关闭 | `?stage&dust=0.6` |
 | `w` / `h` | 换别的固定分辨率 | `?stage&w=5263&h=512` |
 
 快捷键：空格 播放/暂停 · H 显示/隐藏界面 · F 全屏。
@@ -71,6 +72,7 @@ GitHub 网页 → 切到上面那个分支 → Code → Download ZIP → 解压�
 | Toon 阴影（十月改动） | — | 原站把 PCF 阴影（0~1 连续值）直接乘进梯度，阴影是一团软边灰阶。这里把阴影二值化（`fwidth` 抗锯齿的 1px 硬边），在阴影里的像素直接落到梯度最暗一阶 → 阴影与背光面同色、纯平；并设 `shadowSide = DoubleSide`，避免单层面片（车身、建筑）漏光 |
 | 雾 | 原站 `FogBundle` | 强制 `USE_FOG + FOG_EXP2`，3D Perlin 噪声扰动雾深度、`fogTime` 缓慢流动，近/远两色 |
 | 描边 | `outlinePass.ts` → 原站 `MoebiusEffect` | ① override 材质把每个 mesh 画成唯一灰度 identity（+ 深度项）② 正常颜色 pass ③ 对 identity 图做 3×3 Sobel，`× intensity(100)` 后混成黑线 |
+| 车后扬尘 | `dust.ts` → 原站 `initBikeParticles` | 同一张 `dust.png`（2×2 硬边团块图集）、同样的尺寸曲线（1→6→11→5→0）与「速度 × rateFactor」发射率。为老爷车改为：两个后轮发射、世界坐标模拟（车开走烟留在原地）、按动画真实车速驱动（停车不扬尘）、按世界尺寸换算像素（任何分辨率一样大）、帧间插值发射（低帧率不断成一簇簇）、Toon 两色（受光 + 背光月牙） |
 | 日夜 | `setToonPaletteMix` | 每个色板 day / night 两套，按 mix 插值 —— 这里用作「暮色」滑杆 |
 | 渲染器 | `RENDERER_CONFIG` | `antialias:false`、`pixelRatio ≤ 2`、PCF 阴影、`shadowMap.autoUpdate=false` 每帧手动更新 |
 
@@ -88,6 +90,7 @@ GitHub 网页 → 切到上面那个分支 → Code → Download ZIP → 解压�
 
 - **所有物体共用一个 identity**：identity pass 里整场只有一个 override `ShaderMaterial`，three 对连续同材质绘制不会重新上传 uniform，`onBeforeRender` 写的 `uIdentity` 根本没生效 → 只有物体与天空交界处有线。修复：写完后置 `uniformsNeedUpdate = true`。
 - **地面上的假横线**：identity 叠加了 `gl_FragCoord.z * 0.05`，8-bit RT 每跨一个 1/255 台阶，Sobel ×100 就画出一条横贯画面的黑线。identity RT 改为 HalfFloat。
+- **扬尘画成实心方块**：`dust.png` 的 alpha 通道全是 255，移植版用 `max(tex.a, tex.r)` 当透明度恒为 1。改为只用 R 通道作遮罩。
 - **地面 / 水面 identity 不确定**：它们不注册 identity 时会沿用上一个物体的值。改为写固定常量（`registerFlat`）。
 
 ## 已知事项

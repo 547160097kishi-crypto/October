@@ -23,6 +23,7 @@ import {
 } from './toonMaterial'
 import { MoebiusOutline } from './outlinePass'
 import { paletteForPath } from './palettes'
+import { createDustTrail, type DustTrail } from './dust'
 
 const MODEL_URL = `${import.meta.env.BASE_URL}models/october.glb`
 
@@ -34,7 +35,8 @@ const params = {
   outline: true,
   thickness: 0.35, // 描边采样偏移（像素）；越小越细
   fog: 1.0, // 雾强度倍数
-  speed: 1
+  speed: 1,
+  dust: 1 // 车后扬尘浓度倍数，0 = 关闭
 }
 
 // ---------------------------------------------------------------------------
@@ -43,7 +45,7 @@ const params = {
 //   ?w=10527&h=1024   自定义固定渲染分辨率（stage 模式默认就是这个）
 //   ?scale=0.5        显卡吃力时降低内部渲染分辨率（画面仍铺满）
 //   ?thickness=0.35   描边粗细    ?outline=0 关闭描边
-//   ?dusk=0..1  暮色   ?fog=0..3  雾   ?speed=0.1..2  播放速度
+//   ?dusk=0..1  暮色   ?fog=0..3  雾   ?speed=0.1..2  播放速度   ?dust=0..2  车后扬尘（0 关闭）
 // ---------------------------------------------------------------------------
 const query = new URLSearchParams(location.search)
 const num = (k: string, def: number) => {
@@ -58,6 +60,7 @@ params.thickness = num('thickness', params.thickness)
 params.dusk = num('dusk', params.dusk)
 params.fog = num('fog', params.fog)
 params.speed = num('speed', params.speed)
+params.dust = num('dust', params.dust)
 if (query.get('outline') === '0') params.outline = false
 if (STAGE) document.body.classList.add('stage')
 
@@ -106,7 +109,13 @@ const outline = new MoebiusOutline(renderer)
 const syncOutlineSize = () => {
   const s = renderer.getDrawingBufferSize(new THREE.Vector2())
   outline.setSize(s.x, s.y)
+  dust?.setViewportHeight(s.y)
 }
+/** 车后扬尘（motorbike dust.ts 移植）*/
+let dust: DustTrail | null = null
+let rearWheels: THREE.Object3D[] = []
+const carPrev = new THREE.Vector3()
+let carPrevValid = false
 syncOutlineSize()
 outline.setThickness(params.thickness)
 
@@ -458,6 +467,17 @@ async function load() {
   }
   timeline.max = String(clipDuration || 1)
 
+  // 扬尘：从两个后轮接地点发射
+  rearWheels = ['左后轮', '右后轮'].map((n) => root.getObjectByName(n)).filter((o): o is THREE.Object3D => !!o)
+  try {
+    const tex = await new THREE.TextureLoader().loadAsync(`${import.meta.env.BASE_URL}textures/dust.png`)
+    tex.colorSpace = THREE.NoColorSpace // 只当遮罩用
+    dust = createDustTrail(tex)
+    scene.add(dust.object)
+  } catch (err) {
+    console.warn('[october] dust unavailable', err)
+  }
+
   resize()
   applyDusk()
   applyFog()
@@ -474,6 +494,8 @@ async function load() {
 // ---------------------------------------------------------------------------
 // 暮色 / 雾
 // ---------------------------------------------------------------------------
+const DUST_DAY = new THREE.Color('#f1e0c2') // 地面沙色偏亮（motorbike 原色 #be8769 是给红褐沙漠的）
+const DUST_DUSK = new THREE.Color('#c98a6a')
 const _c1 = new THREE.Color()
 const _c2 = new THREE.Color()
 function applyDusk() {
@@ -484,6 +506,7 @@ function applyDusk() {
   skyUniforms.uSunColor.value.lerpColors(new THREE.Color('#fff1d6'), new THREE.Color('#ffb070'), m)
   ;(scene.background as THREE.Color).copy(skyUniforms.uHorizon.value)
   setFogColors(_c1.lerpColors(SKY.day.fogNear, SKY.dusk.fogNear, m), _c2.lerpColors(SKY.day.fogFar, SKY.dusk.fogFar, m))
+  dust?.setColor(_c1.lerpColors(DUST_DAY, DUST_DUSK, m))
   // 暮色时太阳压低
   const dir = SUN_DIR.clone().lerp(new THREE.Vector3(-0.85, 0.28, 0.45), m).normalize()
   skyUniforms.uSunDir.value.copy(dir)
@@ -513,12 +536,49 @@ function syncShadow(cam: THREE.Camera) {
   sun.target.updateMatrixWorld()
 }
 
+const _wheel = new THREE.Vector3()
+const _carPos = new THREE.Vector3()
+const _carVel = new THREE.Vector3()
+const _emitters = [new THREE.Vector3(), new THREE.Vector3()]
+
+/** 用动画里车的真实位移算速度，驱动扬尘 */
+function updateDust(animDt: number) {
+  if (!dust || rearWheels.length === 0) return
+  _carPos.set(0, 0, 0)
+  rearWheels.forEach((w, i) => {
+    w.updateWorldMatrix(true, false)
+    w.getWorldPosition(_wheel)
+    _emitters[i]!.set(_wheel.x, 0.05, _wheel.z) // 轮子接地点
+    _carPos.add(_wheel)
+  })
+  _carPos.divideScalar(rearWheels.length)
+  if (animDt <= 0) {
+    // 暂停：烟尘冻结
+    carPrev.copy(_carPos)
+    return
+  }
+  _carVel.subVectors(_carPos, carPrev).divideScalar(animDt)
+  carPrev.copy(_carPos)
+  // 循环回到开头 / 拖动时间轴会让车「瞬移」：这一帧不发射
+  if (!carPrevValid || _carVel.length() > 80) {
+    carPrevValid = true
+    _carVel.set(0, 0, 0)
+  }
+  dust.object.visible = params.dust > 0
+  dust.update(animDt, _emitters.slice(0, rearWheels.length), _carVel, params.dust)
+}
+
 function frame() {
   const dt = Math.min(clock.getDelta(), 0.1)
+  let animDt = 0
   if (mixer && action) {
-    if (playing) currentTime = (currentTime + dt * params.speed) % clipDuration
+    if (playing && !scrubbing) {
+      animDt = dt * params.speed
+      currentTime = (currentTime + animDt) % clipDuration
+    }
     action.time = currentTime
     mixer.update(0)
+    updateDust(animDt)
     if (!scrubbing) timeline.value = String(currentTime)
     timeLabel.textContent = `${currentTime.toFixed(1)}s / ${clipDuration.toFixed(1)}s`
   }
@@ -557,6 +617,8 @@ playBtn.onclick = () => {
 timeline.addEventListener('input', () => {
   scrubbing = true
   currentTime = Number(timeline.value)
+  dust?.reset()
+  carPrevValid = false
 })
 timeline.addEventListener('change', () => (scrubbing = false))
 
@@ -574,7 +636,7 @@ camBtn.onclick = () => {
   camBtn.textContent = useAnimCamera ? '镜头：动画' : '镜头：自由'
 }
 
-for (const [id, v] of [['dusk', params.dusk], ['thickness', params.thickness], ['fog', params.fog], ['speed', params.speed]] as const) {
+for (const [id, v] of [['dusk', params.dusk], ['thickness', params.thickness], ['fog', params.fog], ['speed', params.speed], ['dust', params.dust]] as const) {
   $<HTMLInputElement>(id).value = String(v)
 }
 $<HTMLInputElement>('outline').checked = params.outline
@@ -596,6 +658,7 @@ bindRange('fog', (v) => {
   applyFog()
 })
 bindRange('speed', (v) => (params.speed = v))
+bindRange('dust', (v) => (params.dust = v))
 $<HTMLInputElement>('outline').addEventListener('change', (e) => (params.outline = (e.target as HTMLInputElement).checked))
 
 window.addEventListener('keydown', (e) => {
@@ -622,6 +685,22 @@ window.addEventListener('keydown', (e) => {
     currentTime = t
     playing = false
     playBtn.textContent = '播放'
+    dust?.reset()
+    carPrevValid = false
+  },
+  playFrom(t: number) {
+    currentTime = t
+    dust?.reset()
+    carPrevValid = false
+    playing = true
+    playBtn.textContent = '暂停'
+  },
+  pause() {
+    playing = false
+    playBtn.textContent = '播放'
+  },
+  get time() {
+    return currentTime
   },
   setFog(v: number) {
     params.fog = v
