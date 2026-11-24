@@ -514,7 +514,6 @@ async function load() {
       fountain = createFountain({
         fountainRoot,
         gradientMap,
-        sunDir: skyUniforms.uSunDir.value,
         waterPalette: PALETTES.water!,
         spriteMap: tex,
         idScene: outline.idExtras,
