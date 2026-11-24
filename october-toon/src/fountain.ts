@@ -11,15 +11,13 @@
  *
  * 风格：水面 / 水流都用场景同一套 Toon 材质（createToonMaterial + 水的色板），
  * 自动获得三阶色带、硬阴影、雾、暮色插值；再注入：
- *   - 水流：不用贴图高光，靠形状表现流动 —— 下宽上窄、越往下越起伏弯折、颈缩断成圆头水珠（见 JET_SHAPE）；
+ *   - 水流：烟尘同款硬边团块组成（轮廓蓬松破碎，不黏稠）：出水口小而密连成一股，越往下越大越散，出水量起伏时断流；
  *   - 水面：从落水点扩散的涟漪色带 + 色带边缘细墨线（线宽同样按画面高度比例）+ 落水点白沫；
  *   - 水花：烟尘同款硬边团块精灵，水色。
- * 全部参与描边：水面走 identity override；水流（着色器变形）/ 水花（精灵）用 identity 孪生体（共享几何与变形代码）。
+ * 全部参与描边：水面走 identity override；水流团块 / 水花（精灵）用 identity 孪生体。
  */
 import * as THREE from 'three'
-import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js'
 import { createToonMaterial, type ToonPalette } from './toonMaterial'
-import { ID_FAR, OCT_ENCODE } from './outlinePass'
 import { SPRITE_VERT, SPRITE_MASK, spriteIdMaterial } from './dust'
 
 const G = 9.8
@@ -40,10 +38,11 @@ interface JetSpec {
   to: [number, number]
   /** 起始竖直速度（>0 先上抛） */
   vy0: number
-  /** 水柱基准半径：出水口 ≈ 0.55×，落点 ≈ 2.1×（下宽上窄） */
-  radius: number
-  /** 沿程「颈缩 → 水珠」的周期数（越大水珠越小越密） */
-  beads: number
+  /** 团块直径（世界单位）：出水口 → 落点（下宽上窄） */
+  sizeTop: number
+  sizeBottom: number
+  /** 每股每秒发射的团块数（越大水柱越连贯） */
+  rate: number
   angle0: number
   /** 落在哪个水面（涟漪中心半径 = to[0]） */
   pool: keyof typeof LEVEL
@@ -51,11 +50,11 @@ interface JetSpec {
 
 const JETS: JetSpec[] = [
   // 顶部尖饰向上喷，冠状散开落进顶碟
-  { name: 'crown', count: 6, from: [0.02, 3.92], to: [0.29, 3.14], vy0: 1.5, radius: 0.02, beads: 6, angle0: 0.3, pool: 'top' },
+  { name: 'crown', count: 6, from: [0.02, 3.92], to: [0.29, 3.14], vy0: 1.5, sizeTop: 0.028, sizeBottom: 0.085, rate: 100, angle0: 0.3, pool: 'top' },
   // 上碗溢出 → 中碗
-  { name: 'upper', count: 8, from: [0.63, 2.66], to: [0.86, 1.6], vy0: 0.3, radius: 0.032, beads: 5, angle0: 0.0, pool: 'middle' },
+  { name: 'upper', count: 8, from: [0.63, 2.66], to: [0.86, 1.6], vy0: 0.3, sizeTop: 0.042, sizeBottom: 0.17, rate: 105, angle0: 0.0, pool: 'middle' },
   // 中碗溢出 → 底池
-  { name: 'middle', count: 10, from: [0.99, 1.63], to: [1.5, 0.5], vy0: 0.35, radius: 0.04, beads: 5, angle0: 0.2, pool: 'basin' }
+  { name: 'middle', count: 10, from: [0.99, 1.63], to: [1.5, 0.5], vy0: 0.35, sizeTop: 0.05, sizeBottom: 0.21, rate: 110, angle0: 0.2, pool: 'basin' }
 ]
 
 /** 模型里静态水滴所在区间（相对底部）：碗沿之外、两层之间 */
@@ -124,215 +123,17 @@ function arc(spec: JetSpec, n: number): { r: number; y: number }[] {
   return out
 }
 
-/**
- * 一层的所有水柱合成一个几何。只生成「基准管」（每圈一个截面环），
- * 真正的形状（下宽上窄、起伏弯折、颈缩断成水珠）在顶点着色器里按时间计算（JET_SHAPE）。
- * 每个顶点带：中心线点 aCenter、切线 aTangent、侧向 aSide、沿程 aAlong(0=出水口,1=落点)、
- * 截面角 aAround(0..1)、每股水的随机相位 aPhase。
- */
-function buildJets(spec: JetSpec, center: THREE.Vector3, baseY: number) {
-  const SEG = 180
-  const RAD = 12
-  const geoms: THREE.BufferGeometry[] = []
-  let totalLen = 0
-  const up = new THREE.Vector3(0, 1, 0)
-  for (let k = 0; k < spec.count; k++) {
-    const ang = spec.angle0 + (k / spec.count) * Math.PI * 2 + (Math.random() - 0.5) * 0.12
-    const pts = arc(spec, 40).map(
-      (p) => new THREE.Vector3(center.x + Math.cos(ang) * p.r, baseY + p.y, center.z + Math.sin(ang) * p.r)
-    )
-    const curve = new THREE.CatmullRomCurve3(pts)
-    totalLen += curve.getLength()
-    // 侧向 = 水平切向（水柱在「径向-竖直」平面里，侧向恒垂直于切线，起点竖直上喷也不退化）
-    const S = new THREE.Vector3(-Math.sin(ang), 0, Math.cos(ang))
-    const nV = (SEG + 1) * (RAD + 1)
-    const position = new Float32Array(nV * 3)
-    const normal = new Float32Array(nV * 3)
-    const uv = new Float32Array(nV * 2)
-    const aCenter = new Float32Array(nV * 3)
-    const aTangent = new Float32Array(nV * 3)
-    const aSide = new Float32Array(nV * 3)
-    const aAlong = new Float32Array(nV)
-    const aAround = new Float32Array(nV)
-    const aPhase = new Float32Array(nV).fill(Math.random() * 10)
-    const c = new THREE.Vector3()
-    const T = new THREE.Vector3()
-    const N = new THREE.Vector3()
-    const dir = new THREE.Vector3()
-    for (let i = 0; i <= SEG; i++) {
-      const u = i / SEG
-      curve.getPointAt(u, c)
-      curve.getTangentAt(u, T)
-      N.crossVectors(S, T).normalize()
-      if (N.dot(up) < 0 && Math.abs(T.y) > 0.99) N.negate()
-      for (let j = 0; j <= RAD; j++) {
-        const v = i * (RAD + 1) + j
-        const th = (j / RAD) * Math.PI * 2
-        dir.copy(N).multiplyScalar(Math.cos(th)).addScaledVector(S, Math.sin(th))
-        position.set([c.x + dir.x * spec.radius, c.y + dir.y * spec.radius, c.z + dir.z * spec.radius], v * 3)
-        normal.set([dir.x, dir.y, dir.z], v * 3)
-        uv.set([u, j / RAD], v * 2)
-        aCenter.set([c.x, c.y, c.z], v * 3)
-        aTangent.set([T.x, T.y, T.z], v * 3)
-        aSide.set([S.x, S.y, S.z], v * 3)
-        aAlong[v] = u
-        aAround[v] = j / RAD
-      }
-    }
-    const index: number[] = []
-    for (let i = 0; i < SEG; i++) {
-      for (let j = 0; j < RAD; j++) {
-        const a = i * (RAD + 1) + j
-        const b = (i + 1) * (RAD + 1) + j
-        index.push(a, b, a + 1, b, b + 1, a + 1)
-      }
-    }
-    const g = new THREE.BufferGeometry()
-    g.setAttribute('position', new THREE.BufferAttribute(position, 3))
-    g.setAttribute('normal', new THREE.BufferAttribute(normal, 3))
-    g.setAttribute('uv', new THREE.BufferAttribute(uv, 2))
-    g.setAttribute('aCenter', new THREE.BufferAttribute(aCenter, 3))
-    g.setAttribute('aTangent', new THREE.BufferAttribute(aTangent, 3))
-    g.setAttribute('aSide', new THREE.BufferAttribute(aSide, 3))
-    g.setAttribute('aAlong', new THREE.BufferAttribute(aAlong, 1))
-    g.setAttribute('aAround', new THREE.BufferAttribute(aAround, 1))
-    g.setAttribute('aPhase', new THREE.BufferAttribute(aPhase, 1))
-    g.setIndex(index)
-    geoms.push(g)
-  }
-  return { geometry: mergeGeometries(geoms)!, length: totalLen / spec.count }
+/** 正态随机（Box–Muller） */
+function gauss() {
+  return Math.sqrt(-2 * Math.log(Math.max(1e-6, Math.random()))) * Math.cos(2 * Math.PI * Math.random())
 }
 
-/**
- * 水柱形状（顶点着色器，可见材质与 identity 孪生体共用 → 描边与形状严丝合缝）：
- *  1. 下宽上窄：半径从出水口 0.55× 增到落点 2.1×（集中的水柱 → 散开）；
- *  2. 起伏弯折：两组沿水流向下传播、与截面角耦合的波（左右边缘不同步），振幅越往下越大；
- *     中心线再叠一个越往下越大的横向摆动 → 整股水柱是弯折的曲线；
- *  3. 颈缩断开：Plateau–Rayleigh 式的周期性变细，越往下越细直到半径为 0；
- *     剖面是椭圆，所以断口两端是圆头 → 一颗颗水珠，随水流往下走；
- *  4. 法线按半径沿程变化实时求（dr/ds），Toon 明暗跟着水珠形状走。
- */
-const JET_SHAPE = /* glsl */ `
-  attribute vec3 aCenter;
-  attribute vec3 aTangent;
-  attribute vec3 aSide;
-  attribute float aAlong;
-  attribute float aAround;
-  attribute float aPhase;
-  uniform float uFlowTime;
-  uniform float uJetR;
-  uniform float uJetLen;
-  uniform float uBeads;
-
-  // 每颗水珠的随机数：按「水珠编号 n + 每股水的相位」取，编号随水珠一起往下走 → 同一颗水珠形状不变
-  float jetHash( float n ) { return fract( sin( n * 127.1 + aPhase * 311.7 ) * 43758.5453 ); }
-
-  // 沿水流的水珠坐标（随时间往下走）
-  float jetCell( float u ) { return u * uBeads - uFlowTime * uBeads * 1.5 + aPhase * 0.37; }
-
-  // 后半段逐渐颈缩 → 断开；每颗水珠断得早晚不同
-  float jetBreakup( float u, float n ) {
-    return smoothstep( 0.42, 0.85, u ) * mix( 0.85, 1.0, jetHash( n + 41.0 ) );
-  }
-
-  // 中段的「断水」：随机一部分水珠格子在出水口之后就完全断开，空隙随水流往下走
-  float jetMidGap( float u, float n ) {
-    return step( jetHash( n + 73.0 ), 0.3 ) * smoothstep( 0.12, 0.22, u );
-  }
-
-  // 圆头：d=0 处半径为 0，d=1 处恢复满半径（四分之一圆）
-  float jetCap( float d ) {
-    d = clamp( d, 0.0, 1.0 );
-    return sqrt( d * ( 2.0 - d ) );
-  }
-
-  float jetRadius( float u, float th ) {
-    float t = uFlowTime;
-    // 1. 下宽上窄
-    float R = uJetR * mix( 0.55, 1.8, pow( u, 0.9 ) );
-    // 2. 起伏：两组向下传播、与截面角耦合的波，越往下越大 → 边缘是弯折的曲线
-    float wob = mix( 0.03, 0.3, u * u );
-    float s1 = u * uJetLen * 7.0 - t * 6.0 + aPhase;
-    float s2 = u * uJetLen * 12.0 - t * 9.0 + aPhase * 1.7;
-    R *= 1.0 + wob * ( 0.6 * sin( s1 + 2.0 * th ) + 0.4 * sin( s2 - 3.0 * th ) );
-    // 3. 颈缩断成水珠：泪滴剖面（下端圆、上端尖），大小 / 长短 / 位置每颗不同
-    float s = jetCell( u );
-    float n = floor( s );
-    float f = fract( s );
-    float r1 = jetHash( n );
-    float r2 = jetHash( n + 17.0 );
-    float gMid = jetMidGap( u, n );
-    float b = max( jetBreakup( u, n ), gMid );
-    float h = mix( 0.5, mix( 0.22, 0.36, r2 ), b );
-    float c0 = 0.5 + ( r1 - 0.5 ) * ( 0.5 - h ) * 1.6;
-    float x = ( f - c0 ) / h;
-    float prof = pow( max( 0.0, 1.0 - x * x ), x > 0.0 ? 0.5 : 1.15 );
-    float size = mix( 0.68, 1.05, r1 ) * mix( 1.0, 0.85, gMid );
-    // 断口两侧的连续水柱收成圆头（上一格 / 下一格是断水格时）
-    float capLen = 0.38;
-    float capBelow = mix( 1.0, jetCap( ( 1.0 - f ) / capLen ), jetMidGap( u, n + 1.0 ) );
-    float capAbove = mix( 1.0, jetCap( f / capLen ), jetMidGap( u, n - 1.0 ) );
-    return R * mix( capBelow * capAbove, prof * size, b );
-  }
-
-  // 中心线：越往下越大的横向摆动（弯折）+ 断开后水珠各自偏离中轴（散开）
-  vec3 jetCenter( float u ) {
-    float t = uFlowTime;
-    float sway = uJetR * 2.2 * u * u;
-    vec3 c = aCenter + aSide * sway * sin( u * uJetLen * 4.0 - t * 4.0 + aPhase * 2.3 );
-    float s = jetCell( u );
-    float n = floor( s );
-    float k = smoothstep( 0.0, 1.0, fract( s ) );
-    vec2 j0 = vec2( jetHash( n + 5.0 ), jetHash( n + 9.0 ) ) - 0.5;
-    vec2 j1 = vec2( jetHash( n + 6.0 ), jetHash( n + 10.0 ) ) - 0.5;
-    // 平滑插值，颈部不会出现错位折角
-    vec2 j = mix( j0, j1, k );
-    float spread = smoothstep( 0.5, 1.0, u );
-    spread *= spread * uJetR * 2.6;
-    vec3 nrm = normalize( cross( aSide, aTangent ) );
-    return c + ( aSide * j.x + nrm * j.y ) * spread;
-  }
-
-  void jetShape( out vec3 pos, out vec3 nrm ) {
-    float u = aAlong;
-    float th = aAround * 6.2831853;
-    vec3 dir = normalize( position - aCenter );
-    float r = jetRadius( u, th );
-    pos = jetCenter( u ) + dir * r;
-    float du = 0.003;
-    float drds = ( jetRadius( min( u + du, 1.0 ), th ) - jetRadius( max( u - du, 0.0 ), th ) ) / ( 2.0 * du * uJetLen );
-    nrm = normalize( dir - aTangent * clamp( drds, -6.0, 6.0 ) );
-  }
-`
-
-function jetIdMaterial(identity: number, shapeUniforms: Record<string, THREE.IUniform>) {
-  return new THREE.ShaderMaterial({
-    uniforms: { uIdent: { value: identity }, uFar: { value: ID_FAR }, ...shapeUniforms },
-    vertexShader: /* glsl */ `
-      ${JET_SHAPE}
-      varying float vViewZ;
-      varying vec3 vN;
-      void main() {
-        vec3 p;
-        vec3 n;
-        jetShape( p, n );
-        vN = normalize( normalMatrix * n );
-        vec4 mv = modelViewMatrix * vec4( p, 1.0 );
-        vViewZ = -mv.z;
-        gl_Position = projectionMatrix * mv;
-      }
-    `,
-    fragmentShader: /* glsl */ `
-      uniform float uIdent;
-      uniform float uFar;
-      varying float vViewZ;
-      varying vec3 vN;
-      ${OCT_ENCODE}
-      void main() {
-        gl_FragColor = vec4( uIdent, vViewZ / uFar, octEncode( normalize( vN ) ) );
-      }
-    `
-  })
+/** 抛物线的落地时间与水平速度 */
+function ballistic(spec: JetSpec) {
+  const [r0, y0] = spec.from
+  const [r1, y1] = spec.to
+  const tLand = (spec.vy0 + Math.sqrt(spec.vy0 * spec.vy0 + 2 * G * (y0 - y1))) / G
+  return { tLand, vr: (r1 - r0) / tLand }
 }
 
 export function createFountain(opts: {
@@ -438,40 +239,171 @@ export function createFountain(opts: {
     toonMaterials.push({ mat, palette: opts.waterPalette })
   }
 
-  // ---------------- 水流 ----------------
-  for (const spec of JETS) {
-    const { geometry: geom, length } = buildJets(spec, center, baseY)
-    const shapeUniforms = {
-      uFlowTime: flowTime,
-      uJetR: { value: spec.radius },
-      uJetLen: { value: length },
-      uBeads: { value: spec.beads }
-    }
-    const mat = createToonMaterial({ palette: opts.waterPalette, gradientMap: opts.gradientMap })
-    const baseCompile = mat.onBeforeCompile
-    mat.onBeforeCompile = (shader, r) => {
-      baseCompile.call(mat, shader, r)
-      Object.assign(shader.uniforms, shapeUniforms)
-      // 法线 / 位置都换成 jetShape 的结果（beginnormal 在 begin_vertex 之前执行）
-      shader.vertexShader = shader.vertexShader
-        .replace('#include <common>', `#include <common>\n${JET_SHAPE}`)
-        .replace('#include <beginnormal_vertex>', 'vec3 jetPos;\nvec3 jetNrm;\njetShape( jetPos, jetNrm );\nvec3 objectNormal = jetNrm;')
-        .replace('#include <begin_vertex>', 'vec3 transformed = jetPos;')
-    }
-    mat.customProgramCacheKey = () => 'october-water-jet'
-    const mesh = new THREE.Mesh(geom, mat)
-    mesh.name = `喷泉水流-${spec.name}`
-    // 形状在着色器里变形 → 包围盒不准，关掉视锥剔除（一共 3 个网格）
-    mesh.frustumCulled = false
-    // layer 1：不走 override identity（override 材质没有这段变形），由孪生体写 identity
-    mesh.layers.set(1)
-    group.add(mesh)
-    toonMaterials.push({ mat, palette: opts.waterPalette })
+  // ---------------- 水流：烟尘同款硬边团块 ----------------
+  // 每股水是一串从出水口按抛物线飞出的团块：出水口小而密 → 连成一股集中的水柱；
+  // 越往下团块越大、速度越快越稀、初速的随机偏差让它们越飞越散 → 下宽上窄、轮廓蓬松破碎；
+  // 出水量按随机节奏起伏，偶尔断流 → 断口是团块的圆润边缘，随水流往下走。
+  const viewportHeight = { value: 720 }
+  const waterLit = { value: new THREE.Color() }
+  const waterShade = { value: new THREE.Color() }
+  const PUFFS = 3200
+  const pPos = new Float32Array(PUFFS * 3)
+  const pSize = new Float32Array(PUFFS)
+  const pTile = new Float32Array(PUFFS)
+  const pRot = new Float32Array(PUFFS)
+  const pGeom = new THREE.BufferGeometry()
+  pGeom.setAttribute('position', new THREE.BufferAttribute(pPos, 3).setUsage(THREE.DynamicDrawUsage))
+  pGeom.setAttribute('aSize', new THREE.BufferAttribute(pSize, 1).setUsage(THREE.DynamicDrawUsage))
+  pGeom.setAttribute('aTile', new THREE.BufferAttribute(pTile, 1).setUsage(THREE.DynamicDrawUsage))
+  pGeom.setAttribute('aRot', new THREE.BufferAttribute(pRot, 1).setUsage(THREE.DynamicDrawUsage))
+  const pMat = new THREE.ShaderMaterial({
+    uniforms: { uMap: { value: opts.spriteMap }, uViewportHeight: viewportHeight, uLit: waterLit, uShade: waterShade },
+    vertexShader: SPRITE_VERT,
+    fragmentShader: /* glsl */ `
+      uniform vec3 uLit;
+      uniform vec3 uShade;
+      ${SPRITE_MASK}
+      void main() {
+        vec2 pc = spriteCoord();
+        if (!spriteInside(pc)) discard;
+        // 与烟尘一致的月牙暗面（左下），受光面是水色
+        float c = cos(vRot), s = sin(vRot);
+        vec2 q = clamp(pc + mat2(c, s, -s, c) * vec2(0.16, -0.16), 0.0, 1.0);
+        float lit = texture2D(uMap, spriteCell() + q * 0.5).r;
+        gl_FragColor = vec4(lit > 0.5 ? uLit : uShade, 1.0);
+        #include <colorspace_fragment>
+      }
+    `
+  })
+  const puffs = new THREE.Points(pGeom, pMat)
+  puffs.name = '喷泉水流'
+  puffs.frustumCulled = false
+  // layer 1 + identity 孪生体（与烟尘相同）：整股水只有外轮廓线，团块之间按前后遮挡出线
+  puffs.layers.set(1)
+  group.add(puffs)
+  const puffTwin = new THREE.Points(pGeom, spriteIdMaterial(opts.spriteMap, opts.allocId(), viewportHeight))
+  puffTwin.name = '喷泉水流-identity'
+  puffTwin.frustumCulled = false
+  opts.idScene.add(puffTwin)
 
-    const twin = new THREE.Mesh(geom, jetIdMaterial(opts.allocId(), shapeUniforms))
-    twin.name = `${mesh.name}-identity`
-    twin.frustumCulled = false
-    opts.idScene.add(twin)
+  interface Jet {
+    spec: JetSpec
+    origin: THREE.Vector3
+    out: THREE.Vector3
+    side: THREE.Vector3
+    vr: number
+    tLand: number
+    yLand: number
+    acc: number
+    ph1: number
+    ph2: number
+    w1: number
+    w2: number
+  }
+  const jets: Jet[] = []
+  for (const spec of JETS) {
+    const { tLand, vr } = ballistic(spec)
+    for (let k = 0; k < spec.count; k++) {
+      const ang = spec.angle0 + (k / spec.count) * Math.PI * 2 + (Math.random() - 0.5) * 0.12
+      const out = new THREE.Vector3(Math.cos(ang), 0, Math.sin(ang))
+      jets.push({
+        spec,
+        origin: new THREE.Vector3(center.x + out.x * spec.from[0], baseY + spec.from[1], center.z + out.z * spec.from[0]),
+        out,
+        side: new THREE.Vector3(-out.z, 0, out.x),
+        vr,
+        tLand,
+        yLand: baseY + spec.to[1],
+        acc: Math.random(),
+        ph1: Math.random() * 10,
+        ph2: Math.random() * 10,
+        w1: 6 + Math.random() * 3,
+        w2: 11 + Math.random() * 5
+      })
+    }
+  }
+  interface Puff {
+    alive: boolean
+    fresh: boolean
+    jet: Jet
+    age: number
+    pos: THREE.Vector3
+    vel: THREE.Vector3
+    s0: number
+    s1: number
+  }
+  const pf: Puff[] = Array.from({ length: PUFFS }, () => ({
+    alive: false, fresh: false, jet: jets[0]!, age: 0, pos: new THREE.Vector3(), vel: new THREE.Vector3(), s0: 0, s1: 0
+  }))
+  let pCursor = 0
+  let clock = 0
+
+  function updatePuffs(dt: number) {
+    clock += dt
+    for (const j of jets) {
+      // 出水量节奏：两组正弦叠加，低于阈值时断流（约 15–20% 的时间）
+      const n = 0.6 * Math.sin(clock * j.w1 + j.ph1) + 0.4 * Math.sin(clock * j.w2 + j.ph2)
+      // 出水量：n 低于 -0.35 断流（约 25% 的时间），断口随水流往下走
+      const flow = THREE.MathUtils.smoothstep(n, -0.35, -0.15)
+      j.acc += dt * j.spec.rate * flow
+      const count = Math.floor(j.acc)
+      j.acc -= count
+      const k = j.spec.sizeBottom / 0.21
+      for (let c = 0; c < count; c++) {
+        const p = pf[pCursor]!
+        pCursor = (pCursor + 1) % PUFFS
+        // 子帧：沿抛物线把本帧的团块均匀铺开（低帧率也不会一簇簇）
+        const a = ((c + Math.random()) / count) * dt
+        p.alive = true
+        p.fresh = true
+        p.jet = j
+        p.age = a
+        p.vel
+          .copy(j.out)
+          .multiplyScalar(j.vr + gauss() * 0.1 * k)
+          .addScaledVector(j.side, gauss() * 0.13 * k)
+        p.vel.y = j.spec.vy0 + gauss() * 0.07 * k
+        p.pos
+          .copy(j.origin)
+          .addScaledVector(j.side, gauss() * j.spec.sizeTop * 0.15)
+          .addScaledVector(p.vel, a)
+        p.pos.y -= 0.5 * G * a * a
+        p.vel.y -= G * a
+        p.s0 = j.spec.sizeTop * (0.8 + Math.random() * 0.35)
+        p.s1 = j.spec.sizeBottom * (0.75 + Math.random() * 0.5)
+        pTile[(pCursor + PUFFS - 1) % PUFFS] = Math.floor(Math.random() * 4)
+        pRot[(pCursor + PUFFS - 1) % PUFFS] = Math.random() * Math.PI * 2
+      }
+    }
+    for (let i = 0; i < PUFFS; i++) {
+      const p = pf[i]!
+      if (!p.alive) {
+        pSize[i] = 0
+        continue
+      }
+      if (p.fresh) p.fresh = false
+      else {
+        p.age += dt
+        p.vel.y -= G * dt
+        p.pos.addScaledVector(p.vel, dt)
+      }
+      // 落进水面：消失，一部分溅起水花
+      if (p.pos.y < p.jet.yLand) {
+        p.alive = false
+        pSize[i] = 0
+        if (Math.random() < 0.12) spawnSplash(p.pos, p.jet.out, p.jet.spec.sizeTop * 1.1)
+        continue
+      }
+      pPos[i * 3] = p.pos.x
+      pPos[i * 3 + 1] = p.pos.y
+      pPos[i * 3 + 2] = p.pos.z
+      const t = Math.min(1, p.age / p.jet.tLand)
+      pSize[i] = THREE.MathUtils.lerp(p.s0, p.s1, t)
+    }
+    pGeom.attributes.position!.needsUpdate = true
+    pGeom.attributes.aSize!.needsUpdate = true
+    pGeom.attributes.aTile!.needsUpdate = true
+    pGeom.attributes.aRot!.needsUpdate = true
   }
 
   // ---------------- 水花 ----------------
@@ -485,7 +417,6 @@ export function createFountain(opts: {
   sGeom.setAttribute('aSize', new THREE.BufferAttribute(sSize, 1).setUsage(THREE.DynamicDrawUsage))
   sGeom.setAttribute('aTile', new THREE.BufferAttribute(sTile, 1))
   sGeom.setAttribute('aRot', new THREE.BufferAttribute(sRot, 1))
-  const viewportHeight = { value: 720 }
   const sMat = new THREE.ShaderMaterial({
     uniforms: { uMap: { value: opts.spriteMap }, uViewportHeight: viewportHeight, uHi: hiColor, uBase: { value: new THREE.Color() } },
     vertexShader: SPRITE_VERT,
@@ -513,50 +444,30 @@ export function createFountain(opts: {
   splashTwin.frustumCulled = false
   opts.idScene.add(splashTwin)
 
-  // 落水点（世界坐标）
-  const landings: { p: THREE.Vector3; size: number }[] = []
-  for (const spec of JETS) {
-    for (let k = 0; k < spec.count; k++) {
-      const ang = spec.angle0 + (k / spec.count) * Math.PI * 2
-      landings.push({
-        p: new THREE.Vector3(center.x + Math.cos(ang) * spec.to[0], baseY + spec.to[1] + 0.01, center.z + Math.sin(ang) * spec.to[0]),
-        // 水花大小跟水流粗细走（顶部细水流的水花要小）
-        size: spec.radius * (spec.name === 'crown' ? 1.4 : 2.0)
-      })
-    }
-  }
   const sp = Array.from({ length: SPLASH }, (_, i) => ({ alive: false, age: 0, life: 0.3, size: 0.08, pos: new THREE.Vector3(), vel: new THREE.Vector3(), i }))
   for (let i = 0; i < SPLASH; i++) {
     sTile[i] = i % 4
     sRot[i] = Math.random() * Math.PI * 2
   }
   let cursor = 0
-  let acc = 0
-  const RATE = 520 // 每秒总水花数
+
+  /** 团块落进水面时溅起的小水花 */
+  function spawnSplash(at: THREE.Vector3, out: THREE.Vector3, size: number) {
+    const p = sp[cursor]!
+    cursor = (cursor + 1) % SPLASH
+    const k = size / 0.07
+    p.alive = true
+    p.age = 0
+    p.life = 0.2 + Math.random() * 0.22
+    p.size = size * (0.5 + Math.random() * 0.6)
+    p.pos.copy(at)
+    p.vel.copy(out).multiplyScalar((0.1 + Math.random() * 0.4) * k)
+    p.vel.x += (Math.random() - 0.5) * 0.5 * k
+    p.vel.z += (Math.random() - 0.5) * 0.5 * k
+    p.vel.y = (0.5 + Math.random() * 0.9) * Math.sqrt(k)
+  }
 
   function updateSplash(dt: number) {
-    acc += dt * RATE
-    let n = Math.floor(acc)
-    acc -= n
-    while (n-- > 0) {
-      const p = sp[cursor]!
-      cursor = (cursor + 1) % SPLASH
-      const land = landings[Math.floor(Math.random() * landings.length)]!
-      const L = land.p
-      const k = land.size / 0.1
-      const out = new THREE.Vector3(L.x - center.x, 0, L.z - center.z).normalize()
-      p.alive = true
-      p.age = 0
-      p.life = 0.22 + Math.random() * 0.25
-      p.size = land.size * (0.6 + Math.random() * 0.8)
-      p.pos.copy(L).addScaledVector(out, (Math.random() - 0.3) * 0.08 * k)
-      p.pos.x += (Math.random() - 0.5) * 0.06 * k
-      p.pos.z += (Math.random() - 0.5) * 0.06 * k
-      p.vel.copy(out).multiplyScalar((0.2 + Math.random() * 0.5) * k)
-      p.vel.x += (Math.random() - 0.5) * 0.5 * k
-      p.vel.z += (Math.random() - 0.5) * 0.5 * k
-      p.vel.y = (0.6 + Math.random() * 1.0) * Math.sqrt(k)
-    }
     for (const p of sp) {
       if (!p.alive) {
         sSize[p.i] = 0
@@ -585,6 +496,10 @@ export function createFountain(opts: {
     const p = opts.waterPalette
     const d = p.d.map((v, i) => v + ((p.nd ?? p.d)[i]! - v) * m)
     baseCol.setRGB(d[0]!, d[1]!, d[2]!)
+    waterLit.value.copy(baseCol)
+    const i = p.i.map((v, k) => v + ((p.ni ?? p.i)[k]! - v) * m)
+    // 暗面取受光色与水的背光色之间（与烟尘一样偏亮），团块才会融成一股而不是一片片
+    waterShade.value.setRGB(i[0]!, i[1]!, i[2]!).lerp(baseCol, 0.5)
     ;(sMat.uniforms.uBase!.value as THREE.Color).copy(baseCol)
   }
   setDusk(0)
@@ -595,7 +510,8 @@ export function createFountain(opts: {
     surfaces,
     update(dt) {
       flowTime.value += dt
-      updateSplash(dt)
+      updatePuffs(Math.min(dt, 0.1))
+      updateSplash(Math.min(dt, 0.1))
     },
     setDusk,
     setViewportHeight(px) {
