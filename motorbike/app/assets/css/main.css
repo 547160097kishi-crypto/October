@@ -1,0 +1,531 @@
+/* =========================================================
+   Molazone UI 还原 — 全局样式
+   设计取值直接来自原站计算样式与 entry.B2OHENv6.css：
+   --c-primary  #fff        --c-secondary #0b0b0c
+   --sand-white 240,237,235 --dark        11,11,12
+   字体：第一阶段提取的 Kern（400 / 500 / 700）
+   ========================================================= */
+
+@font-face {
+  font-family: 'Kern';
+  src: url('/fonts/Kern-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Kern';
+  src: url('/fonts/Kern-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Kern';
+  src: url('/fonts/Kern-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --c-primary: #fff;
+  --c-secondary: #0b0b0c;
+  --c-primary-50: rgba(255, 255, 255, 0.5);
+  --c-primary-60: rgba(255, 255, 255, 0.6);
+  --c-primary-80: rgba(255, 255, 255, 0.8);
+  --sand-white: 240, 237, 235;
+  --dark: 11, 11, 12;
+  --font-main: 'Kern', 'PingFang SC', 'Microsoft YaHei', system-ui, sans-serif;
+  --header-height: 132px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 15px;
+  -webkit-text-size-adjust: 100%;
+  background: var(--c-secondary);
+}
+
+body {
+  font-family: var(--font-main);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 15px;
+  background: var(--c-secondary);
+  color: var(--c-primary);
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+img,
+svg {
+  display: block;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+/* ---------- 原站排版类 ---------- */
+.heading-1 {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.44px;
+  line-height: 15px;
+  text-transform: uppercase;
+}
+@media (min-width: 769px) {
+  .heading-1 {
+    font-size: 12px;
+    letter-spacing: 0.66px;
+  }
+}
+.body-2 {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 14px;
+  text-transform: none;
+}
+.link-2 {
+  font-size: 11px;
+  letter-spacing: 0.44px;
+  line-height: 15.131px;
+  text-transform: uppercase;
+}
+.link-2:hover {
+  opacity: 0.8;
+}
+
+/* ---------- 应用容器 ---------- */
+.app {
+  position: relative;
+  width: 100%;
+  height: 100dvh;
+  background: var(--c-secondary);
+  color: var(--c-primary);
+  overflow: hidden;
+}
+.app.dark {
+  --ui-button-color: #fff;
+  --ui-button-border: #7b7a79;
+}
+
+.homePage {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+/* 3D 场景：全屏 WebGL 画布（第四阶段已接入 Three.js） */
+.webglRenderTargetContainer {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100svh;
+  overflow: hidden;
+  z-index: 0;
+  background: #030303;
+}
+.webglRenderTarget {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* ---------- 顶部导航 ---------- */
+.appHeader {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 52px;
+  padding: 0 60px;
+  z-index: 3;
+}
+
+.appHeader > .navigation {
+  display: flex;
+  align-items: center;
+}
+/* 注意：navigation 不能设为定位祖先，原站 .play-btn 相对 .appHeader 定位（left:60px） */
+
+/* Play 胶囊按钮 */
+.uiButtonGame {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 32px;
+  padding: 0 16px;
+  border: 1px solid var(--c-primary-60);
+  border-radius: 50px;
+  background-color: rgb(var(--sand-white));
+  overflow: hidden;
+  pointer-events: all;
+}
+.uiButtonGame.light {
+  --c-primary: #0b0b0c;
+}
+.uiButtonGame > .inner {
+  height: 9px;
+  padding: 0;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.63px;
+  line-height: 1;
+  text-transform: uppercase;
+  color: #0b0b0c;
+}
+.uiButtonGame > .inner > span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: opacity 0.3s ease;
+}
+.uiButtonGame .uiIconPlay {
+  width: 7px;
+  height: 9px;
+}
+.uiButtonGame .uiIconMoto {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  opacity: 0;
+  transform: translate(-50%, -50%);
+  transition: opacity 0.3s ease;
+}
+.uiButtonGame:hover > .inner > span {
+  opacity: 0;
+}
+.uiButtonGame:hover .uiIconMoto {
+  opacity: 1;
+  /* 原图标为白色填充，浅色胶囊按钮上需要反色才能看见 */
+  filter: invert(1);
+}
+.play-btn {
+  position: absolute;
+  top: 50%;
+  left: 60px;
+  z-index: 4;
+  transform: translateY(-50%);
+}
+
+/* 导航链接 */
+.appHeader > .navigation > nav {
+  position: relative;
+  display: flex;
+  margin-left: 142px;
+}
+.appHeader > .navigation > nav > .nav-item {
+  height: fit-content;
+  padding: 4px 12px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.63px;
+  line-height: 15px;
+  text-transform: uppercase;
+  color: var(--c-primary);
+  transition: opacity 0.15s ease-out;
+}
+
+/* Logo（绝对居中，压在上层） */
+.appLogo {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: fit-content;
+  pointer-events: none;
+  transform: translateX(-50%) translateY(-3px);
+}
+.appLogo > .logos {
+  display: flex;
+  flex-direction: column;
+  height: fit-content;
+}
+.appLogo > .logos > .yame-logo {
+  height: 50px;
+  width: 100px;
+  overflow: visible;
+}
+
+/* 右侧控制区 */
+.appHeader > .controls {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 48px;
+  order: 3;
+  z-index: 2;
+}
+.sound-control {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+/* Now Playing */
+.uiRadio {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-transform: uppercase;
+}
+.uiRadio > .top {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+.uiRadio .label {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--c-primary-60);
+  white-space: nowrap;
+}
+.uiRadio .value {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.7px;
+  white-space: nowrap;
+}
+
+/* 音量状态 + 波形 */
+.uiSoundButton {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--c-primary-80);
+  cursor: pointer;
+}
+.uiSoundButton > .volume-state {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.63px;
+  line-height: 15px;
+  text-transform: uppercase;
+}
+.uiSoundButton .waveform {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  height: 12px;
+}
+.uiSoundButton .waveform i {
+  display: block;
+  width: 1.5px;
+  height: 12px;
+  background: currentColor;
+  transform-origin: bottom;
+  animation: soundbar 1s infinite ease-in-out;
+}
+.uiSoundButton .waveform i:nth-child(1) { animation-delay: 0.12s; }
+.uiSoundButton .waveform i:nth-child(2) { animation-delay: 0.34s; }
+.uiSoundButton .waveform i:nth-child(3) { animation-delay: 0.27s; }
+.uiSoundButton .waveform i:nth-child(4) { animation-delay: 0.5s; }
+.uiSoundButton .waveform i:nth-child(5) { animation-delay: 0.19s; }
+.uiSoundButton.is-muted .waveform i {
+  animation-play-state: paused;
+  transform: scaleY(0.25);
+}
+
+@keyframes soundbar {
+  0%, 100% { transform: scaleY(0.25); }
+  50% { transform: scaleY(1); }
+}
+
+/* Fullscreen */
+.fullscreen {
+  display: flex;
+  padding: 4px;
+  background: none;
+  cursor: pointer;
+}
+.fullscreen svg {
+  width: 19px;
+  height: 14px;
+}
+
+/* ---------- 底部信息栏 ---------- */
+.appFooter {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  padding: 24px 60px;
+  font-size: 9px;
+  font-weight: 400;
+  letter-spacing: 0.18px;
+  z-index: 60; /* 高于 loader(50)，Loading 期间也可见，与原站一致 */
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 1s;
+}
+.appFooter.-mounted {
+  opacity: 1;
+}
+.appFooter p {
+  opacity: 0.7;
+}
+.appFooter a {
+  pointer-events: all;
+  transition: all 0.2s ease;
+}
+.appFooter > .left,
+.appFooter > .right {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 6px;
+}
+.appFooter > .left {
+  line-height: unset;
+}
+.appFooter > .left .links {
+  display: flex;
+  gap: 32px;
+  text-decoration: underline;
+  text-underline-position: from-font;
+}
+.appFooter > .left .links > a {
+  opacity: 0.8;
+}
+.appFooter > .left .links > a:hover {
+  opacity: 1;
+}
+
+/* 右下：Join the Molazone + 社媒 + 语言 */
+.appFooter > .right > .newsletter {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.7px;
+  text-transform: uppercase;
+  opacity: 0.8;
+  white-space: nowrap;
+}
+.appFooter > .right > .newsletter::after {
+  content: '';
+  width: 5px;
+  height: 5px;
+  margin-left: 3px;
+  border-top: 1px solid currentColor;
+  border-right: 1px solid currentColor;
+  transform: rotate(45deg);
+  transition: transform 0.2s ease;
+}
+.appFooter > .right > .newsletter:hover {
+  opacity: 1;
+}
+.appFooter > .right > .newsletter:hover::after {
+  transform: translateX(2px) rotate(45deg);
+}
+
+.appSocial {
+  display: flex;
+  gap: 16px;
+  height: 16px;
+  margin-left: 40px;
+}
+.appSocial a {
+  display: block;
+  opacity: 0.8;
+}
+.appSocial a:hover {
+  opacity: 1;
+}
+.appSocial a img,
+.appSocial a svg {
+  width: 14px;
+  height: 14px;
+}
+
+.appSwitchLocale {
+  display: flex;
+  margin-left: 112px;
+}
+.appSwitchLocale a {
+  display: block;
+  opacity: 0.6;
+}
+.appSwitchLocale a.-active,
+.appSwitchLocale a:hover {
+  opacity: 1;
+}
+.appSwitchLocale span {
+  display: block;
+  width: 1px;
+  height: 6px;
+  margin: 4px 8px 0;
+  background-color: var(--c-primary);
+}
+
+/* ---------- 滚动提示 ---------- */
+.scrollHint {
+  position: fixed;
+  bottom: 84px;
+  left: 50%;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  transform: translateX(-50%);
+  z-index: 2;
+  opacity: 0;
+  transition: opacity 1.2s ease;
+  pointer-events: none;
+}
+.scrollHint.-show {
+  opacity: 1;
+}
+.scrollHint .dash {
+  width: 88px;
+  height: 1px;
+  background-image: linear-gradient(90deg, rgba(255, 255, 255, 0.45) 50%, transparent 50%);
+  background-size: 8px 1px;
+}
+.scrollHint .chev {
+  font-size: 13px;
+  line-height: 1;
+  color: rgba(255, 255, 255, 0.55);
+}
+.scrollHint .label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}

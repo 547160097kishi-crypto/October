@@ -1,0 +1,27 @@
+{
+  "name": "fastbike",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "FastBike — 基于第一阶段提取的 mola-zone 3D 资源构建的 Nuxt + Three.js 摩托车体验项目",
+  "scripts": {
+    "dev": "nuxt dev",
+    "build": "nuxt build",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare",
+    "assets:sync": "node scripts/sync-assets.mjs"
+  },
+  "dependencies": {
+    "@theatre/core": "^0.7.2",
+    "@theatre/studio": "^0.7.2",
+    "howler": "^2.2.4",
+    "lottie-web": "^5.13.0",
+    "nuxt": "^4.6.4",
+    "three": "^0.187.0"
+  },
+  "devDependencies": {
+    "@types/howler": "^2.2.13",
+    "@types/three": "^0.187.0"
+  }
+}

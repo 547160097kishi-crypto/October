@@ -1,0 +1,45 @@
+HAR entries            : 135
+status                 : {301: 1, 200: 109, 503: 3, 204: 1, 202: 5, 304: 16}
+base64 编码条目         : 42
+唯一输出路径            : 100
+实际提取文件            : 93 共 21040154 字节
+分类统计(请求数)        : {'html': 2, 'data': 22, 'css': 10, 'fonts': 19, 'js': 17, 'images': 22, 'third-party': 14, 'audio': 7, 'animations': 2, 'scenes': 1, 'textures': 12, 'models': 3, 'decoders': 4}
+分类统计(提取字节)      : {'html': 144787, 'data': 148220, 'css': 96392, 'fonts': 79168, 'js': 2268293, 'images': 851064, 'third-party': 2719163, 'audio': 3085245, 'animations': 29115, 'scenes': 193745, 'textures': 663528, 'models': 9836768, 'decoders': 924666}
+校验失败文件            : 无
+size 不一致条目         : 0
+问题请求                : 29 其中可恢复: 18
+解码器文件              : ['decoders/3d/basis/basis_transcoder.js', 'decoders/3d/basis/basis_transcoder.wasm', 'decoders/www.gstatic.com/draco/versioned/decoders/1.5.7/draco_decoder.wasm', 'decoders/www.gstatic.com/draco/versioned/decoders/1.5.7/draco_wasm_wrapper.js']
+内联 data URI           : [{'index': 8, 'url': 'https://mola-zone.com/_nuxt/gpNsPhdA.js', 'count': 4, 'types': {'application/wasm': 1, 'audio/wav': 3}}, {'index': 73, 'url': 'https://www.gstatic.com/draco/versioned/decoders/1.5.7/draco_wasm_wrapper.js', 'count': 2, 'types': {'application/octet-stream': 2}}, {'index': 75, 'url': 'https://mola-zone.com/3d/basis/basis_transcoder.js', 'count': 1, 'types': {'application/octet-stream': 1}}, {'index': 111, 'url': 'https://newassets.hcaptcha.com/captcha/v1/b7cb55144cfb1f79ab8b18a24ea5786dc178370e/static/hcaptcha.html', 'count': 3, 'types': {'image/gif': 1, 'image/png': 2}}]
+
+=== 重点文件深挖 ===
+-- scene_v6.16.4.glb -> models/3d/Scene/scene_v6.16.4.glb 大小 6631384
+   counts: {'scenes': 1, 'nodes': 168, 'meshes': 118, 'materials': 100, 'images': 58, 'textures': 58, 'samplers': 1, 'buffers': 1, 'bufferViews': 222, 'accessors': 615}
+   required: ['KHR_draco_mesh_compression', 'KHR_texture_basisu', 'KHR_texture_transform']
+   image mime: {'image/ktx2': 58}
+   draco primitives: 124  basisu textures: 58
+   external refs: 0 0
+   animations: []
+-- bike_v9.7.glb -> models/3d/Library/bike/bike_v9.7.glb 大小 3171448
+   counts: {'scenes': 1, 'nodes': 105, 'meshes': 14, 'materials': 12, 'animations': 12, 'images': 11, 'textures': 11, 'samplers': 1, 'buffers': 1, 'bufferViews': 32, 'accessors': 539, 'skins': 1}
+   required: ['KHR_draco_mesh_compression', 'KHR_texture_basisu']
+   image mime: {'image/ktx2': 11}
+   draco primitives: 14  basisu textures: 11
+   external refs: 0 0
+   animations: ['Idle Action', 'Left Action', 'Right Action', 'Head Character Action', 'Idle Character Action', 'Left Character Action', 'Right Character Action', 'Stop Action', 'wind_float', 'wind_influence', 'Left Axle Action', 'Right Axle Action']
+-- oiseau_v1.glb -> models/3d/Library/oiseau_v1.glb 大小 33936
+   counts: {'scenes': 1, 'nodes': 1, 'meshes': 1, 'materials': 1, 'images': 1, 'textures': 1, 'samplers': 1, 'buffers': 1, 'bufferViews': 8, 'accessors': 8}
+   required: ['KHR_draco_mesh_compression']
+   image mime: {'image/png': 1}
+   draco primitives: 1  basisu textures: 0
+   external refs: 0 0
+   animations: []
+-- state_v9.json -> scenes/3d/state_v9.json 大小 193745
+   kind: Theatre.js 场景/动画状态 (state sheet) keys: ['sheetsById', 'definitionVersion', 'revisionHistory']
+   sheets: {'game': {'keys': ['staticOverrides'], 'staticOverride_objects': 22, 'sequence_tracks': 0, 'subKeys': {'staticOverrides': 1}}, 'World': {'keys': ['staticOverrides'], 'staticOverride_objects': 181, 'sequence_tracks': 0, 'subKeys': {'staticOverrides': 1}}, 'bike': {'keys': ['staticOverrides'], 'staticOverride_objects': 26, 'sequence_tracks': 0, 'subKeys': {'staticOverrides': 1}}, 'Orbital Sequence': {'keys': ['staticOverrides', 'sequence'], 'staticOverride_objects': 5, 'sequence_tracks': 14, 'subKeys': {'staticOverrides': 1, 'sequence': 4}}}
+   lottie: {'lottie_version': None, 'width': None, 'height': None, 'frameRate': None, 'duration_sec': None, 'assets': None}
+   mojibake: False
+-- logo_anim_v3.json -> animations/3d/tmp-cdn-patch/logo_anim_v3.json 大小 29115
+   kind: Lottie / Bodymovin 动画 keys: ['nm', 'ddd', 'h', 'w', 'meta', 'layers', 'v', 'fr', 'op', 'ip', 'assets']
+   sheets: None
+   lottie: {'lottie_version': '5.7.0', 'width': 800, 'height': 400, 'frameRate': 60, 'duration_sec': 4.98, 'assets': [{'id': '1', 'name': 'Logo YamÃª Lottie', 'path': None, 'file': None, 'embedded': False}, {'id': '2', 'name': 'Logo EBEM', 'path': None, 'file': None, 'embedded': False}]}
+   mojibake: True

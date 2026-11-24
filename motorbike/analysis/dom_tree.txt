@@ -1,0 +1,192 @@
+<body >
+  <div id="__nuxt">
+    <div class="app dark">
+      <div class="mobileOrientationBlocker">
+        <img src="/3d/tmp-cdn-patch/images/main_logo.svg" alt="logo" class="logo">
+        <div class="wrapper">
+          <svg >
+          <p >
+            📄 please rotate your device
+          <p class="lower">
+            📄 The page is best viewed in portrait orientation
+      <div class="homePage">
+      <span >
+        <div class="webglRenderTargetContainer">
+          <canvas id="webglCanvas" class="webglRenderTarget">
+        <header class="appHeader">
+          <div class="navigation">
+            <div class="uiButtonGame light play-btn">
+              <button class="uiButtonGhost inner">
+                <span >
+                  <svg class="uiIconPlay">
+                  📄 Play
+              <svg class="uiIconMoto">
+            <nav >
+              <a href="/en/posts/tourdates" class="nav-item">
+                📄 TOUR 2025
+              <a href="/en/posts/shop" class="nav-item">
+                📄 Shop
+              <a href="/en/posts/premium" class="nav-item">
+                📄 ÉBĒM Vault
+              <img src="/3d/tmp-cdn-patch/images/nav-focus-icon.svg" alt="" class="focusIcon">
+            <button class="uiButtonGhost cta-mobile-menu">
+              <span >
+                📄 Menu
+          <header class="appLogo">
+            <div class="logos">
+              <span >
+          <div class="controls">
+            <div class="sound-control">
+              <div class="uiRadio link-2">
+                <div class="top">
+                  <p class="label">
+                    📄 Now Playing
+                <p class="value">
+              <div class="uiSoundButton soundButton">
+                <p class="volume-state">
+                  📄 ON
+            <button class="fullscreen">
+              <svg >
+        <div class="appLoader">
+          <div class="loaderOverlay">
+          <div class="enterOverlay">
+          <div class="loader">
+            <header class="appLogo">
+              <div class="logos">
+                <span >
+            <div class="background">
+              <div class="backgroundContainer">
+                <img src="/3d/tmp-cdn-patch/images/loader_background01.webp" alt="">
+              <div class="backgroundContainer">
+                <img src="/3d/tmp-cdn-patch/images/loader_background02.webp" alt="">
+              <div class="backgroundContainer">
+                <img src="/3d/tmp-cdn-patch/images/loader_background03.webp" alt="">
+              <div class="backgroundContainer">
+                <img src="/3d/tmp-cdn-patch/images/loader_background04.webp" alt="">
+            <div class="loaderGrid">
+              <div class="left">
+                <img src="/3d/tmp-cdn-patch/images/loader_leftShape.webp" alt="">
+              <div class="top">
+                <img src="/3d/tmp-cdn-patch/images/loader_topShape.webp" alt="">
+              <div class="center">
+                <div class="transitionCenter">
+                <div class="shape">
+                  <svg >
+                <div class="loadingStep">
+                  <div class="counter">
+                    <div class="percentage">
+                      📄 0%
+              <div class="bottom">
+                <img src="/3d/tmp-cdn-patch/images/loader_bottomShape.webp" alt="">
+              <div class="right">
+                <img src="/3d/tmp-cdn-patch/images/loader_rightShape.webp" alt="">
+            <div class="footerBackground">
+        <div class="webglObject">
+          <a href="/en/posts/shop" class="uiPointOfInterest" style="display:none;">
+            <svg >
+            <span >
+              📄 Enter the shop
+        <div class="webglObject">
+          <a href="/en/posts/premium" class="uiPointOfInterest" style="display:none;">
+            <svg >
+            <span >
+              📄 The ÉBĒM Vault
+        <div class="webglObject">
+          <a href="/en/posts/tourdates" class="uiPointOfInterest" style="display:none;">
+            <svg >
+            <span >
+              📄 YAMÊ ON TOUR
+        <div class="webglObject">
+          <a href="/en/posts/youtube?id=shoot" class="uiPointOfInterest" style="display:none;">
+            <svg >
+            <span >
+              📄 SHOOT (CLIP)
+        <div class="webglObject">
+          <a href="/en/posts/youtube?id=colors" class="uiPointOfInterest" style="display:none;">
+            <svg >
+            <span >
+              📄 BÉCANE - A COLORS SHOW
+        <div class="webglObject">
+          <a href="/en/posts/molazone" class="uiPointOfInterest" style="display:none;">
+            <svg >
+            <span >
+              📄 Join the Molazone
+        <div class="webglObject">
+          <a href="/en/posts/vinyl" class="uiPointOfInterest" style="display:none;">
+            <svg >
+            <span >
+              📄 EBEM - THE VINYL
+        <div class="webglObject">
+          <a href="/en/posts/video?id=cave" class="uiPointOfInterest" style="display:none;">
+            <svg >
+            <span >
+              📄 MAKING-OF ÉBĒM FILM - ECHO CAVE STUDIO
+        <div class="webglObject">
+          <a href="/en/posts/video?id=desert" class="uiPointOfInterest" style="display:none;">
+            <svg >
+            <span >
+              📄 MAKING-OF ÉBĒM FILM - DESERT
+        <div class="webglObject">
+          <a href="/en/posts/radio" class="uiPointOfInterest" style="display:none;">
+            <svg >
+            <span >
+              📄 YAMÊ’S PLAYLIST (APPLE MUSIC)
+        <div class="webglObject">
+          <a href="/en/posts/video?id=camera" class="uiPointOfInterest" style="display:none;">
+            <svg >
+            <span >
+              📄 MAKING-OF ÉBĒM FILM - RED FOREST
+        <div class="webglObject">
+          <a href="/en/posts/video?id=ocean" class="uiPointOfInterest" style="display:none;">
+            <svg >
+            <span >
+              📄 MAKING-OF ÉBĒM FILM - MERMAID OCEAN
+        <div class="webglObject">
+          <a href="/en/posts/video?id=musee" class="uiPointOfInterest" style="display:none;">
+            <svg >
+            <span >
+              📄 MAKING-OF ÉBĒM FILM - THE KING'S MUSEUM
+        <div class="webglObject">
+          <a href="/en/posts/video?id=makingof" class="uiPointOfInterest" style="display:none;">
+            <svg >
+            <span >
+              📄 SHOOT (MAKING OF)
+        <div class="webglObject">
+          <a href="/en/posts/roi" class="uiPointOfInterest" style="display:none;">
+            <svg >
+            <span >
+              📄 THE KING’S SYMBOL (YAMÊ’S AUDIO)
+        <footer class="appFooter">
+          <div class="left">
+            <p >
+              📄 Copyright Yamê 2025. All rights reserved
+            <div class="links">
+              <a href="/3d/tmp-cdn-patch/files/legal_notice_EN.pdf">
+                📄 Terms of use
+              <a href="/3d/tmp-cdn-patch/files/privacy_EN.pdf" class="privacy">
+                📄 Privacy policy
+          <div class="right">
+            <a href="/en/posts/molazone" class="body-2 newsletter" style="display:none;">
+              📄 Join the Molazone
+            <div class="appSocial">
+              <a href="https://www.youtube.com/@yamebantu">
+                <img src="/3d/tmp-cdn-patch/images/youtube.svg" alt="YouTube">
+              <a href="https://www.instagram.com/yamebantu?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==">
+                <img src="/3d/tmp-cdn-patch/images/instagram.svg" alt="Instagram">
+              <a href="https://www.tiktok.com/@yamebantu">
+                <img src="/3d/tmp-cdn-patch/images/tiktok.svg" alt="TikTok">
+            <div class="appSwitchLocale body-2">
+              <a href="/en" class="router-link-active router-link-exact-active -active">
+                📄 EN
+              <span >
+              <a href="/" class="">
+                📄 FR
+            <a href="/3d/tmp-cdn-patch/files/privacy_EN.pdf" class="privacy">
+              📄 Privacy policy
+          <div class="uiButtonGame light play-btn" style="display:none;">
+            <button class="uiButtonGhost inner">
+              <span >
+                <svg class="uiIconPlay">
+                📄 Play
+            <svg class="uiIconMoto">
+  <div id="teleports">

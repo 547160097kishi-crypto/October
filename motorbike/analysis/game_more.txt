@@ -1,0 +1,365 @@
+
+
+################################################################################
+## bikeGameStrategy count=2 @[1797490, 1873262]
+################################################################################
+
+--- @1797490 ---
+,phiStart:0,speed:0,isFirst:!0,wasMoving:!1,isDragging:!1,targetPhi:bikeState.phi};function getSpeed(){return Math.abs(Math.min(0,state$3.speed))}function
+resetTargetPhi(){state$3.targetPhi=bikeState.phi}const moveBike=S=>{bikeState.phi-=S;const y=m().set(Math.cos(bikeState.phi-
+.001)*worldConfig.RADIUS,0,Math.sin(bikeState.phi-
+.001)*worldConfig.RADIUS);bikeState.group.position.set(Math.cos(bikeState.phi)*worldConfig.RADIUS,0,Math.sin(bikeState.phi)*worldConfig.RADIUS),bikeState.group.lookAt(y)}
+,bikeGameStrategy=()=>{const S=state$5.delta*40;moveBike(bikeState.speed*S)},bikeCinematicStrategy=()=>{moveBike(0)},stopBike=()=>{stopAnimation(),state$3.isFirst=!0,bike
+State.cinematicModeSpeed=0},startAnimOnFirstInteraction=S=>{S.isFirst&&Math.abs(S.speed)>bikeConfig.MIN_SPEED&&(S.isFirst=!1,startAnimation())},handleDragStart=()=>{gameS
+tore.mode==="cinematic"&&(state$3.phi=bikeState.phi,state$3.phiStart=state$3.phi,state$3.isDragging=!0)},handleDrag=({detail:S})=>{if(startAnimOnFirstInteraction(state$3)
+,gameStore.mode!=="cinematic"||!state$3.isDragging)return;const y=Math.sqrt(S.speedY**2)*Math.sign(S.speedY);state$3.speed+=y*bikeConfig.DRAG_MOVEMENT_FACTOR,state$3.spee
+d=Math.max(Math.min(state$3.speed,bikeConfig.MAX_SPEED),-
+bikeConfig.MAX_SPEED)},handleDragEnd=()=>{gameStore.mode==="cinematic"&&(state$3.isDragging=!1)},handleScroll=S=>{gameStore.mode==="cinematic"&&(startAnimOnFirstInt
+
+--- @1873262 ---
+group.getObjectByName("front_wheel"),bikeState.rearWheel=bikeState.group.getObjectByName("rear_wheel"),bikeState.root=bikeState.group.getObjectByName("root"),await
+initAudio(),initDragListeners();const S=getBikeMoebiusConfig();bikeState.group.traverse(_=>{_ instanceof Mesh&&_.material instanceof MeshStandardMaterial&&(generateMeshRa
+mpNoiseToonMaterial(_,{name:name$4},S[_.name]||{}),_.castShadow=!0)}),initConstraints(),getScene().add(bikeState.group),initLights(),o$3(()=>{gameStore.mode==="game"?bike
+GameStrategy():bikeCinematicStrategy()},60);const y=useState("phi");y.value=(bikeState.phi+Math.PI*2)%(Math.PI*2),updateCameraSequence(),resolve$3(!0)}function
+initConstraints(){const S=n$4("phone")?"HomePhone":"HomeDesktop",y=getCameraView(S);bikeState.sunConstraintPosition.position.set(100,30,-
+100),bikeState.cameraConstraintPosition.position.copy(y.position),bikeState.cameraConstraintLookAt.position.copy(y.lookAt),bikeState.spotConstraintLookAt.position.set(0,.
+5,10),bikeState.group.add(bikeState.sunConstraintPosition),bikeState.group.add(bikeState.cameraConstraintPosition),bikeState.group.add(bikeState.cameraConstraintLookAt)}c
+onst mount$2=async()=>{initBikeAnimation()},PiX2=Math.PI*2;let speed,rotationIntensity;const render$5=({clock:S,delta:y})=>{var w;const
+_=useState("phi");_.value=(bikeState.phi%PiX2+PiX2)%PiX2;const E=y*40;gameStore.mode==="cinematic"?speed=bikeState.cinemati
+
+
+################################################################################
+## cinematicStrategyOff count=2 @[1799621, 1927343]
+################################################################################
+
+--- @1799621 ---
+tHandlers.forEach(([S,y])=>{renderTarget$1.removeEventListener(S,y)})},handleMovement=(S,y)=>{Math.abs(S.speed)>bikeConfig.MIN_SPEED?(S.speed*=y,S.targetPhi+=S.speed*stat
+e$5.delta*40,bikeState.phi=MathUtils$1.lerp(bikeState.phi,S.targetPhi,.1),S.wasMoving=!0,bikeState.cinematicModeSpeed=-
+S.speed):S.wasMoving&&(S.wasMoving=!1,stopBike(),S.speed=0,resetTargetPhi())},cinematicStrategy=()=>{handleMovement(state$3,bikeConfig.DAMPING)};function
+cinematicStrategyOn(){o$3(cinematicStrategy,60)}function cinematicStrategyOff(){c$2(cinematicStrategy,60),state$3.speed=0}const viewport$3=useViewport();let
+renderTarget;const onDragEnd=({detail:S})=>{const y=S.position.x-
+S.startPosition.x;Math.abs(y)>gameConfig.SWIPE_THRESOLD?turn(y>0):turn(S.startPosition.x>viewport$3.width/2)},onDragEndThrottled=throttle(onDragEnd,200),initSwipeListener
+=()=>{renderTarget=document.body.querySelector(".webglRenderTarget"),renderTarget.addEventListener("custom:dragend",onDragEndThrottled,{passive:!0})},removeSwipeListener=
+()=>{renderTarget&&renderTarget.removeEventListener("custom:dragend",onDragEndThrottled)};function u(S,y=2){const _=10**y;return~~(S*_)/_}class
+System{constructor(){sn(this,"particles");sn(this,"emitters");this.particles=[],this.emitters=[]}addEmitter(y){this.emitters.push(y)}update(y){for(const _ of
+this.emitters){_.emit(y);for(const E of _.particles)E.update(y),_.particles=_.particles.filte
+
+--- @1927343 ---
+_)<.001||(needsUpdate=!0,y.position=_)};function render$3(){updateCameraSequence()}const SequenceBundle=Object.freeze(Object.defineProperty({__proto__:null,bindOrbitalObj
+ect,cameraSequenceGui,create:create$4,handleVisibility,mount:mount$1,name:name$2,render:render$3,updateCameraSequence},Symbol.toStringTag,{value:"Module"})),setInterval$1
+=window.setInterval;async function switchToGameMode(){gameStore.isAlive||cameraState.isAnimated||(bikeState.speed=bikeConfig.INITIAL_SPEED,gameStore.isAlive=!0,cinematicS
+trategyOff(),handleVisibility("game"),await moveToGameView(),gameStore.mode="game",setDecorVisibility(!0),toggleObstacleTick(!0),start(),gameStore.isPaused=!1,n$4("phone"
+)&&(removeDragListeners(),initSwipeListener()))}async function switchToCinematicMode(){cameraState.isAnimated||(await moveToOrigin(),stopAnimation(),gameStore.isPaused==!
+0&&startAnimation(),moveToHomeView(),cinematicStrategyOn(),clearInterval(gameStore.scoreInterval),gameStore.isAlive=!1,gameStore.mode="cinematic",await hideObstacles(),ha
+ndleVisibility(),setDecorVisibility(!1),moveObstaclesUp(),stop({animation:!1}),resetScore(),bikeState.speed=bikeConfig.INITIAL_SPEED,resetTargetPhi(),n$4("phone")&&(remov
+eSwipeListener(),initDragListeners()))}function
+pause({animation:S=!0,instant:y=!1}={}){S&&stopAnimation(),clearInterval(gameStore.scoreInterval),bikeState.speedBeforePause=bikeState.speed,y?bikeState.speed=0:a
+
+
+################################################################################
+## cinematicStrategyOn count=3 @[1799564, 1927730, 1943475]
+################################################################################
+
+--- @1799564 ---
+=>{state$3.isDragging=!1})},removeDragListeners=()=>{eventHandlers.forEach(([S,y])=>{renderTarget$1.removeEventListener(S,y)})},handleMovement=(S,y)=>{Math.abs(S.speed)>b
+ikeConfig.MIN_SPEED?(S.speed*=y,S.targetPhi+=S.speed*state$5.delta*40,bikeState.phi=MathUtils$1.lerp(bikeState.phi,S.targetPhi,.1),S.wasMoving=!0,bikeState.cinematicModeS
+peed=-S.speed):S.wasMoving&&(S.wasMoving=!1,stopBike(),S.speed=0,resetTargetPhi())},cinematicStrategy=()=>{handleMovement(state$3,bikeConfig.DAMPING)};function
+cinematicStrategyOn(){o$3(cinematicStrategy,60)}function cinematicStrategyOff(){c$2(cinematicStrategy,60),state$3.speed=0}const viewport$3=useViewport();let
+renderTarget;const onDragEnd=({detail:S})=>{const y=S.position.x-
+S.startPosition.x;Math.abs(y)>gameConfig.SWIPE_THRESOLD?turn(y>0):turn(S.startPosition.x>viewport$3.width/2)},onDragEndThrottled=throttle(onDragEnd,200),initSwipeListener
+=()=>{renderTarget=document.body.querySelector(".webglRenderTarget"),renderTarget.addEventListener("custom:dragend",onDragEndThrottled,{passive:!0})},removeSwipeListener=
+()=>{renderTarget&&renderTarget.removeEventListener("custom:dragend",onDragEndThrottled)};function u(S,y=2){const _=10**y;return~~(S*_)/_}class
+System{constructor(){sn(this,"particles");sn(this,"emitters");this.particles=[],this.emitters=[]}addEmitter(y){this.emitters.push(y)}update(y){for(const _ of
+this.emitters){_.emit(y);for(const E
+
+--- @1927730 ---
+Mode(){gameStore.isAlive||cameraState.isAnimated||(bikeState.speed=bikeConfig.INITIAL_SPEED,gameStore.isAlive=!0,cinematicStrategyOff(),handleVisibility("game"),await mov
+eToGameView(),gameStore.mode="game",setDecorVisibility(!0),toggleObstacleTick(!0),start(),gameStore.isPaused=!1,n$4("phone")&&(removeDragListeners(),initSwipeListener()))
+}async function switchToCinematicMode(){cameraState.isAnimated||(await moveToOrigin(),stopAnimation(),gameStore.isPaused==!0&&startAnimation(),moveToHomeView(),cinematicS
+trategyOn(),clearInterval(gameStore.scoreInterval),gameStore.isAlive=!1,gameStore.mode="cinematic",await hideObstacles(),handleVisibility(),setDecorVisibility(!1),moveObs
+taclesUp(),stop({animation:!1}),resetScore(),bikeState.speed=bikeConfig.INITIAL_SPEED,resetTargetPhi(),n$4("phone")&&(removeSwipeListener(),initDragListeners()))}function
+pause({animation:S=!0,instant:y=!1}={}){S&&stopAnimation(),clearInterval(gameStore.scoreInterval),bikeState.speedBeforePause=bikeState.speed,y?bikeState.speed=0:animate(b
+ikeState,{speed:0},{duration:1}),gameStore.isPaused=!0,toggleObstacleTick(!1)}function resume({animation:S=!0}={}){S&&startAnimation(),animate(bikeState,{speed:bikeState.
+speedBeforePause},{duration:1}),gameStore.scoreInterval=setInterval$1(()=>{incrementGameScore(),incrementGameSpeed()},1e3),gameStore.isPaused=!1,toggleObstacleTick(!0)}as
+ync function restart(){const S=bikeStat
+
+--- @1943475 ---
+BSTACLE_DISTANCE,{range:[.1,2],nudgeMultiplier:.01}),minInterval:distExports.types.number(gameConfig.OBSTACLE_MIN_INTERVAL,{range:[.1,5],nudgeMultiplier:.01})});y.onValue
+sChange(({SPEED_INCREMENT:E,MAX_SPEED:b})=>{gameConfig.MAX_SPEED=b,gameConfig.SPEED_INCREMENT=E}),_.onValuesChange(({difficulty:E,distance:b,minInterval:M})=>{gameConfig.
+OBSTACLE_DIFFICULTY=E,gameConfig.OBSTACLE_DISTANCE=b,gameConfig.OBSTACLE_MIN_INTERVAL=M})},name$1="game",columnCount=3,create$3=async()=>{initializeObstacles(),cinematicS
+trategyOn(),initGameHelperCurve()},render$2=()=>{gameModeTick(),gameState.phi=-(Math.PI*2-bikeState.phi%(Math.PI*2)+Math.PI*2)%(Math.PI*2)};function
+toggleObstacleTick(S){S?o$3(generateObstacleTick,10):c$2(generateObstacleTick,10)}function gameModeTick(){detectCollision(),checkObstaclesPassed()}function
+incrementGameSpeed(){bikeState.speed=Math.min(bikeState.speed+gameConfig.SPEED_INCREMENT,gameConfig.MAX_SPEED)}function
+start({animation:S=!0}={}){bikeState.speedBeforePause=bikeConfig.INITIAL_SPEED,resume({animation:S})}function
+stop({animation:S=!0}={}){S&&stopAnimation(),saveScore(),bikeState.speedBeforePause=bikeConfig.INITIAL_SPEED,pause({animation:S,instant:!0})}function
+onEndGame(){gameStore.isAlive=!1,toggleObstacleTick(!1),bikeState.speed=0,stop()}let obstacleBox=new Box3$1;function
+detectCollision(){if(!gameStore.isAlive||gameStore.mode==="cinematic")return;const S=bik
+
+
+################################################################################
+## scoreInterval count=3 @[1927776, 1928164, 1928463]
+################################################################################
+
+--- @1927776 ---
+ed||(bikeState.speed=bikeConfig.INITIAL_SPEED,gameStore.isAlive=!0,cinematicStrategyOff(),handleVisibility("game"),await moveToGameView(),gameStore.mode="game",setDecorVi
+sibility(!0),toggleObstacleTick(!0),start(),gameStore.isPaused=!1,n$4("phone")&&(removeDragListeners(),initSwipeListener()))}async function
+switchToCinematicMode(){cameraState.isAnimated||(await moveToOrigin(),stopAnimation(),gameStore.isPaused==!0&&startAnimation(),moveToHomeView(),cinematicStrategyOn(),clea
+rInterval(gameStore.scoreInterval),gameStore.isAlive=!1,gameStore.mode="cinematic",await hideObstacles(),handleVisibility(),setDecorVisibility(!1),moveObstaclesUp(),stop(
+{animation:!1}),resetScore(),bikeState.speed=bikeConfig.INITIAL_SPEED,resetTargetPhi(),n$4("phone")&&(removeSwipeListener(),initDragListeners()))}function pause({animatio
+n:S=!0,instant:y=!1}={}){S&&stopAnimation(),clearInterval(gameStore.scoreInterval),bikeState.speedBeforePause=bikeState.speed,y?bikeState.speed=0:animate(bikeState,{speed
+:0},{duration:1}),gameStore.isPaused=!0,toggleObstacleTick(!1)}function resume({animation:S=!0}={}){S&&startAnimation(),animate(bikeState,{speed:bikeState.speedBeforePaus
+e},{duration:1}),gameStore.scoreInterval=setInterval$1(()=>{incrementGameScore(),incrementGameSpeed()},1e3),gameStore.isPaused=!1,toggleObstacleTick(!0)}async function
+restart(){const S=bikeState.speed===0;resetScore(),stop({animation:!1}),
+
+--- @1928164 ---
+ation(),gameStore.isPaused==!0&&startAnimation(),moveToHomeView(),cinematicStrategyOn(),clearInterval(gameStore.scoreInterval),gameStore.isAlive=!1,gameStore.mode="cinema
+tic",await hideObstacles(),handleVisibility(),setDecorVisibility(!1),moveObstaclesUp(),stop({animation:!1}),resetScore(),bikeState.speed=bikeConfig.INITIAL_SPEED,resetTar
+getPhi(),n$4("phone")&&(removeSwipeListener(),initDragListeners()))}function pause({animation:S=!0,instant:y=!1}={}){S&&stopAnimation(),clearInterval(gameStore.scoreInter
+val),bikeState.speedBeforePause=bikeState.speed,y?bikeState.speed=0:animate(bikeState,{speed:0},{duration:1}),gameStore.isPaused=!0,toggleObstacleTick(!1)}function resume
+({animation:S=!0}={}){S&&startAnimation(),animate(bikeState,{speed:bikeState.speedBeforePause},{duration:1}),gameStore.scoreInterval=setInterval$1(()=>{incrementGameScore
+(),incrementGameSpeed()},1e3),gameStore.isPaused=!1,toggleObstacleTick(!0)}async function restart(){const S=bikeState.speed===0;resetScore(),stop({animation:!1}),await
+hideObstacles(),moveObstaclesUp(),start({animation:S}),gameStore.isAlive=!0,setDecorVisibility(!0),toggleObstacleTick(!0),moveToOrigin(),actions.get("start")()}var
+__defProp=Object.defineProperty,__defNormalProp=(S,y,_)=>y in
+S?__defProp(S,y,{enumerable:!0,configurable:!0,writable:!0,value:_}):S[y]=_,__publicField=(S,y,_)=>(__defNormalProp(S,typeof y!="symbol"?y+"":y,_),_);functi
+
+--- @1928463 ---
+e.speed=bikeConfig.INITIAL_SPEED,resetTargetPhi(),n$4("phone")&&(removeSwipeListener(),initDragListeners()))}function pause({animation:S=!0,instant:y=!1}={}){S&&stopAnima
+tion(),clearInterval(gameStore.scoreInterval),bikeState.speedBeforePause=bikeState.speed,y?bikeState.speed=0:animate(bikeState,{speed:0},{duration:1}),gameStore.isPaused=
+!0,toggleObstacleTick(!1)}function resume({animation:S=!0}={}){S&&startAnimation(),animate(bikeState,{speed:bikeState.speedBeforePause},{duration:1}),gameStore.scoreInter
+val=setInterval$1(()=>{incrementGameScore(),incrementGameSpeed()},1e3),gameStore.isPaused=!1,toggleObstacleTick(!0)}async function restart(){const
+S=bikeState.speed===0;resetScore(),stop({animation:!1}),await
+hideObstacles(),moveObstaclesUp(),start({animation:S}),gameStore.isAlive=!0,setDecorVisibility(!0),toggleObstacleTick(!0),moveToOrigin(),actions.get("start")()}var
+__defProp=Object.defineProperty,__defNormalProp=(S,y,_)=>y in
+S?__defProp(S,y,{enumerable:!0,configurable:!0,writable:!0,value:_}):S[y]=_,__publicField=(S,y,_)=>(__defNormalProp(S,typeof y!="symbol"?y+"":y,_),_);function
+memcpy(S,y,_,E,b){let M;if(S=S.subarray||S.slice?S:S.buffer,_=_.subarray||_.slice?_:_.buffer,S=y?S.subarray?S.subarray(y,b&&y+b):S.slice(y,b&&y+b):S,_.set)_.set(S,E);else
+for(M=0;M<S.length;M++)_[M+E]=S[M];return _}function convertPoints(S){return S instanceof Float32Array?S:S instanceof BufferG
+
+
+################################################################################
+## animateCameraView count=3 @[1768221, 1769253, 1769403]
+################################################################################
+
+--- @1768221 ---
+tor3$1(-1.5,1.8,-4.8),lookAt:new Vector3$1(5.6,-2.3,17.3),fov:63,far:150}],getCameraView=(S=cameraState.view)=>cameraViews.find(y=>y.name===S),setCameraView=S=>{const
+y=getCameraView(S);if(!y)throw new Error(`No camera view with name ${S}`);const _=getCamera();_.position.copy(bikeState.cameraConstraintPosition.getWorldPosition(m())),_.
+lookAt(bikeState.cameraConstraintLookAt.getWorldPosition(m())),_.fov=y.fov,cameraState.view=S,cameraState.viewSpherical.setFromVector3(getCameraView(S).position)},animate
+CameraView=async(S,{duration:y=1,ease:_=[.77,0,.18,1]}={})=>{const E=getCamera(),b={name:"currentView",position:bikeState.cameraConstraintPosition.position.clone(),lookAt
+:bikeState.cameraConstraintLookAt.position.clone(),fov:E.fov},M=getCameraView(S);if(!M)throw new Error("Target view not found");const w=[b,M],P=new
+CatmullRomCurve3(w.map(F=>F.position),!1,"centripetal",.5),N=new CatmullRomCurve3(w.map(F=>F.lookAt),!1,"centripetal",.5),L=w[0].fov,D=w[1].fov;await
+animate(0,1,{duration:y,ease:_,onUpdate:F=>{const k=P.getPointAt(F,m());bikeState.cameraConstraintPosition.position.copy(k);const O=N.getPointAt(F,m());bikeState.cameraCo
+nstraintLookAt.position.copy(O),E.fov=L+(D-
+L)*F,E.updateProjectionMatrix()},onPlay(){cameraState.isAnimated=!0},onComplete(){resetMouseValues()}}),setCameraView(S)},viewport$4=useViewport();let
+isFirstMouseMove=!1,initialMouseX=0,initialMouseY=0,targetCam
+
+--- @1769253 ---
+PointAt(F,m());bikeState.cameraConstraintPosition.position.copy(k);const O=N.getPointAt(F,m());bikeState.cameraConstraintLookAt.position.copy(O),E.fov=L+(D-
+L)*F,E.updateProjectionMatrix()},onPlay(){cameraState.isAnimated=!0},onComplete(){resetMouseValues()}}),setCameraView(S)},viewport$4=useViewport();let
+isFirstMouseMove=!1,initialMouseX=0,initialMouseY=0,targetCameraPhi=0,targetCameraTheta=0,initialLerpFactor;async function moveToGameView(){const
+y=n$4("phone")?"GamePhone":"GameDesktop";await animateCameraView(y,{ease:"easeInOut",duration:1}),isFirstMouseMove=!0}async function moveToHomeView(){const
+y=n$4("phone")?"HomePhone":"HomeDesktop";animateCameraView(y,{ease:"easeInOut",duration:1}),isFirstMouseMove=!0}function onMouseMove(S){if(gameStore.mode!=="cinematic"||c
+ameraState.isAnimated)return;if(isFirstMouseMove){initialMouseX=S.clientX,initialMouseY=S.clientY,isFirstMouseMove=!1;return}const y=(S.clientX-
+initialMouseX)/viewport$4.width*.025,_=-((S.clientY-initialMouseY)/viewport$4.height)*.025;targetCameraTheta=y*Math.PI,targetCameraPhi=_*Math.PI}let
+mousePhi=0,mouseTheta=0,spherical=new Spherical;function updateCameraTick(){gameStore.mode!=="cinematic"||cameraState.isAnimated||(cameraState.viewSpherical.setFromVector
+3(getCameraView().position),spherical.setFromVector3(bikeState.cameraConstraintPosition.position),mousePhi+=(targetCameraPhi-mousePhi)*cameraConfig.LERP_FACTO
+
+--- @1769403 ---
+=L+(D-L)*F,E.updateProjectionMatrix()},onPlay(){cameraState.isAnimated=!0},onComplete(){resetMouseValues()}}),setCameraView(S)},viewport$4=useViewport();let
+isFirstMouseMove=!1,initialMouseX=0,initialMouseY=0,targetCameraPhi=0,targetCameraTheta=0,initialLerpFactor;async function moveToGameView(){const
+y=n$4("phone")?"GamePhone":"GameDesktop";await animateCameraView(y,{ease:"easeInOut",duration:1}),isFirstMouseMove=!0}async function moveToHomeView(){const
+y=n$4("phone")?"HomePhone":"HomeDesktop";animateCameraView(y,{ease:"easeInOut",duration:1}),isFirstMouseMove=!0}function onMouseMove(S){if(gameStore.mode!=="cinematic"||c
+ameraState.isAnimated)return;if(isFirstMouseMove){initialMouseX=S.clientX,initialMouseY=S.clientY,isFirstMouseMove=!1;return}const y=(S.clientX-
+initialMouseX)/viewport$4.width*.025,_=-((S.clientY-initialMouseY)/viewport$4.height)*.025;targetCameraTheta=y*Math.PI,targetCameraPhi=_*Math.PI}let
+mousePhi=0,mouseTheta=0,spherical=new Spherical;function updateCameraTick(){gameStore.mode!=="cinematic"||cameraState.isAnimated||(cameraState.viewSpherical.setFromVector
+3(getCameraView().position),spherical.setFromVector3(bikeState.cameraConstraintPosition.position),mousePhi+=(targetCameraPhi-
+mousePhi)*cameraConfig.LERP_FACTOR,mouseTheta+=(targetCameraTheta-
+mouseTheta)*cameraConfig.LERP_FACTOR,spherical.phi=cameraState.viewSpherical.phi+mousePhi,spherical.theta=cameraState
+
+
+################################################################################
+## moveToOrigin count=3 @[1776228, 1927641, 1928804]
+################################################################################
+
+--- @1776228 ---
+Turning&&gameStore.isAlive&&!gameStore.isPaused||_)&&(bikeState.column+=E?1:-
+1,bikeState.isTurning=!0,b.forEach(O=>{O.stop(),O.fadeIn(.5),O.play(),state$4.mixer.timeScale=D}),animate(bikeState.root.position,{x:(bikeState.column-1)*-
+2},{duration:F,ease:"easeInOut"}),y)){const O=n$4("phone")?.5:1,$={value:getOffsetFromColumn(bikeState.column,O)};animate(cameraState,{columnOffset:$.value},{duration:F,e
+ase:"easeInOut"})}setTimeout(()=>{state$4.keyPressed=!1,bikeState.isTurning=!1},k)}async function moveToOrigin({animateCamera:S=!0}={}){bikeState.column===0?turn(!0,{toOr
+igin:!0,animateCamera:S}):bikeState.column===columnCount$1-1&&turn(!1,{toOrigin:!0,animateCamera:S})}function
+turnLeft({animateCamera:S=!0,toOrigin:y}={}){cameraState.isAnimated&&(S=!1),turn(!1,{animateCamera:S,toOrigin:y})}function
+turnRight({animateCamera:S=!0,toOrigin:y}={}){cameraState.isAnimated&&(S=!1),turn(!0,{animateCamera:S,toOrigin:y})}function animateMorphTarget(S,y,_,E=1){var
+w,P;if(!S.morphTargetDictionary)throw new Error("No morphTargetDictionnary");const b=(w=state$4.skinnedMesh)==null?void 0:w.morphTargetDictionary[y];if(b<0||b===void
+0)throw new Error(`No action ${y}`);const M={value:(P=state$4.skinnedMesh)==null?void 0:P.morphTargetInfluences[b]};return new
+Promise(N=>{animate(M,{value:_},{duration:E,onUpdate:()=>{S.morphTargetInfluences[b]=M.value}}).then(()=>{N(S)})})}function setWindIntensity(S){
+
+--- @1927641 ---
+StringTag,{value:"Module"})),setInterval$1=window.setInterval;async function switchToGameMode(){gameStore.isAlive||cameraState.isAnimated||(bikeState.speed=bikeConfig.INI
+TIAL_SPEED,gameStore.isAlive=!0,cinematicStrategyOff(),handleVisibility("game"),await moveToGameView(),gameStore.mode="game",setDecorVisibility(!0),toggleObstacleTick(!0)
+,start(),gameStore.isPaused=!1,n$4("phone")&&(removeDragListeners(),initSwipeListener()))}async function switchToCinematicMode(){cameraState.isAnimated||(await moveToOrig
+in(),stopAnimation(),gameStore.isPaused==!0&&startAnimation(),moveToHomeView(),cinematicStrategyOn(),clearInterval(gameStore.scoreInterval),gameStore.isAlive=!1,gameStore
+.mode="cinematic",await hideObstacles(),handleVisibility(),setDecorVisibility(!1),moveObstaclesUp(),stop({animation:!1}),resetScore(),bikeState.speed=bikeConfig.INITIAL_S
+PEED,resetTargetPhi(),n$4("phone")&&(removeSwipeListener(),initDragListeners()))}function pause({animation:S=!0,instant:y=!1}={}){S&&stopAnimation(),clearInterval(gameSto
+re.scoreInterval),bikeState.speedBeforePause=bikeState.speed,y?bikeState.speed=0:animate(bikeState,{speed:0},{duration:1}),gameStore.isPaused=!0,toggleObstacleTick(!1)}fu
+nction resume({animation:S=!0}={}){S&&startAnimation(),animate(bikeState,{speed:bikeState.speedBeforePause},{duration:1}),gameStore.scoreInterval=setInterval$1(()=>{incre
+mentGameScore(),incrementGameSpeed()},1e
+
+--- @1928804 ---
+0,toggleObstacleTick(!1)}function resume({animation:S=!0}={}){S&&startAnimation(),animate(bikeState,{speed:bikeState.speedBeforePause},{duration:1}),gameStore.scoreInterv
+al=setInterval$1(()=>{incrementGameScore(),incrementGameSpeed()},1e3),gameStore.isPaused=!1,toggleObstacleTick(!0)}async function restart(){const
+S=bikeState.speed===0;resetScore(),stop({animation:!1}),await
+hideObstacles(),moveObstaclesUp(),start({animation:S}),gameStore.isAlive=!0,setDecorVisibility(!0),toggleObstacleTick(!0),moveToOrigin(),actions.get("start")()}var
+__defProp=Object.defineProperty,__defNormalProp=(S,y,_)=>y in
+S?__defProp(S,y,{enumerable:!0,configurable:!0,writable:!0,value:_}):S[y]=_,__publicField=(S,y,_)=>(__defNormalProp(S,typeof y!="symbol"?y+"":y,_),_);function
+memcpy(S,y,_,E,b){let M;if(S=S.subarray||S.slice?S:S.buffer,_=_.subarray||_.slice?_:_.buffer,S=y?S.subarray?S.subarray(y,b&&y+b):S.slice(y,b&&y+b):S,_.set)_.set(S,E);else
+for(M=0;M<S.length;M++)_[M+E]=S[M];return _}function convertPoints(S){return S instanceof Float32Array?S:S instanceof
+BufferGeometry?S.getAttribute("position").array:S.map(y=>{const _=Array.isArray(y);return y instanceof Vector3$1?[y.x,y.y,y.z]:y instanceof
+Vector2$1?[y.x,y.y,0]:_&&y.length===3?[y[0],y[1],y[2]]:_&&y.length===2?[y[0],y[1],0]:y}).flat()}class MeshLineGeometry extends
+BufferGeometry{constructor(){super(),__publicField(this,"type","MeshLine"),__publ
+
+
+################################################################################
+## turnRight count=2 @[1776533, 1779890]
+################################################################################
+
+--- @1776533 ---
+getOffsetFromColumn(bikeState.column,O)};animate(cameraState,{columnOffset:$.value},{duration:F,ease:"easeInOut"})}setTimeout(()=>{state$4.keyPressed=!1,bikeState.isTurni
+ng=!1},k)}async function moveToOrigin({animateCamera:S=!0}={}){bikeState.column===0?turn(!0,{toOrigin:!0,animateCamera:S}):bikeState.column===columnCount$1-
+1&&turn(!1,{toOrigin:!0,animateCamera:S})}function
+turnLeft({animateCamera:S=!0,toOrigin:y}={}){cameraState.isAnimated&&(S=!1),turn(!1,{animateCamera:S,toOrigin:y})}function
+turnRight({animateCamera:S=!0,toOrigin:y}={}){cameraState.isAnimated&&(S=!1),turn(!0,{animateCamera:S,toOrigin:y})}function animateMorphTarget(S,y,_,E=1){var
+w,P;if(!S.morphTargetDictionary)throw new Error("No morphTargetDictionnary");const b=(w=state$4.skinnedMesh)==null?void 0:w.morphTargetDictionary[y];if(b<0||b===void
+0)throw new Error(`No action ${y}`);const M={value:(P=state$4.skinnedMesh)==null?void 0:P.morphTargetInfluences[b]};return new
+Promise(N=>{animate(M,{value:_},{duration:E,onUpdate:()=>{S.morphTargetInfluences[b]=M.value}}).then(()=>{N(S)})})}function
+setWindIntensity(S){state$4.hairMixer.setTime(S)}async function blink(){await animateMorphTarget(state$4.skinnedMesh,"blink",1,.15),await delay(100),await
+animateMorphTarget(state$4.skinnedMesh,"blink",0,.15)}async function lookRight(){await animateMorphTarget(state$4.skinnedMesh,"look_right",.7,.5),await delay(500*Math.ran
+
+--- @1779890 ---
+s.makeClipAdditive(j);const H=state$4.mixer.clipAction(j);return
+H.setLoop(LoopOnce,1),H.blendMode=AdditiveAnimationBlendMode,H}),state$4.rightActions=M.map(j=>{AnimationUtils.makeClipAdditive(j);const
+H=state$4.mixer.clipAction(j);return H.setLoop(LoopOnce,1),H.blendMode=AdditiveAnimationBlendMode,H}),state$4.keyPressed=!1;const U=useStudioSheet("bike");addObject(U,bik
+eState.root),document.addEventListener("keydown",j=>{if(["ArrowRight","ArrowLeft"].indexOf(j.key)<0)return;j.key==="ArrowRight"?turnRight():turnLeft()},{passive:!0}),o$3(
+()=>{state$4.mixer.update(bikeConfig.ANIMATION_SPEED*state$5.delta),state$4.hairMixer.update(bikeConfig.ANIMATION_SPEED*state$5.delta),O.time=MathUtils$1.lerp(O.time,bike
+State.speed*L.duration/gameConfig.MAX_SPEED,.1),$.weight=MathUtils$1.lerp($.weight,bikeState.speed/gameConfig.MAX_SPEED,.1)},60)}}const detectZoneBasedOnAngle=S=>{for(let
+y=0;y<zones.length;y++){const _=zones[y],E=(_.phiStart%(2*Math.PI)+2*Math.PI)%(2*Math.PI)-2*Math.PI,b=(_.phiEnd%(2*Math.PI)+2*Math.PI)%(2*Math.PI)-
+2*Math.PI;if(E>=b&&S<=E&&S>=b||E<b&&(S<=E||S>=b))return y}};function glsl(S){return S[0]}const lights_toon_pars_fragment=`varying vec3 vViewPosition;  struct ToonMaterial
+{   vec3 diffuseColor; };  void RE_Direct_Toon( const in IncidentLight directLight, const in vec3 geometryPosition, const in vec3 geometryNormal, const in vec3
+geometryViewDir, const in vec3 geometry
+
+
+################################################################################
+## turnLeft count=2 @[1776410, 1779902]
+################################################################################
+
+--- @1776410 ---
+(bikeState.root.position,{x:(bikeState.column-1)*-2},{duration:F,ease:"easeInOut"}),y)){const O=n$4("phone")?.5:1,$={value:getOffsetFromColumn(bikeState.column,O)};animat
+e(cameraState,{columnOffset:$.value},{duration:F,ease:"easeInOut"})}setTimeout(()=>{state$4.keyPressed=!1,bikeState.isTurning=!1},k)}async function moveToOrigin({animateC
+amera:S=!0}={}){bikeState.column===0?turn(!0,{toOrigin:!0,animateCamera:S}):bikeState.column===columnCount$1-1&&turn(!1,{toOrigin:!0,animateCamera:S})}function
+turnLeft({animateCamera:S=!0,toOrigin:y}={}){cameraState.isAnimated&&(S=!1),turn(!1,{animateCamera:S,toOrigin:y})}function
+turnRight({animateCamera:S=!0,toOrigin:y}={}){cameraState.isAnimated&&(S=!1),turn(!0,{animateCamera:S,toOrigin:y})}function animateMorphTarget(S,y,_,E=1){var
+w,P;if(!S.morphTargetDictionary)throw new Error("No morphTargetDictionnary");const b=(w=state$4.skinnedMesh)==null?void 0:w.morphTargetDictionary[y];if(b<0||b===void
+0)throw new Error(`No action ${y}`);const M={value:(P=state$4.skinnedMesh)==null?void 0:P.morphTargetInfluences[b]};return new
+Promise(N=>{animate(M,{value:_},{duration:E,onUpdate:()=>{S.morphTargetInfluences[b]=M.value}}).then(()=>{N(S)})})}function
+setWindIntensity(S){state$4.hairMixer.setTime(S)}async function blink(){await animateMorphTarget(state$4.skinnedMesh,"blink",1,.15),await delay(100),await
+animateMorphTarget(state$4.skinnedMesh,"blink",
+
+--- @1779902 ---
+ditive(j);const H=state$4.mixer.clipAction(j);return
+H.setLoop(LoopOnce,1),H.blendMode=AdditiveAnimationBlendMode,H}),state$4.rightActions=M.map(j=>{AnimationUtils.makeClipAdditive(j);const
+H=state$4.mixer.clipAction(j);return H.setLoop(LoopOnce,1),H.blendMode=AdditiveAnimationBlendMode,H}),state$4.keyPressed=!1;const U=useStudioSheet("bike");addObject(U,bik
+eState.root),document.addEventListener("keydown",j=>{if(["ArrowRight","ArrowLeft"].indexOf(j.key)<0)return;j.key==="ArrowRight"?turnRight():turnLeft()},{passive:!0}),o$3(
+()=>{state$4.mixer.update(bikeConfig.ANIMATION_SPEED*state$5.delta),state$4.hairMixer.update(bikeConfig.ANIMATION_SPEED*state$5.delta),O.time=MathUtils$1.lerp(O.time,bike
+State.speed*L.duration/gameConfig.MAX_SPEED,.1),$.weight=MathUtils$1.lerp($.weight,bikeState.speed/gameConfig.MAX_SPEED,.1)},60)}}const detectZoneBasedOnAngle=S=>{for(let
+y=0;y<zones.length;y++){const _=zones[y],E=(_.phiStart%(2*Math.PI)+2*Math.PI)%(2*Math.PI)-2*Math.PI,b=(_.phiEnd%(2*Math.PI)+2*Math.PI)%(2*Math.PI)-
+2*Math.PI;if(E>=b&&S<=E&&S>=b||E<b&&(S<=E||S>=b))return y}};function glsl(S){return S[0]}const lights_toon_pars_fragment=`varying vec3 vViewPosition;  struct ToonMaterial
+{   vec3 diffuseColor; };  void RE_Direct_Toon( const in IncidentLight directLight, const in vec3 geometryPosition, const in vec3 geometryNormal, const in vec3
+geometryViewDir, const in vec3 geometryClearcoatNor
+
+
+################################################################################
+## function handleMovement count=0 @[]
+################################################################################
+
+
+################################################################################
+## function moveBike count=0 @[]
+################################################################################
+
+
+################################################################################
+## leaderboard count=6 @[2181814, 2183395, 2183631]
+################################################################################
+
+--- @2181814 ---
+ose)==null||V.call($)}return y({close:O}),($,V)=>(openBlock(),createElementBlock("div",null,[(openBlock(),createBlock(resolveDynamicComponent(unref(L)),{ref_key:"dynamicC
+omponent",ref:w,theme:P.theme,onClose:k,class:"uiModal"},createSlots({default:withCtx(()=>[renderSlot($.$slots,"default")]),_:2},[$.$slots.footer?{name:"footer",fn:withCt
+x(()=>[renderSlot($.$slots,"footer")]),key:"0"}:void 0]),1064,["theme"]))]))}}),_hoisted_1$8={class:"body"},_hoisted_2$3={class:"content"},_hoisted_3$3={class:"leaderboar
+d"},_hoisted_4$3={class:"left"},_hoisted_5$2={class:"position"},_hoisted_6$2={class:"username"},_hoisted_7$1={class:"right"},_hoisted_8={class:"score"},_hoisted_9={class:
+"username"},_hoisted_10={class:"label"},_hoisted_11={class:"deathFooter"},_hoisted_12={class:"gameCta"},_sfc_main$c=defineComponent({__name:"DeathInterface",emits:["compl
+eted","validated","submit","clear-error"],setup(S,{emit:y}){const{t:_}=useI18n(),E=useRuntimeConfig(),b=ref(!1),M=ref("AAAAA"),w=ref(),P=ref(),N=ref(!0),L=ref(),D=ref(),F
+=ref(!1),k=ref(!1),O=ref(null),$=ref(!1),V=c$1();function z(){return new Promise((X,K)=>{if(window.hcaptcha)return X(window.hcaptcha);const Y=document.createElement("scri
+pt");Y.src="https://js.hcaptcha.com/1/api.js?hl=fr",Y.async=!0,Y.defer=!0,Y.onload=()=>X(window.hcaptcha),Y.onerror=K,document.head.appendChild(Y)})}function
+U(){window.hcaptcha?(window.hcaptcha.execute(),$.val
+
+--- @2183395 ---
+rs:{"Content-Type":"application/json"},body:JSON.stringify({pseudo:M.value,score:gameStore.score,hcaptchaToken:X})});await K.json(),K.ok?(console.log("Score submitted
+successfully"),window.hcaptcha.reset(),k.value=!0,await H(),localStorage.setItem("username",M.value),L.value.clearInputs(),$.value=!1):($.value=!1,O.value=_("game.death.e
+rror"),window.hcaptcha.reset(),L.value.clearInputs())};async function j(){let X=gameStore.score;const Y=await(await
+fetch(E.public.netlifyUrl+"/.netlify/functions/leaderboard",{method:"POST",body:JSON.stringify({score:X}),headers:{"Content-
+Type":"application/json"}})).json();P.value=Y.position}async function H(){var Z,re,me,de,xe;const K=await(await
+fetch(E.public.netlifyUrl+"/.netlify/functions/leaderboard",{method:"GET",headers:{"Content-Type":"application/json"}})).json(),ee=Math.floor((V.height.value*.19-
+36)/19);D.value={pseudo:M.value,score:gameStore.score,isUser:!0},k.value||((Z=K.leaderboard)==null||Z.push(D.value),await
+j()),(re=K.leaderboard)==null||re.sort((Ie,Ne)=>Ne.score-Ie.score),w.value=K.leaderboard.slice(0,ee+1),D.value.score<=((me=w.value[ee])==null?void
+0:me.score)?((de=w.value)==null||de.push(D.value),N.value=!1):(w.value=(xe=w.value)==null?void 0:xe.map(Ie=>Ie.pseudo===M.value&&Ie.score===gameStore.score?{...Ie,isUser:
+!0}:Ie),N.value=!0)}onMounted(async()=>{localStorage.getItem("username")&&(F.value=!0,M.value=localStorage.get
+
+--- @2183631 ---
+age.setItem("username",M.value),L.value.clearInputs(),$.value=!1):($.value=!1,O.value=_("game.death.error"),window.hcaptcha.reset(),L.value.clearInputs())};async function
+j(){let X=gameStore.score;const Y=await(await fetch(E.public.netlifyUrl+"/.netlify/functions/leaderboard",{method:"POST",body:JSON.stringify({score:X}),headers:{"Content-
+Type":"application/json"}})).json();P.value=Y.position}async function H(){var Z,re,me,de,xe;const K=await(await
+fetch(E.public.netlifyUrl+"/.netlify/functions/leaderboard",{method:"GET",headers:{"Content-Type":"application/json"}})).json(),ee=Math.floor((V.height.value*.19-
+36)/19);D.value={pseudo:M.value,score:gameStore.score,isUser:!0},k.value||((Z=K.leaderboard)==null||Z.push(D.value),await
+j()),(re=K.leaderboard)==null||re.sort((Ie,Ne)=>Ne.score-Ie.score),w.value=K.leaderboard.slice(0,ee+1),D.value.score<=((me=w.value[ee])==null?void
+0:me.score)?((de=w.value)==null||de.push(D.value),N.value=!1):(w.value=(xe=w.value)==null?void 0:xe.map(Ie=>Ie.pseudo===M.value&&Ie.score===gameStore.score?{...Ie,isUser:
+!0}:Ie),N.value=!0)}onMounted(async()=>{localStorage.getItem("username")&&(F.value=!0,M.value=localStorage.getItem("username")),await z(),await H()});function
+W(X,K){b.value=X,K&&(M.value=K),X&&!F.value&&U()}return(X,K)=>{const Y=_sfc_main$k,ee=_sfc_main$j,Z=_sfc_main$i,re=__nuxt_component_3,me=_sfc_main$x,de=_sfc_main$d;return
+openBlock(),crea
+
+
+################################################################################
+## OBSTACLE_DISTANCE count=4 @[1772462, 1942974, 1943348]
+################################################################################
+
+--- @1772462 ---
+.cameraConstraintPosition.getWorldPosition(m())),S.lookAt(bikeState.cameraConstraintLookAt.getWorldPosition(m())),bikeState.cameraConstraintPosition.position.x-
+=cameraState.columnOffset,bikeState.cameraConstraintLookAt.position.x-
+=cameraState.columnOffset},CameraBundle=Object.freeze(Object.defineProperty({__proto__:null,create:create$9,gui:gui$5,mount:mount$4,name:name$7,render:render$8},Symbol.to
+StringTag,{value:"Module"})),gameConfig={SPEED_INCREMENT:1e-
+4,MAX_SPEED:.012,OBSTACLE_DIFFICULTY:.8,OBSTACLE_DISTANCE:Math.PI/6,OBSTACLE_MIN_INTERVAL:.125,SWIPE_THRESOLD:10},OBSTACLE_MOEBIUS_CONFIG={cactus_02_v11_reference:{day:{d
+irectColor:new Color$1(.4823529411764706,.5176470588235295,.37254901960784315),indirectColor:new
+Color$1(.29411764705882354,.3176470588235294,.2196078431372549),luminance:1},night:{directColor:new Color$1(1453358),indirectColor:new
+Color$1(197893),luminance:1}},cactus_03_v2_reference:{day:{directColor:new Color$1(.4823529411764706,.5176470588235295,.37254901960784315),indirectColor:new
+Color$1(3296817),luminance:1},night:{directColor:new Color$1(1453358),indirectColor:new Color$1(197893),luminance:1}},cactus_04_v11_reference:{day:{directColor:new
+Color$1(.4823529411764706,.5176470588235295,.37254901960784315),indirectColor:new Color$1(3296817),luminance:1},night:{directColor:new Color$1(1453358),indirectColor:new
+Color$1(197893),luminance:1}},cactus_07_v1_refe
+
+--- @1942974 ---
+tion:.5}).then(()=>{E.visible=!1,c$2(w)})}watchEffect(()=>{gameStore.isAlive?P():N()})}const gui$1=S=>{const y=S.object("Speed",{SPEED_INCREMENT:distExports.types.number(
+gameConfig.SPEED_INCREMENT,{range:[0,.5],nudgeMultiplier:.001}),MAX_SPEED:distExports.types.number(gameConfig.MAX_SPEED,{range:[0,5],nudgeMultiplier:.01})}),_=S.object("O
+bstacles",{difficulty:distExports.types.number(gameConfig.OBSTACLE_DIFFICULTY,{range:[.01,1],nudgeMultiplier:.01}),distance:distExports.types.number(gameConfig.OBSTACLE_D
+ISTANCE,{range:[.1,2],nudgeMultiplier:.01}),minInterval:distExports.types.number(gameConfig.OBSTACLE_MIN_INTERVAL,{range:[.1,5],nudgeMultiplier:.01})});y.onValuesChange((
+{SPEED_INCREMENT:E,MAX_SPEED:b})=>{gameConfig.MAX_SPEED=b,gameConfig.SPEED_INCREMENT=E}),_.onValuesChange(({difficulty:E,distance:b,minInterval:M})=>{gameConfig.OBSTACLE_
+DIFFICULTY=E,gameConfig.OBSTACLE_DISTANCE=b,gameConfig.OBSTACLE_MIN_INTERVAL=M})},name$1="game",columnCount=3,create$3=async()=>{initializeObstacles(),cinematicStrategyOn
+(),initGameHelperCurve()},render$2=()=>{gameModeTick(),gameState.phi=-(Math.PI*2-bikeState.phi%(Math.PI*2)+Math.PI*2)%(Math.PI*2)};function
+toggleObstacleTick(S){S?o$3(generateObstacleTick,10):c$2(generateObstacleTick,10)}function gameModeTick(){detectCollision(),checkObstaclesPassed()}function
+incrementGameSpeed(){bikeState.speed=Math.min(bikeState.speed+gameConfig.SPEED_INCRE
+
+--- @1943348 ---
+types.number(gameConfig.OBSTACLE_DIFFICULTY,{range:[.01,1],nudgeMultiplier:.01}),distance:distExports.types.number(gameConfig.OBSTACLE_DISTANCE,{range:[.1,2],nudgeMultipl
+ier:.01}),minInterval:distExports.types.number(gameConfig.OBSTACLE_MIN_INTERVAL,{range:[.1,5],nudgeMultiplier:.01})});y.onValuesChange(({SPEED_INCREMENT:E,MAX_SPEED:b})=>
+{gameConfig.MAX_SPEED=b,gameConfig.SPEED_INCREMENT=E}),_.onValuesChange(({difficulty:E,distance:b,minInterval:M})=>{gameConfig.OBSTACLE_DIFFICULTY=E,gameConfig.OBSTACLE_D
+ISTANCE=b,gameConfig.OBSTACLE_MIN_INTERVAL=M})},name$1="game",columnCount=3,create$3=async()=>{initializeObstacles(),cinematicStrategyOn(),initGameHelperCurve()},render$2
+=()=>{gameModeTick(),gameState.phi=-(Math.PI*2-bikeState.phi%(Math.PI*2)+Math.PI*2)%(Math.PI*2)};function
+toggleObstacleTick(S){S?o$3(generateObstacleTick,10):c$2(generateObstacleTick,10)}function gameModeTick(){detectCollision(),checkObstaclesPassed()}function
+incrementGameSpeed(){bikeState.speed=Math.min(bikeState.speed+gameConfig.SPEED_INCREMENT,gameConfig.MAX_SPEED)}function
+start({animation:S=!0}={}){bikeState.speedBeforePause=bikeConfig.INITIAL_SPEED,resume({animation:S})}function
+stop({animation:S=!0}={}){S&&stopAnimation(),saveScore(),bikeState.speedBeforePause=bikeConfig.INITIAL_SPEED,pause({animation:S,instant:!0})}function
+onEndGame(){gameStore.isAlive=!1,toggleObstacleTick(!1),bikeState.speed=0,stop

@@ -1,0 +1,615 @@
+/* entry.B2OHENv6.css  */
+.mobileOrientationBlocker {align-items:center;background-color:#000;display:none;flex-direction:column;height:100svh;justify-content:start;left:0;position:fixed;top:0;width:100%;z-index:1000}
+
+/* entry.B2OHENv6.css  */
+.mobileOrientationBlocker .logo {margin-bottom:80px;margin-top:20px;width:70px}
+
+/* entry.B2OHENv6.css  */
+.mobileOrientationBlocker .wrapper {align-items:center;display:flex;flex-direction:column;height:120px;justify-content:space-around}
+
+/* entry.B2OHENv6.css  */
+.mobileOrientationBlocker .wrapper p {color:#c7d8eb;font-size:12px;font-weight:500;letter-spacing:4%;line-height:13px;text-align:center;text-transform:uppercase}
+
+/* entry.B2OHENv6.css  */
+.mobileOrientationBlocker .wrapper .lower {color:#fff;opacity:.8;text-transform:none}
+
+/* entry.B2OHENv6.css  */
+.mobileOrientationBlocker {display:flex}
+
+/* entry.B2OHENv6.css  */
+.is-focused .mobileOrientationBlocker {display:none}
+
+/* entry.B2OHENv6.css  */
+.webglRenderTargetContainer {height:100svh;left:0;overflow:hidden;position:fixed;top:0;width:100%;z-index:0}
+
+/* entry.B2OHENv6.css  */
+.webglRenderTargetContainer:after {background-position:50%;background-repeat:no-repeat;background-size:100% 170%;content:"";display:block;height:100%;pointer-events:none;position:fixed;width:100%;z-index:0}
+
+/* entry.B2OHENv6.css  */
+.webglRenderTargetContainer.-blured .webglRenderTarget {filter:blur(10px)}
+
+/* entry.B2OHENv6.css  */
+.webglRenderTargetContainer>.webglRenderTarget {height:100%;left:0;position:absolute;top:0;touch-action:auto!important;transition:filter 1s;width:100%}
+
+/* entry.B2OHENv6.css  */
+.uiButtonGhost {color:var(--ui-button-color);contain:paint;cursor:pointer;font-size:10px;font-weight:700;height:43px;letter-spacing:.63px;line-height:15px;line-height:1.1em;overflow:hidden;padding:21px 0;pointer-events:all;text-align:center;text-transform:uppercase;transform:translateZ(0);transition:color .2s ease;will-change:transform}
+
+/* entry.B2OHENv6.css  */
+.uiButtonGhost:hover {color:var(--ui-button-color)!important}
+
+/* entry.B2OHENv6.css  */
+.uiButtonGhost>span {align-items:center;display:flex;gap:16px;pointer-events:none;transition:opacity .3s ease}
+
+/* entry.B2OHENv6.css  */
+.uiButtonGame>.inner {font-size:10px;font-weight:700;letter-spacing:.63px;line-height:15px;text-transform:uppercase}
+
+/* entry.B2OHENv6.css  */
+.uiButtonGame {align-items:center;background-color:rgb(var(--sand-white));border:1px solid var(--c-primary-60);border-radius:50px;display:flex;height:32px;justify-content:center;overflow:hidden;padding:0 16px;pointer-events:all}
+
+/* entry.B2OHENv6.css  */
+.uiButtonGame>.inner {height:9px;line-height:1;padding:0}
+
+/* entry.B2OHENv6.css  */
+.uiButtonGame>.inner>span {gap:6px}
+
+/* entry.B2OHENv6.css  */
+.uiButtonGame .uiIconMoto {left:0;opacity:0;position:absolute;top:50%;transform:translateY(-50%)}
+
+/* entry.B2OHENv6.css  */
+.uiButtonGame .uiButtonGhost span {animation:none!important}
+
+/* entry.B2OHENv6.css  */
+.appLogo {align-items:center;display:flex;height:-moz-fit-content;height:fit-content;justify-content:center;left:50%;pointer-events:none;position:absolute;top:0;transform:translate(-50%) translateY(-3px);z-index:4}
+
+/* entry.B2OHENv6.css  */
+.appLogo {height:-moz-fit-content;height:fit-content;transform:translate(-50%)}
+
+/* entry.B2OHENv6.css  */
+.appLogo>.logos {display:flex;flex-direction:column;height:100%;height:-moz-fit-content;height:fit-content}
+
+/* entry.B2OHENv6.css  */
+.appLogo>.logos>.yame-logo {height:40px;overflow:visible}
+
+/* entry.B2OHENv6.css  */
+.appLogo>.logos>.yame-logo {height:50px;overflow:visible}
+
+/* entry.B2OHENv6.css  */
+.appLogo>img {height:100%;-o-object-fit:contain;object-fit:contain}
+
+/* entry.B2OHENv6.css  */
+.uiSoundButton>.volume-state {font-size:10px;font-weight:700;letter-spacing:.63px;line-height:15px;text-transform:uppercase}
+
+/* entry.B2OHENv6.css  */
+.uiSoundButton {--sound-btn-intensity:1;align-items:center;color:var(--c-primary-80);display:flex;gap:10px;transition:--sound-btn-intensity .5s ease}
+
+/* entry.B2OHENv6.css  */
+.uiSoundButton path {transform-origin:bottom;stroke-width:1.1;animation-duration:1s;animation-iteration-count:infinite;animation-name:uiSoundButtonAnimation;transition-duration:.5s;transition-property:transform}
+
+/* entry.B2OHENv6.css  */
+.uiSoundButton path:first-child {animation-delay:606ms}
+
+/* entry.B2OHENv6.css  */
+.uiSoundButton path:nth-child(2) {animation-delay:269ms}
+
+/* entry.B2OHENv6.css  */
+.uiSoundButton path:nth-child(3) {animation-delay:272ms}
+
+/* entry.B2OHENv6.css  */
+.uiSoundButton path:nth-child(4) {animation-delay:784ms}
+
+/* entry.B2OHENv6.css  */
+.uiSoundButton path:nth-child(5) {animation-delay:779ms}
+
+/* entry.B2OHENv6.css  */
+.uiSoundButton path:nth-child(6) {animation-delay:569ms}
+
+/* entry.B2OHENv6.css  */
+.uiSoundButton path:nth-child(7) {animation-delay:751ms}
+
+/* entry.B2OHENv6.css  */
+.uiSoundButton path:nth-child(8) {animation-delay:.34s}
+
+/* entry.B2OHENv6.css  */
+.uiSoundButton path:nth-child(9) {animation-delay:834ms}
+
+/* entry.B2OHENv6.css  */
+.uiSoundButton path:nth-child(10) {animation-delay:916ms}
+
+/* entry.B2OHENv6.css  */
+.uiSoundButton path:nth-child(11) {animation-delay:126ms}
+
+/* entry.B2OHENv6.css  */
+.uiSoundButton path:nth-child(12) {animation-delay:745ms}
+
+/* entry.B2OHENv6.css  */
+.uiSoundButton path:nth-child(13) {animation-delay:709ms}
+
+/* entry.B2OHENv6.css  */
+.uiSoundButton path:nth-child(14) {animation-delay:726ms}
+
+/* entry.B2OHENv6.css  */
+.uiSoundButton path:nth-child(15) {animation-delay:655ms}
+
+/* entry.B2OHENv6.css  */
+.uiSoundButton path:nth-child(16) {animation-delay:561ms}
+
+/* entry.B2OHENv6.css  */
+.uiSoundButton path:nth-child(17) {animation-delay:451ms}
+
+/* entry.B2OHENv6.css  */
+.uiSoundButton path:nth-child(18) {animation-delay:366ms}
+
+/* entry.B2OHENv6.css  */
+.uiSoundButton path:nth-child(19) {animation-delay:392ms}
+
+/* entry.B2OHENv6.css  */
+.uiSoundButton .vol {display:none}
+
+/* entry.B2OHENv6.css  */
+.uiSoundButton:hover {cursor:pointer}
+
+/* entry.B2OHENv6.css  */
+.uiSoundButton--muted {--sound-btn-intensity:0}
+
+/* entry.B2OHENv6.css  */
+.uiSoundButton>.waveform {max-width:50px;overflow:hidden}
+
+/* entry.B2OHENv6.css  */
+.uiSoundButtonInner-enter-active,.uiSoundButtonInner-leave-active {transition:max-width .5s .5s}
+
+/* entry.B2OHENv6.css  */
+.uiSoundButtonInner-enter-from,.uiSoundButtonInner-leave-to {max-width:0!important}
+
+/* entry.B2OHENv6.css  */
+.uiSoundButtonInner-enter-to,.uiSoundButtonInner-leave-from {max-width:50px!important}
+
+/* entry.B2OHENv6.css  */
+.uiRadio>.value {font-size:10px;font-weight:700;letter-spacing:.63px;line-height:15px;text-transform:uppercase}
+
+/* entry.B2OHENv6.css  */
+.uiRadio {align-items:center;display:flex;gap:8px;text-transform:uppercase}
+
+/* entry.B2OHENv6.css  */
+.uiRadio:hover {opacity:1}
+
+/* entry.B2OHENv6.css  */
+.uiRadio .label {color:var(--c-primary-60);font-size:10px;font-weight:700}
+
+/* entry.B2OHENv6.css  */
+.uiRadio .value {font-size:10px;font-weight:700;letter-spacing:.7px}
+
+/* entry.B2OHENv6.css  */
+.uiRadio>.top {display:contents}
+
+/* entry.B2OHENv6.css  */
+.uiRadio.menu {flex-direction:column}
+
+/* entry.B2OHENv6.css  */
+.uiRadio.menu>.top {align-items:baseline;display:flex;gap:8px}
+
+/* entry.B2OHENv6.css  */
+.appHeader>.navigation>nav>.nav-item {font-size:10px;font-weight:700;letter-spacing:.63px;line-height:15px;text-transform:uppercase}
+
+/* entry.B2OHENv6.css  */
+.appHeader {align-items:center;display:flex;justify-content:space-between;margin-top:24px;padding:0 24px;position:relative;width:100%}
+
+/* entry.B2OHENv6.css  */
+.appHeader {margin-top:52px;padding:0 60px}
+
+/* entry.B2OHENv6.css  */
+.appHeader>.controls {align-items:center;display:flex;flex-direction:row;gap:48px;order:1;z-index:2}
+
+/* entry.B2OHENv6.css  */
+.appHeader>.controls {margin-left:116px}
+
+/* entry.B2OHENv6.css  */
+.appHeader>.controls {margin-left:0;order:3}
+
+/* entry.B2OHENv6.css  */
+.appHeader>.controls>.sound-control {display:flex;gap:24px}
+
+/* entry.B2OHENv6.css  */
+.appHeader>.controls>.sound-control>.uiRadio {display:none}
+
+/* entry.B2OHENv6.css  */
+.appHeader>.controls>.sound-control>.uiRadio {display:flex}
+
+/* entry.B2OHENv6.css  */
+.appHeader>.controls>.fullscreen {background:none;cursor:pointer;display:none;padding:4px}
+
+/* entry.B2OHENv6.css  */
+.appHeader>.controls>.fullscreen {display:flex}
+
+/* entry.B2OHENv6.css  */
+.appHeader>.navigation {align-items:center;cursor:pointer;display:flex;order:3;z-index:2}
+
+/* entry.B2OHENv6.css  */
+.appHeader>.navigation {order:1}
+
+/* entry.B2OHENv6.css  */
+.appHeader>.navigation .back-btn,.appHeader>.navigation>.play-btn {display:none;margin-right:48px}
+
+/* entry.B2OHENv6.css  */
+.appHeader>.navigation .back-btn,.appHeader>.navigation>.play-btn {display:flex;left:60px;position:absolute}
+
+/* entry.B2OHENv6.css  */
+.appHeader>.navigation .back-btn>.inner,.appHeader>.navigation>.play-btn>.inner {text-transform:uppercase}
+
+/* entry.B2OHENv6.css  */
+.appHeader>.navigation .back-btn,.appHeader>.navigation>.play-btn {left:inherit}
+
+/* entry.B2OHENv6.css  */
+.appHeader>.navigation>nav {display:none;margin-left:142px;position:relative}
+
+/* entry.B2OHENv6.css  */
+.appHeader>.navigation>nav>.nav-item {height:-moz-fit-content;height:fit-content;padding:4px 12px;transition:opacity .15s ease-out}
+
+/* entry.B2OHENv6.css  */
+.appHeader>.navigation>nav>.nav-item:hover~.focusIcon {opacity:1;transform:translate(-50%)}
+
+/* entry.B2OHENv6.css  */
+.appHeader>.navigation>nav {display:flex}
+
+/* entry.B2OHENv6.css  */
+.appHeader>.navigation>nav>.focusIcon {opacity:0;pointer-events:none;position:absolute;top:20px;transform:translate(-50%,100%);transition:transform .25s,opacity .25s}
+
+/* entry.B2OHENv6.css  */
+.appHeader>.navigation>.cta-mobile-menu {display:none}
+
+/* entry.B2OHENv6.css  */
+.appHeader>.navigation>.cta-mobile-menu {color:var(--c-primary-80);display:block;font-weight:700;height:-moz-fit-content;height:fit-content;padding:0;text-transform:uppercase}
+
+/* entry.B2OHENv6.css  */
+.appHeader>.appLogo {z-index:3}
+
+/* entry.B2OHENv6.css  */
+.appLoader>.loaderOverlay {background-color:var(--c-secondary);z-index:100}
+
+/* entry.B2OHENv6.css  */
+.appLoader>.enterOverlay,.appLoader>.loaderOverlay {height:100svh;left:0;opacity:1;pointer-events:none;position:fixed;top:0;width:100svw}
+
+/* entry.B2OHENv6.css  */
+.appLoader>.enterOverlay {background-color:var(--c-primary);z-index:0}
+
+/* entry.B2OHENv6.css  */
+.appLoader>.loader {background:var(--c-secondary);color:var(--c-primary);display:flex;flex-direction:column;height:100%;left:0;position:fixed;top:0;width:100%;z-index:3}
+
+/* entry.B2OHENv6.css  */
+.appLoader>.loader>.appLogo {top:24px}
+
+/* entry.B2OHENv6.css  */
+.appLoader>.loader>.appLogo {top:32px}
+
+/* entry.B2OHENv6.css  */
+.appLoader>.loader>.background {display:grid;grid-template-columns:repeat(2,50svw);grid-template-rows:repeat(2,50svh);height:100%;place-content:center;width:100%}
+
+/* entry.B2OHENv6.css  */
+.appLoader>.loader>.background {gap:4.5svw}
+
+/* entry.B2OHENv6.css  */
+.appLoader>.loader>.background>.backgroundContainer {height:100%;width:100%}
+
+/* entry.B2OHENv6.css  */
+.appLoader>.loader>.background>.backgroundContainer>img {height:100%;-o-object-fit:cover;object-fit:cover;width:100%}
+
+/* entry.B2OHENv6.css  */
+.appLoader>.loader>.background>.backgroundContainer:first-child>img,.appLoader>.loader>.background>.backgroundContainer:nth-child(2)>img {-o-object-position:bottom;object-position:bottom}
+
+/* entry.B2OHENv6.css  */
+.appLoader>.loader>.background>.backgroundContainer:nth-child(3)>img,.appLoader>.loader>.background>.backgroundContainer:nth-child(4)>img {-o-object-position:top;object-position:top}
+
+/* entry.B2OHENv6.css  */
+.appLoader>.loader>.background>.backgroundContainer:first-child>img {-o-object-position:right;object-position:right}
+
+/* entry.B2OHENv6.css  */
+.appLoader>.loader>.background>.backgroundContainer:nth-child(2)>img {-o-object-position:left;object-position:left}
+
+/* entry.B2OHENv6.css  */
+.appLoader>.loader>.background>.backgroundContainer:nth-child(3)>img {-o-object-position:right;object-position:right}
+
+/* entry.B2OHENv6.css  */
+.appLoader>.loader>.background>.backgroundContainer:nth-child(4)>img {-o-object-position:left;object-position:left}
+
+/* entry.B2OHENv6.css  */
+.appLoader>.loader>.loaderGrid {display:grid;grid-template-columns:1fr 63.3svw 1fr;grid-template-rows:auto auto auto;height:100svh;place-content:center;position:fixed;width:100%}
+
+/* entry.B2OHENv6.css  */
+.appLoader>.loader>.loaderGrid {grid-template-columns:1fr 28.125vw 1fr}
+
+/* entry.B2OHENv6.css  */
+.appLoader>.loader>.loaderGrid>.left {grid-column:1;grid-row:2}
+
+/* entry.B2OHENv6.css  */
+.appLoader>.loader>.loaderGrid>.left>img {-o-object-position:right;object-position:right}
+
+/* entry.B2OHENv6.css  */
+.appLoader>.loader>.loaderGrid>.top {grid-column:2;grid-row:1}
+
+/* entry.B2OHENv6.css  */
+.appLoader>.loader>.loaderGrid>.center {align-items:center;aspect-ratio:1/1;clip-path:circle(50%);display:flex;grid-column:2;grid-row:2;justify-content:center;pointer-events:none;position:relative}
+
+/* entry.B2OHENv6.css  */
+.appLoader>.loader>.loaderGrid>.center>.transitionCenter {background-color:var(--c-primary);clip-path:circle(48%);height:100%;opacity:0;position:absolute;transition:opacity .5s cubic-bezier(.87,0,.13,1);width:100%;z-index:1}
+
+/* entry.B2OHENv6.css  */
+.appLoader>.loader>.loaderGrid>.center:before {animation:rotation 60s linear infinite;animation-direction:reverse;background:50%/contain no-repeat url(../3d/tmp-cdn-patch/images/loader_centerShape.webp);content:"";height:100%;position:absolute;width:100%;z-index:-2}
+
+/* entry.B2OHENv6.css  */
+.appLoader>.loader>.loaderGrid>.center:after {background-color:var(--c-secondary);clip-path:circle(48%);content:"";height:100%;position:absolute;transition:all .35s ease-in-out;width:100%;z-index:-1}
+
+/* entry.B2OHENv6.css  */
+.appLoader>.loader>.loaderGrid>.center.-loaded {pointer-events:all}
+
+/* entry.B2OHENv6.css  */
+.appLoader>.loader>.loaderGrid>.center.-loaded:hover {cursor:pointer}
+
+/* entry.B2OHENv6.css  */
+.appLoader>.loader>.loaderGrid>.center.-loaded:hover:after {background-color:var(--c-primary)}
+
+/* entry.B2OHENv6.css  */
+.appLoader>.loader>.loaderGrid>.center.-loaded:hover .shape>svg>path:first-child {stroke:var(--c-secondary);fill:var(--c-secondary)}
+
+/* entry.B2OHENv6.css  */
+.appLoader>.loader>.loaderGrid>.center.-loaded:hover .shape>svg>path:last-child {stroke:var(--c-secondary);fill:var(--c-primary)}
+
+/* entry.B2OHENv6.css  */
+.appLoader>.loader>.loaderGrid>.center.-loaded:hover .uiButtonLoading {--btn-bg:var(--c-secondary);--btn-border:var(--c-primary)}
+
+/* entry.B2OHENv6.css  */
+.appLoader>.loader>.loaderGrid>.center.-loaded:hover .uiButtonLoading>.inner {animation:text-enter-hover .5s ease;color:var(--c-primary)}
+
+/* entry.B2OHENv6.css  */
+.appLoader>.loader>.loaderGrid>.center.-entering>.transitionCenter {opacity:1}
+
+/* entry.B2OHENv6.css  */
+.appLoader>.loader>.loaderGrid>.center.-entering .shape {opacity:0!important}
+
+/* entry.B2OHENv6.css  */
+.appLoader>.loader>.loaderGrid>.center.-entering .loading-cta {opacity:0}
+
+/* entry.B2OHENv6.css  */
+.appLoader>.loader>.loaderGrid>.center>.shape {height:40%;opacity:0;transition:opacity .5s cubic-bezier(.87,0,.13,1);width:40%}
+
+/* entry.B2OHENv6.css  */
+.appLoader>.loader>.loaderGrid>.center>.shape>svg {height:100%;width:100%}
+
+/* entry.B2OHENv6.css  */
+.appLoader>.loader>.loaderGrid>.center>.shape>svg>path {transition:.25s ease-in-out;transition-property:stroke,fill}
+
+/* entry.B2OHENv6.css  */
+.appLoader>.loader>.loaderGrid>.center>.loadingStep {bottom:0;display:flex;justify-content:center;position:absolute;width:100%}
+
+/* entry.B2OHENv6.css  */
+.appLoader>.loader>.loaderGrid>.center>.loadingStep .action,.appLoader>.loader>.loaderGrid>.center>.loadingStep>.counter {bottom:2px;clip-path:url(#my-clip);position:absolute;width:74%}
+
+/* entry.B2OHENv6.css  */
+.appLoader>.loader>.loaderGrid>.center>.loadingStep .action,.appLoader>.loader>.loaderGrid>.center>.loadingStep>.counter {bottom:6px}
+
+/* entry.B2OHENv6.css  */
+.appLoader>.loader>.loaderGrid>.center>.loadingStep .action>.loading-cta,.appLoader>.loader>.loaderGrid>.center>.loadingStep>.counter>.loading-cta {transform:translateY(100%);transition:opacity .5s cubic-bezier(.87,0,.13,1)}
+
+/* entry.B2OHENv6.css  */
+.appLoader>.loader>.loaderGrid>.center>.loadingStep>.counter {bottom:41px;font-size:10px;font-weight:400;letter-spacing:2px;line-height:100%;opacity:0;text-align:center;text-transform:uppercase;transition:opacity 1s linear}
+
+/* entry.B2OHENv6.css  */
+.appLoader>.loader>.loaderGrid>.center>.loadingStep>.counter {font-size:12px}
+
+/* entry.B2OHENv6.css  */
+.appLoader>.loader>.loaderGrid>.bottom {grid-column:2;grid-row:3}
+
+/* entry.B2OHENv6.css  */
+.appLoader>.loader>.loaderGrid>.right {grid-column:3;grid-row:2}
+
+/* entry.B2OHENv6.css  */
+.appLoader>.loader>.loaderGrid>.right>img {-o-object-position:left;object-position:left}
+
+/* entry.B2OHENv6.css  */
+.appLoader>.loader>.loaderGrid img {height:100%;-o-object-fit:cover;object-fit:cover;width:100%}
+
+/* entry.B2OHENv6.css  */
+.appLoader>.loader.-mounted>.loaderGrid>.center>.loadingStep>.counter {opacity:1}
+
+/* entry.B2OHENv6.css  */
+.appLoader>.loader>.footerBackground {background-color:var(--c-secondary);bottom:0;height:40px;position:absolute;width:100%;z-index:10}
+
+/* entry.B2OHENv6.css  */
+.appLoader>.loader>.footerBackground {height:63px}
+
+/* entry.B2OHENv6.css  */
+.appDeathInterface .body>.content>.deathFooter>.gameCta>.uiButtonGhost {margin:0 auto;text-transform:uppercase}
+
+/* entry.B2OHENv6.css  */
+.uiPointOfInterest {--c-primary:#000;background:rgb(var(--sand-white));border-radius:22px;cursor:pointer;display:flex;height:44px;min-width:44px;min-width:calc(var(--8c569be8) + 12px);outline:1px solid rgb(var(--dark));overflow:hidden;position:relative;transform:translate3D(var(--x),var(--y),0) translate(-50%,-50%) scale(.7);width:44px}
+
+/* entry.B2OHENv6.css  */
+.uiPointOfInterest>svg {min-height:44px;min-width:44px;opacity:0;padding:13.5px;position:absolute;transition:.3s .2s}
+
+/* entry.B2OHENv6.css  */
+.uiPointOfInterest>span {color:rgb(var(--dark));display:block;font-size:10px;font-weight:700;letter-spacing:1.5px;line-height:15px;margin-left:15px;opacity:1;padding:16px 16px 16px 0;text-transform:uppercase;white-space:nowrap;width:auto}
+
+/* entry.B2OHENv6.css  */
+.uiPointOfInterest {min-width:44px;transform:translate3D(var(--x),var(--y),0) translate(-50%,-50%) scale(1);transition:min-width .4s}
+
+/* entry.B2OHENv6.css  */
+.uiPointOfInterest:hover {min-width:calc(var(--8c569be8) + 12px)}
+
+/* entry.B2OHENv6.css  */
+.uiPointOfInterest:hover>span {opacity:1;transform:translateY(0);transition:.5s .3s}
+
+/* entry.B2OHENv6.css  */
+.uiPointOfInterest:hover svg {opacity:0;transition:.15s}
+
+/* entry.B2OHENv6.css  */
+.uiPointOfInterest>svg {opacity:1;transition:.3s .2s}
+
+/* entry.B2OHENv6.css  */
+.uiPointOfInterest>span {opacity:0;transform:translateY(5px);transition:.2s}
+
+/* entry.B2OHENv6.css  */
+.appSocial {display:flex;gap:16px;height:16px}
+
+/* entry.B2OHENv6.css  */
+.appSocial a {display:block;opacity:.8}
+
+/* entry.B2OHENv6.css  */
+.appSocial a svg {height:14px;width:14px}
+
+/* entry.B2OHENv6.css  */
+.appSocial a:hover {opacity:1}
+
+/* entry.B2OHENv6.css  */
+.appSwitchLocale {display:flex}
+
+/* entry.B2OHENv6.css  */
+.appSwitchLocale a {display:block;opacity:.6}
+
+/* entry.B2OHENv6.css  */
+.appSwitchLocale a.-active,.appSwitchLocale a:hover {opacity:1}
+
+/* entry.B2OHENv6.css  */
+.appSwitchLocale span {background-color:var(--c-primary);display:block;height:6px;margin:4px 8px 0;width:1px}
+
+/* entry.B2OHENv6.css  */
+.appFooter .privacy,.appFooter>.left {font-size:8px;font-weight:300;line-height:1em}
+
+/* entry.B2OHENv6.css  */
+.appFooter {align-self:flex-end;bottom:0;display:flex;flex-direction:row;justify-content:space-between;opacity:0;padding:20px;pointer-events:none;position:fixed;transition:opacity 1s;width:100%;z-index:3}
+
+/* entry.B2OHENv6.css  */
+.appFooter {padding:24px 60px}
+
+/* entry.B2OHENv6.css  */
+.appFooter.-mounted {opacity:1}
+
+/* entry.B2OHENv6.css  */
+.appFooter.-hide-phone {opacity:0}
+
+/* entry.B2OHENv6.css  */
+.appFooter>.play-btn {position:absolute;right:50%;top:-8px;transform:translate(50%) translateY(-100%)}
+
+/* entry.B2OHENv6.css  */
+.appFooter>.play-btn>.inner {text-transform:uppercase}
+
+/* entry.B2OHENv6.css  */
+.appFooter>.play-btn {display:none}
+
+/* entry.B2OHENv6.css  */
+.appFooter>.left,.appFooter>.right {display:flex;flex-direction:row;gap:6px}
+
+/* entry.B2OHENv6.css  */
+.appFooter>.left {line-height:unset}
+
+/* entry.B2OHENv6.css  */
+.appFooter>.left {font-size:9px;font-weight:400;letter-spacing:.18px}
+
+/* entry.B2OHENv6.css  */
+.appFooter>.left .links {display:flex;gap:32px}
+
+/* entry.B2OHENv6.css  */
+.appFooter>.left .links>a {opacity:.8}
+
+/* entry.B2OHENv6.css  */
+.appFooter>.left .links>a:hover {opacity:1}
+
+/* entry.B2OHENv6.css  */
+.appFooter>.left .links {text-decoration:underline;text-underline-position:from-font}
+
+/* entry.B2OHENv6.css  */
+.appFooter>.left .privacy {display:none}
+
+/* entry.B2OHENv6.css  */
+.appFooter>.left .privacy {display:block}
+
+/* entry.B2OHENv6.css  */
+.appFooter>.left .credits {display:none}
+
+/* entry.B2OHENv6.css  */
+.appFooter>.right>.newsletter {text-transform:uppercase}
+
+/* entry.B2OHENv6.css  */
+.appFooter>.right .appSocial {margin-left:40px}
+
+/* entry.B2OHENv6.css  */
+.appFooter>.right .appSwitchLocale {display:none;margin-left:112px}
+
+/* entry.B2OHENv6.css  */
+.appFooter>.right .appSwitchLocale {display:flex}
+
+/* entry.B2OHENv6.css  */
+.appFooter>.right .appSocial {display:none}
+
+/* entry.B2OHENv6.css  */
+.appFooter>.right .appSocial {display:flex}
+
+/* entry.B2OHENv6.css  */
+.appFooter>.right .newsletter {display:none}
+
+/* entry.B2OHENv6.css  */
+.appFooter>.right .newsletter {align-items:center;display:flex;font-size:10px;font-weight:700;gap:5px;letter-spacing:.7px;opacity:.8;white-space:nowrap}
+
+/* entry.B2OHENv6.css  */
+.appFooter>.right .newsletter:after {content:url(../3d/tmp-cdn-patch/images/chevron.svg);height:11px;transition:transform .2s ease}
+
+/* entry.B2OHENv6.css  */
+.appFooter>.right .newsletter:hover {opacity:1}
+
+/* entry.B2OHENv6.css  */
+.appFooter>.right .newsletter:hover:after {transform:translate(2px)}
+
+/* entry.B2OHENv6.css  */
+.appFooter>.right .privacy {display:block}
+
+/* entry.B2OHENv6.css  */
+.appFooter>.right .privacy {display:none}
+
+/* entry.B2OHENv6.css  */
+.appFooter .privacy {line-height:unset}
+
+/* entry.B2OHENv6.css  */
+.appFooter .privacy {font-size:9px;font-weight:400;letter-spacing:.18px}
+
+/* entry.B2OHENv6.css  */
+.appFooter p {opacity:.7}
+
+/* entry.B2OHENv6.css  */
+.appFooter a {pointer-events:all;transition:all .2s ease}
+
+/* entry.B2OHENv6.css  */
+.play-btn-enter-active {transition:opacity 1s ease .5s!important}
+
+/* entry.B2OHENv6.css  */
+.play-btn-leave-active {transition:opacity 1s ease 0s!important}
+
+/* entry.B2OHENv6.css  */
+.play-btn-enter-to,.play-btn-leave-from {opacity:1!important}
+
+/* entry.B2OHENv6.css  */
+.play-btn-enter-from,.play-btn-leave-to {opacity:0!important}
+
+/* entry.B2OHENv6.css  */
+.appSocialMobile {align-items:center;display:flex;height:16px;margin-top:-1px}
+
+/* entry.B2OHENv6.css  */
+.appSocialMobile .uiIconDiamond {fill:none;stroke:var(--c-primary);stroke-width:.5}
+
+/* entry.B2OHENv6.css  */
+.appSocialMobile a {font-size:10px;font-weight:700;letter-spacing:.7px;text-transform:uppercase}
+
+/* entry.B2OHENv6.css  */
+.appSocialMobile a {opacity:.8}
+
+/* entry.B2OHENv6.css  */
+.appSocialMobile a:hover {opacity:1}
+
+/* entry.B2OHENv6.css  */
+.appSocialMobile a>img {width:20px}
+
+/* entry.B2OHENv6.css  */
+.appMenu>.container>.informations>.social>.appSocialMobile {align-items:start;flex-direction:column;gap:10px;height:-moz-fit-content;height:fit-content}
+
+/* entry.B2OHENv6.css  */
+.appMenu>.container>.informations>.social>.appSocialMobile>a {padding:0!important}
+
+/* premium.BUj5YXut.css  */
+.premiumCodeInterface>.body>.tutorial>.player>.uiIconPlay {fill:var(--c-primary-50)}
+

@@ -1,0 +1,6057 @@
+{
+  "sheetsById": {
+    "game": {
+      "staticOverrides": {
+        "byObject": {
+          "objects / cactus_05_v1_reference / day": {
+            "directColor": {
+              "r": 0.13333333333333333,
+              "g": 0.18823529411764706,
+              "b": 0.12549019607843137,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.06666666666666667,
+              "g": 0.06666666666666667,
+              "b": 0.050980392156862744,
+              "a": 1
+            }
+          },
+          "objects / forest_tree_01_reference / night": {
+            "directColor": {
+              "r": 1,
+              "g": 0.03137254901960784,
+              "b": 0,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            },
+            "luminance": 0
+          },
+          "objects / forest_tree_01_reference / day": {
+            "directColor": {
+              "r": 1,
+              "g": 0.03137254901960784,
+              "b": 0,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            },
+            "luminance": 1
+          },
+          "objects / forest_tree_02_reference / day": {
+            "directColor": {
+              "r": 1,
+              "g": 0.03137254901960784,
+              "b": 0,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            },
+            "luminance": 1
+          },
+          "objects / forest_tree_02_reference / night": {
+            "directColor": {
+              "r": 1,
+              "g": 0.03137254901960784,
+              "b": 0,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            },
+            "luminance": 0
+          },
+          "objects / chain_tree_02_reference / day": {
+            "directColor": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.0392156862745098,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            },
+            "luminance": 2
+          },
+          "objects / chain_tree_02_reference / night": {
+            "directColor": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.0392156862745098,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            },
+            "luminance": 5
+          },
+          "objects / tree_chain_02 / day": {
+            "directColor": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.0392156862745098,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            },
+            "luminance": 10
+          },
+          "objects / tree_chain_02 / night": {
+            "directColor": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.0392156862745098,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            },
+            "luminance": 10
+          },
+          "objects / socle_reference / day": {
+            "directColor": {
+              "r": 0.2823529411764706,
+              "g": 0.2196078431372549,
+              "b": 0.13333333333333333,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.03529411764705882,
+              "g": 0.027450980392156862,
+              "b": 0.01568627450980392,
+              "a": 1
+            }
+          },
+          "objects / socle_02_reference / day": {
+            "directColor": {
+              "r": 0.2823529411764706,
+              "g": 0.2196078431372549,
+              "b": 0.13333333333333333,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.03529411764705882,
+              "g": 0.027450980392156862,
+              "b": 0.01568627450980392,
+              "a": 1
+            }
+          },
+          "objects / socle_reference / night": {
+            "directColor": {
+              "r": 0.2823529411764706,
+              "g": 0.2196078431372549,
+              "b": 0.13333333333333333,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.03529411764705882,
+              "g": 0.027450980392156862,
+              "b": 0.01568627450980392,
+              "a": 1
+            }
+          },
+          "objects / socle_02_reference / night": {
+            "directColor": {
+              "r": 0.2823529411764706,
+              "g": 0.2196078431372549,
+              "b": 0.13333333333333333,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.03529411764705882,
+              "g": 0.027450980392156862,
+              "b": 0.01568627450980392,
+              "a": 1
+            }
+          },
+          "objects / cactus_02_reference / day": {
+            "directColor": {
+              "r": 0.24313725490196078,
+              "g": 0.33725490196078434,
+              "b": 0.21568627450980393,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.043137254901960784,
+              "g": 0.050980392156862744,
+              "b": 0.06274509803921569,
+              "a": 1
+            }
+          },
+          "objects / cactus_03_reference / day": {
+            "directColor": {
+              "r": 0.33725490196078434,
+              "g": 0.35294117647058826,
+              "b": 0.3176470588235294,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.1411764705882353,
+              "g": 0.1450980392156863,
+              "b": 0.0784313725490196,
+              "a": 1
+            }
+          },
+          "objects / cactus_07_reference / day": {
+            "directColor": {
+              "r": 0.33725490196078434,
+              "g": 0.35294117647058826,
+              "b": 0.3176470588235294,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.1411764705882353,
+              "g": 0.1450980392156863,
+              "b": 0.0784313725490196,
+              "a": 1
+            }
+          },
+          "objects / cactus_08_reference / day": {
+            "directColor": {
+              "r": 0.33725490196078434,
+              "g": 0.35294117647058826,
+              "b": 0.3176470588235294,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.1411764705882353,
+              "g": 0.1450980392156863,
+              "b": 0.0784313725490196,
+              "a": 1
+            }
+          },
+          "objects / rock_05_v1_reference / day": {
+            "directColor": {
+              "r": 0.596078431372549,
+              "g": 0.25882352941176473,
+              "b": 0.14901960784313725,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.21176470588235294,
+              "g": 0.09803921568627451,
+              "b": 0.058823529411764705,
+              "a": 1
+            }
+          },
+          "objects / rock_04_v1_reference / day": {
+            "directColor": {
+              "r": 0.6627450980392157,
+              "g": 0.26666666666666666,
+              "b": 0.1411764705882353,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.6627450980392157,
+              "g": 0.26666666666666666,
+              "b": 0.1411764705882353,
+              "a": 1
+            }
+          },
+          "objects / cactus_02_v11_reference / Material": {
+            "randomIntensity": 0.38,
+            "randomScale": 30000
+          },
+          "objects / rock_01_reference / day": {
+            "directColor": {
+              "r": 0.5686274509803921,
+              "g": 0.36470588235294116,
+              "b": 0.20392156862745098,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.27058823529411763,
+              "g": 0.17254901960784313,
+              "b": 0.17254901960784313,
+              "a": 1
+            }
+          },
+          "objects / rock_03_reference / day": {
+            "indirectColor": {
+              "r": 0.06274509803921569,
+              "g": 0.050980392156862744,
+              "b": 0.050980392156862744,
+              "a": 1
+            },
+            "directColor": {
+              "r": 0.9058823529411765,
+              "g": 0.5607843137254902,
+              "b": 0.30196078431372547,
+              "a": 1
+            }
+          }
+        }
+      }
+    },
+    "World": {
+      "staticOverrides": {
+        "byObject": {
+          "ground / Material": {
+            "color": {
+              "r": 0.7215686274509804,
+              "g": 0.23137254901960785,
+              "b": 0.07058823529411765,
+              "a": 1
+            }
+          },
+          "sun": {
+            "color": {
+              "r": 0.8666666666666667,
+              "g": 0.803921568627451,
+              "b": 0.5450980392156862,
+              "a": 1
+            }
+          },
+          "objects / head001 / day": {
+            "luminance": 1,
+            "directColor": {
+              "r": 0.30196078431372547,
+              "g": 0.3215686274509804,
+              "b": 0.3176470588235294,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.027450980392156862,
+              "g": 0.023529411764705882,
+              "b": 0.023529411764705882,
+              "a": 1
+            }
+          },
+          "objects / head / day": {
+            "luminance": 1,
+            "indirectColor": {
+              "r": 0.25098039215686274,
+              "g": 0.25098039215686274,
+              "b": 0.25098039215686274,
+              "a": 1
+            },
+            "directColor": {
+              "r": 0.596078431372549,
+              "g": 0.5764705882352941,
+              "b": 0.5254901960784314,
+              "a": 1
+            }
+          },
+          "objects / head / Material": {
+            "randomIntensity": 0.8299999999999998,
+            "randomScale": 2000
+          },
+          "objects / head001 / Material": {
+            "randomScale": 10000,
+            "randomIntensity": 0.4
+          },
+          "objects / menton001 / Material": {
+            "randomScale": 9465,
+            "randomIntensity": 0.3600000000000001
+          },
+          "objects / menton001 / day": {
+            "luminance": 1,
+            "directColor": {
+              "r": 0.2980392156862745,
+              "g": 0.3607843137254902,
+              "b": 0.35294117647058826,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.054901960784313725,
+              "g": 0.011764705882352941,
+              "b": 0.06274509803921569,
+              "a": 1
+            }
+          },
+          "objects / container / day": {
+            "directColor": {
+              "r": 0.7568627450980392,
+              "g": 0.7058823529411765,
+              "b": 0.7058823529411765,
+              "a": 1
+            },
+            "luminance": 1.09,
+            "indirectColor": {
+              "r": 0.11372549019607843,
+              "g": 0.11372549019607843,
+              "b": 0.11372549019607843,
+              "a": 1
+            }
+          },
+          "objects / placard / day": {
+            "luminance": 1
+          },
+          "objects / cactus_07001 / day": {
+            "luminance": 1.149999999999999,
+            "directColor": {
+              "r": 0.2784313725490196,
+              "g": 0.30980392156862746,
+              "b": 0.23921568627450981,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.2784313725490196,
+              "g": 0.30980392156862746,
+              "b": 0.23921568627450981,
+              "a": 1
+            }
+          },
+          "objects / usb001 / Material": {
+            "randomScale": 10000,
+            "randomIntensity": 0.49999999999999956
+          },
+          "objects / usb001 / day": {
+            "directColor": {
+              "r": 0.3058823529411765,
+              "g": 0.24313725490196078,
+              "b": 0.1607843137254902,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.08627450980392157,
+              "g": 0.0784313725490196,
+              "b": 0.054901960784313725,
+              "a": 1
+            }
+          },
+          "ground": {
+            "rAlbedo": {
+              "type": "image"
+            },
+            "gAlbedo": {
+              "type": "image"
+            },
+            "color": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 1
+            },
+            "map": {
+              "type": "image",
+              "id": "mapfinal1°.jpg"
+            }
+          },
+          "objects / rock_dune_01_root / day": {
+            "luminance": 1,
+            "directColor": {
+              "r": 0.45098039215686275,
+              "g": 0.2,
+              "b": 0.12941176470588237,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.19607843137254902,
+              "g": 0.11764705882352941,
+              "b": 0.0784313725490196,
+              "a": 1
+            }
+          },
+          "objects / rock_dune_03_root / day": {
+            "directColor": {
+              "r": 0.5490196078431373,
+              "g": 0.27450980392156865,
+              "b": 0.18823529411764706,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.19607843137254902,
+              "g": 0.06666666666666667,
+              "b": 0.027450980392156862,
+              "a": 1
+            }
+          },
+          "objects / rock_dune_04_root / day": {
+            "directColor": {
+              "r": 0.5254901960784314,
+              "g": 0.34509803921568627,
+              "b": 0.27058823529411763,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.12156862745098039,
+              "g": 0.06666666666666667,
+              "b": 0.07058823529411765,
+              "a": 1
+            },
+            "luminance": 1
+          },
+          "objects / rock_dune_05 / day": {
+            "directColor": {
+              "r": 0.4117647058823529,
+              "g": 0.21176470588235294,
+              "b": 0.15294117647058825,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.23137254901960785,
+              "g": 0.12941176470588237,
+              "b": 0.06666666666666667,
+              "a": 1
+            }
+          },
+          "objects / cactus_03_instance_desert / day": {
+            "directColor": {
+              "r": 0.2784313725490196,
+              "g": 0.30980392156862746,
+              "b": 0.23921568627450981,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.07058823529411765,
+              "g": 0.09411764705882353,
+              "b": 0.06666666666666667,
+              "a": 1
+            }
+          },
+          "objects / cactus_07_instance_desert / day": {
+            "directColor": {
+              "r": 0.19215686274509805,
+              "g": 0.25098039215686274,
+              "b": 0.1843137254901961,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.1411764705882353,
+              "g": 0.18823529411764706,
+              "b": 0.13725490196078433,
+              "a": 1
+            }
+          },
+          "objects / cactus_08_instance_desert / day": {
+            "directColor": {
+              "r": 0.2784313725490196,
+              "g": 0.30980392156862746,
+              "b": 0.23921568627450981,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.08627450980392157,
+              "g": 0.1411764705882353,
+              "b": 0.09411764705882353,
+              "a": 1
+            }
+          },
+          "objects / grass_01_instance_desert / day": {
+            "directColor": {
+              "r": 0.3137254901960784,
+              "g": 0.2901960784313726,
+              "b": 0.20784313725490197,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            }
+          },
+          "objects / grass_02_instance_desert / day": {
+            "directColor": {
+              "r": 0.21176470588235294,
+              "g": 0.16470588235294117,
+              "b": 0.1803921568627451,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.06666666666666667,
+              "g": 0.16862745098039217,
+              "b": 0.0784313725490196,
+              "a": 1
+            }
+          },
+          "objects / cactus_02_instance_desert / day": {
+            "directColor": {
+              "r": 0.10588235294117647,
+              "g": 0.12156862745098039,
+              "b": 0.10196078431372549,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.043137254901960784,
+              "g": 0.050980392156862744,
+              "b": 0.06274509803921569,
+              "a": 1
+            }
+          },
+          "objects / cactus_02_instance_desert / Material": {
+            "randomScale": 10000,
+            "randomIntensity": 0.6899999999999997
+          },
+          "objects / rock_01_instance_desert / day": {
+            "luminance": 1,
+            "indirectColor": {
+              "r": 0.12941176470588237,
+              "g": 0.0392156862745098,
+              "b": 0.0392156862745098,
+              "a": 1
+            },
+            "directColor": {
+              "r": 0.4196078431372549,
+              "g": 0.19607843137254902,
+              "b": 0.1450980392156863,
+              "a": 1
+            }
+          },
+          "objects / rock_03_instance_desert / day": {
+            "directColor": {
+              "r": 0.4196078431372549,
+              "g": 0.19607843137254902,
+              "b": 0.1450980392156863,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.12941176470588237,
+              "g": 0.0392156862745098,
+              "b": 0.0392156862745098,
+              "a": 1
+            }
+          },
+          "objects / batiment / Material": {
+            "randomScale": 50000,
+            "emissive": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            },
+            "randomIntensity": 0.4,
+            "color": {
+              "r": 0.7490196078431373,
+              "g": 0.5843137254901961,
+              "b": 0.4823529411764706,
+              "a": 1
+            }
+          },
+          "objects / batiment / day": {
+            "directColor": {
+              "r": 0.792156862745098,
+              "g": 0.792156862745098,
+              "b": 0.792156862745098,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.42745098039215684,
+              "g": 0.37254901960784315,
+              "b": 0.34901960784313724,
+              "a": 1
+            },
+            "luminance": 1
+          },
+          "objects / pancarte_toit / Material": {
+            "randomScale": 0,
+            "opacity": 1,
+            "emissive": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            }
+          },
+          "objects / pancarte_toit / day": {
+            "directColor": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 1
+            },
+            "luminance": 1,
+            "indirectColor": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 1
+            }
+          },
+          "objects / fenetre / Material": {
+            "opacity": 0.867100967384861,
+            "randomScale": 0,
+            "emissive": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 1
+            },
+            "randomIntensity": 0
+          },
+          "objects / fenetre / day": {
+            "directColor": {
+              "r": 0.9333333333333333,
+              "g": 0.9333333333333333,
+              "b": 0.9333333333333333,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            }
+          },
+          "objects / pancarte_princip / day": {
+            "directColor": {
+              "r": 0.9254901960784314,
+              "g": 0.9254901960784314,
+              "b": 0.9254901960784314,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            }
+          },
+          "objects / pancarte_princip / Material": {
+            "opacity": 1,
+            "emissive": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            },
+            "color": {
+              "r": 0.9372549019607843,
+              "g": 0.9372549019607843,
+              "b": 0.9372549019607843,
+              "a": 1
+            },
+            "randomScale": 0,
+            "randomIntensity": 0
+          },
+          "objects / bar_pancarte / day": {
+            "directColor": {
+              "r": 0.37254901960784315,
+              "g": 0.41568627450980394,
+              "b": 0.4666666666666667,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            }
+          },
+          "objects / echelle / day": {
+            "directColor": {
+              "r": 0.36470588235294116,
+              "g": 0.2901960784313726,
+              "b": 0.23137254901960785,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.12941176470588237,
+              "g": 0.10196078431372549,
+              "b": 0.08235294117647059,
+              "a": 1
+            }
+          },
+          "objects / débris_toit / day": {
+            "directColor": {
+              "r": 0.5686274509803921,
+              "g": 0.5215686274509804,
+              "b": 0.48627450980392156,
+              "a": 1
+            }
+          },
+          "objects / contour_fenetre / day": {
+            "directColor": {
+              "r": 0.8666666666666667,
+              "g": 0.7607843137254902,
+              "b": 0.6941176470588235,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.09411764705882353,
+              "g": 0.11764705882352941,
+              "b": 0.12156862745098039,
+              "a": 1
+            }
+          },
+          "objects / pied_pancarte_toit / day": {
+            "directColor": {
+              "r": 0.25882352941176473,
+              "g": 0.07058823529411765,
+              "b": 0.0392156862745098,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.19607843137254902,
+              "g": 0.09019607843137255,
+              "b": 0.07058823529411765,
+              "a": 1
+            }
+          },
+          "objects / echelle / Material": {
+            "color": {
+              "r": 0.43137254901960786,
+              "g": 0.3333333333333333,
+              "b": 0.3333333333333333,
+              "a": 1
+            }
+          },
+          "objects / débris_toit / Material": {
+            "color": {
+              "r": 0.5411764705882353,
+              "g": 0.5450980392156862,
+              "b": 0.5529411764705883,
+              "a": 1
+            }
+          },
+          "objects / etagere / day": {
+            "directColor": {
+              "r": 0.21568627450980393,
+              "g": 0.2196078431372549,
+              "b": 0.2549019607843137,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.12156862745098039,
+              "g": 0.10980392156862745,
+              "b": 0.13333333333333333,
+              "a": 1
+            }
+          },
+          "objects / tree_02_instance_desert / day": {
+            "directColor": {
+              "r": 0.14901960784313725,
+              "g": 0.10196078431372549,
+              "b": 0.12941176470588237,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.07450980392156863,
+              "g": 0.043137254901960784,
+              "b": 0.06274509803921569,
+              "a": 1
+            }
+          },
+          "objects / cactus_08001 / day": {
+            "directColor": {
+              "r": 0.2784313725490196,
+              "g": 0.30980392156862746,
+              "b": 0.23921568627450981,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.2784313725490196,
+              "g": 0.30980392156862746,
+              "b": 0.23921568627450981,
+              "a": 1
+            }
+          },
+          "objects / rock_03001 / day": {
+            "directColor": {
+              "r": 0.3607843137254902,
+              "g": 0.19215686274509805,
+              "b": 0.21568627450980393,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.1568627450980392,
+              "g": 0.06274509803921569,
+              "b": 0.03137254901960784,
+              "a": 1
+            }
+          },
+          "objects / small_rock_01001 / day": {
+            "directColor": {
+              "r": 0.37254901960784315,
+              "g": 0.24705882352941178,
+              "b": 0.2823529411764706,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.2,
+              "g": 0.10196078431372549,
+              "b": 0.10196078431372549,
+              "a": 1
+            }
+          },
+          "objects / small_rock_01_desert / day": {
+            "directColor": {
+              "r": 0.37254901960784315,
+              "g": 0.24705882352941178,
+              "b": 0.2823529411764706,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.2,
+              "g": 0.10196078431372549,
+              "b": 0.10196078431372549,
+              "a": 1
+            }
+          },
+          "objects / container / Material": {
+            "color": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 1
+            },
+            "randomScale": 50000,
+            "randomIntensity": 0.4
+          },
+          "objects / bar_container / day": {
+            "directColor": {
+              "r": 0.7450980392156863,
+              "g": 0.7450980392156863,
+              "b": 0.7450980392156863,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.24313725490196078,
+              "g": 0.24313725490196078,
+              "b": 0.24313725490196078,
+              "a": 1
+            }
+          },
+          "objects / etagere / Material": {
+            "color": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 1
+            }
+          },
+          "objects / plateform / day": {
+            "directColor": {
+              "r": 0.34509803921568627,
+              "g": 0.26666666666666666,
+              "b": 0.16862745098039217,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.06274509803921569,
+              "g": 0.047058823529411764,
+              "b": 0.03137254901960784,
+              "a": 1
+            }
+          },
+          "objects / ampli / Material": {
+            "randomScale": 15000,
+            "randomIntensity": 0.4,
+            "color": {
+              "r": 0.9607843137254902,
+              "g": 0.8235294117647058,
+              "b": 0.9882352941176471,
+              "a": 1
+            }
+          },
+          "objects / ampli / day": {
+            "directColor": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.054901960784313725,
+              "g": 0.054901960784313725,
+              "b": 0.054901960784313725,
+              "a": 1
+            }
+          },
+          "objects / truc_bass / Material": {
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            }
+          },
+          "objects / corp_bass / day": {
+            "directColor": {
+              "r": 0.7098039215686275,
+              "g": 0.6313725490196078,
+              "b": 0.5254901960784314,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.6470588235294118,
+              "g": 0.5764705882352941,
+              "b": 0.5490196078431373,
+              "a": 1
+            }
+          },
+          "objects / batt / Material": {
+            "randomScale": 100000,
+            "randomIntensity": 0.5,
+            "color": {
+              "r": 0.5333333333333333,
+              "g": 0.47843137254901963,
+              "b": 0.45098039215686275,
+              "a": 1
+            }
+          },
+          "objects / batt / day": {
+            "indirectColor": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 1
+            },
+            "directColor": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 1
+            }
+          },
+          "objects / plateform / Material": {
+            "randomScale": 10000,
+            "randomIntensity": 0.34999999999999987
+          },
+          "objects / tree_01_instance_forest / night": {
+            "directColor": {
+              "r": 1,
+              "g": 0.03137254901960784,
+              "b": 0,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            },
+            "luminance": 0
+          },
+          "objects / tree_01_instance_forest / day": {
+            "directColor": {
+              "r": 1,
+              "g": 0.03137254901960784,
+              "b": 0,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            },
+            "luminance": 0.05
+          },
+          "objects / tree_02_instance_forest / day": {
+            "directColor": {
+              "r": 1,
+              "g": 0.03137254901960784,
+              "b": 0,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            },
+            "luminance": 0.05
+          },
+          "objects / tree_02_instance_forest / night": {
+            "directColor": {
+              "r": 1,
+              "g": 0.03137254901960784,
+              "b": 0,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            },
+            "luminance": 0
+          },
+          "objects / tree_chain_02_instance_forest / day": {
+            "directColor": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.0392156862745098,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            },
+            "luminance": 5
+          },
+          "objects / tree_chain_02_instance_forest / night": {
+            "directColor": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.0392156862745098,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            },
+            "luminance": 5
+          },
+          "objects / tree_chain_instance_forest / day": {
+            "directColor": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.0392156862745098,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            },
+            "luminance": 10
+          },
+          "objects / tree_chain_instance_forest / night": {
+            "directColor": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.0392156862745098,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            },
+            "luminance": 10
+          },
+          "objects / tree_chain_instance_forest / Material": {
+            "color": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 1
+            },
+            "emissive": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            },
+            "randomIntensity": 1,
+            "randomScale": 1000
+          },
+          "objects / tree_01_instance_forest / Material": {
+            "randomScale": 50000
+          },
+          "Day - Night": {
+            "mix": 0
+          },
+          "objects / tree_chain_02_instance_forest / Material": {
+            "randomScale": 1000,
+            "randomIntensity": 1
+          },
+          "objects / rock_dune_06_root / day": {
+            "directColor": {
+              "r": 0.5882352941176471,
+              "g": 0.3176470588235294,
+              "b": 0.20392156862745098,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.20784313725490197,
+              "g": 0.058823529411764705,
+              "b": 0.054901960784313725,
+              "a": 1
+            }
+          },
+          "objects / small_rock_02_02001 / day": {
+            "directColor": {
+              "r": 0.37254901960784315,
+              "g": 0.24705882352941178,
+              "b": 0.2823529411764706,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.2,
+              "g": 0.10196078431372549,
+              "b": 0.10196078431372549,
+              "a": 1
+            }
+          },
+          "objects / small_rock_02_instance_desert / day": {
+            "indirectColor": {
+              "r": 0.2,
+              "g": 0.10196078431372549,
+              "b": 0.10196078431372549,
+              "a": 1
+            },
+            "directColor": {
+              "r": 0.37254901960784315,
+              "g": 0.24705882352941178,
+              "b": 0.2823529411764706,
+              "a": 1
+            }
+          },
+          "objects / rock_dune_01_root / night": {
+            "directColor": {
+              "r": 0.043137254901960784,
+              "g": 0.01568627450980392,
+              "b": 0.011764705882352941,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            }
+          },
+          "objects / rock_dune_04_root / night": {
+            "directColor": {
+              "r": 0.07450980392156863,
+              "g": 0.03529411764705882,
+              "b": 0.0392156862745098,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            }
+          },
+          "objects / rock_dune_05 / night": {
+            "directColor": {
+              "r": 0.06274509803921569,
+              "g": 0.03137254901960784,
+              "b": 0.03529411764705882,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            }
+          },
+          "objects / rock_dune_06_root / night": {
+            "directColor": {
+              "r": 0.06666666666666667,
+              "g": 0.023529411764705882,
+              "b": 0.011764705882352941,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            }
+          },
+          "objects / head001 / night": {
+            "directColor": {
+              "r": 0.00784313725490196,
+              "g": 0.00784313725490196,
+              "b": 0.00784313725490196,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            }
+          },
+          "objects / rock_03001 / night": {
+            "directColor": {
+              "r": 0.07450980392156863,
+              "g": 0.03529411764705882,
+              "b": 0.043137254901960784,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            }
+          },
+          "objects / mask_palace_in / night": {
+            "directColor": {
+              "r": 0.047058823529411764,
+              "g": 0.047058823529411764,
+              "b": 0.047058823529411764,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            },
+            "luminance": 0.12999999999999923
+          },
+          "objects / mask_palace_in / day": {
+            "directColor": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.00784313725490196,
+              "g": 0.00784313725490196,
+              "b": 0.00784313725490196,
+              "a": 1
+            }
+          },
+          "objects / cactus_02_instance_desert / night": {
+            "directColor": {
+              "r": 0.24313725490196078,
+              "g": 0.33725490196078434,
+              "b": 0.21568627450980393,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.043137254901960784,
+              "g": 0.050980392156862744,
+              "b": 0.06274509803921569,
+              "a": 1
+            }
+          },
+          "objects / cactus_03_instance_desert / night": {
+            "directColor": {
+              "r": 0.0196078431372549,
+              "g": 0.0196078431372549,
+              "b": 0.01568627450980392,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            }
+          },
+          "objects / cactus_07_instance_desert / night": {
+            "directColor": {
+              "r": 0.19215686274509805,
+              "g": 0.25098039215686274,
+              "b": 0.1843137254901961,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.1411764705882353,
+              "g": 0.18823529411764706,
+              "b": 0.13725490196078433,
+              "a": 1
+            }
+          },
+          "objects / cactus_08_instance_desert / night": {
+            "directColor": {
+              "r": 0.03137254901960784,
+              "g": 0.03529411764705882,
+              "b": 0.027450980392156862,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            }
+          },
+          "objects / grass_01_instance_desert / night": {
+            "directColor": {
+              "r": 0.3137254901960784,
+              "g": 0.2901960784313726,
+              "b": 0.20784313725490197,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            }
+          },
+          "objects / grass_02_instance_desert / night": {
+            "directColor": {
+              "r": 0.21176470588235294,
+              "g": 0.16470588235294117,
+              "b": 0.1803921568627451,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            }
+          },
+          "objects / small_rock_01001 / night": {
+            "directColor": {
+              "r": 0.12156862745098039,
+              "g": 0.0784313725490196,
+              "b": 0.09019607843137255,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            }
+          },
+          "objects / small_rock_02_02001 / night": {
+            "directColor": {
+              "r": 0.37254901960784315,
+              "g": 0.24705882352941178,
+              "b": 0.2823529411764706,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            }
+          },
+          "objects / small_rock_01_desert / night": {
+            "directColor": {
+              "r": 0.07450980392156863,
+              "g": 0.047058823529411764,
+              "b": 0.054901960784313725,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            }
+          },
+          "objects / small_rock_02_instance_desert / night": {
+            "directColor": {
+              "r": 0.027450980392156862,
+              "g": 0.0196078431372549,
+              "b": 0.0196078431372549,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            }
+          },
+          "objects / mask_palace_out / day": {
+            "directColor": {
+              "r": 0.5725490196078431,
+              "g": 0.4745098039215686,
+              "b": 0.3568627450980392,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            }
+          },
+          "objects / ponton / day": {
+            "indirectColor": {
+              "r": 0.14901960784313725,
+              "g": 0.10980392156862745,
+              "b": 0.10980392156862745,
+              "a": 1
+            },
+            "directColor": {
+              "r": 0.5411764705882353,
+              "g": 0.4588235294117647,
+              "b": 0.34509803921568627,
+              "a": 1
+            },
+            "luminance": 1
+          },
+          "objects / black_screen_in / night": {
+            "directColor": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            }
+          },
+          "objects / black_screen_in / day": {
+            "directColor": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            }
+          },
+          "objects / door / night": {
+            "indirectColor": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            },
+            "directColor": {
+              "r": 0.0196078431372549,
+              "g": 0.0196078431372549,
+              "b": 0.0196078431372549,
+              "a": 1
+            },
+            "luminance": 0.29
+          },
+          "objects / door / day": {
+            "directColor": {
+              "r": 0.32941176470588235,
+              "g": 0.26666666666666666,
+              "b": 0.19215686274509805,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.054901960784313725,
+              "g": 0.043137254901960784,
+              "b": 0.0196078431372549,
+              "a": 1
+            }
+          },
+          "objects / black_screen_out / day": {
+            "directColor": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            }
+          },
+          "objects / water / day": {
+            "indirectColor": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            },
+            "directColor": {
+              "r": 0.6235294117647059,
+              "g": 0.5647058823529412,
+              "b": 0.4823529411764706,
+              "a": 1
+            },
+            "luminance": 1.08
+          },
+          "objects / door_left / night": {
+            "indirectColor": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            },
+            "directColor": {
+              "r": 0.011764705882352941,
+              "g": 0.011764705882352941,
+              "b": 0.011764705882352941,
+              "a": 1
+            },
+            "luminance": 0.39999999999999947
+          },
+          "objects / door_left / Material": {
+            "randomScale": 1000,
+            "randomIntensity": 0
+          },
+          "objects / tree_02_instance_desert / night": {
+            "indirectColor": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            },
+            "directColor": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            }
+          },
+          "objects / rock_01_instance_desert / night": {
+            "indirectColor": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            },
+            "directColor": {
+              "r": 0.09019607843137255,
+              "g": 0.06666666666666667,
+              "b": 0.050980392156862744,
+              "a": 1
+            }
+          },
+          "objects / cactus_07001 / night": {
+            "indirectColor": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            },
+            "directColor": {
+              "r": 0.12156862745098039,
+              "g": 0.09803921568627451,
+              "b": 0.07450980392156863,
+              "a": 1
+            }
+          },
+          "objects / cactus_08001 / night": {
+            "indirectColor": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            },
+            "directColor": {
+              "r": 0.21176470588235294,
+              "g": 0.16862745098039217,
+              "b": 0.13725490196078433,
+              "a": 1
+            }
+          },
+          "objects / palace_ground / night": {
+            "directColor": {
+              "r": 0.37254901960784315,
+              "g": 0.2823529411764706,
+              "b": 0.20784313725490197,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.1843137254901961,
+              "g": 0.1411764705882353,
+              "b": 0.11764705882352941,
+              "a": 1
+            }
+          },
+          "objects / mask_palace_out / Material": {
+            "map": {
+              "type": "image"
+            },
+            "randomScale": 50000,
+            "randomIntensity": 0.5700000000000002
+          },
+          "objects / palace_ground / day": {
+            "directColor": {
+              "r": 0.37254901960784315,
+              "g": 0.2823529411764706,
+              "b": 0.20784313725490197,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.1843137254901961,
+              "g": 0.1411764705882353,
+              "b": 0.11764705882352941,
+              "a": 1
+            }
+          },
+          "objects / arch022 / day": {
+            "directColor": {
+              "r": 0.49411764705882355,
+              "g": 0.43137254901960786,
+              "b": 0.3137254901960784,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.3843137254901961,
+              "g": 0.3215686274509804,
+              "b": 0.20392156862745098,
+              "a": 1
+            }
+          },
+          "objects / palace001 / day": {
+            "directColor": {
+              "r": 0.49411764705882355,
+              "g": 0.43137254901960786,
+              "b": 0.3137254901960784,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.3843137254901961,
+              "g": 0.3215686274509804,
+              "b": 0.20392156862745098,
+              "a": 1
+            }
+          },
+          "objects / palace_roof / day": {
+            "directColor": {
+              "r": 0.49411764705882355,
+              "g": 0.43137254901960786,
+              "b": 0.3137254901960784,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.3843137254901961,
+              "g": 0.3215686274509804,
+              "b": 0.20392156862745098,
+              "a": 1
+            }
+          },
+          "objects / palace_wall / day": {
+            "directColor": {
+              "r": 0.403921568627451,
+              "g": 0.35294117647058826,
+              "b": 0.2549019607843137,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.49411764705882355,
+              "g": 0.43137254901960786,
+              "b": 0.3137254901960784,
+              "a": 1
+            }
+          },
+          "objects / palace_wall / night": {
+            "directColor": {
+              "r": 0.1843137254901961,
+              "g": 0.15294117647058825,
+              "b": 0.09411764705882353,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.49411764705882355,
+              "g": 0.43137254901960786,
+              "b": 0.3137254901960784,
+              "a": 1
+            }
+          },
+          "objects / palace_roof / night": {
+            "indirectColor": {
+              "r": 0.3843137254901961,
+              "g": 0.3215686274509804,
+              "b": 0.20392156862745098,
+              "a": 1
+            },
+            "directColor": {
+              "r": 0.49411764705882355,
+              "g": 0.43137254901960786,
+              "b": 0.3137254901960784,
+              "a": 1
+            }
+          },
+          "objects / arch021 / day": {
+            "directColor": {
+              "r": 0.4666666666666667,
+              "g": 0.40784313725490196,
+              "b": 0.2980392156862745,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.3843137254901961,
+              "g": 0.3215686274509804,
+              "b": 0.20392156862745098,
+              "a": 1
+            }
+          },
+          "objects / arch010 / day": {
+            "directColor": {
+              "r": 0.49411764705882355,
+              "g": 0.43137254901960786,
+              "b": 0.3137254901960784,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.3843137254901961,
+              "g": 0.3215686274509804,
+              "b": 0.20392156862745098,
+              "a": 1
+            }
+          },
+          "objects / stair_impo / day": {
+            "directColor": {
+              "r": 0.5803921568627451,
+              "g": 0.5058823529411764,
+              "b": 0.3607843137254902,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.17647058823529413,
+              "g": 0.13725490196078433,
+              "b": 0.07058823529411765,
+              "a": 1
+            }
+          },
+          "objects / big_arch008 / day": {
+            "directColor": {
+              "r": 0.5411764705882353,
+              "g": 0.48627450980392156,
+              "b": 0.37254901960784315,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.10196078431372549,
+              "g": 0.08235294117647059,
+              "b": 0.0392156862745098,
+              "a": 1
+            }
+          },
+          "objects / palace_wall / Material": {
+            "randomIntensity": 0.4,
+            "randomScale": 50000
+          },
+          "objects / zone_3 / day": {
+            "directColor": {
+              "r": 0.5411764705882353,
+              "g": 0.47058823529411764,
+              "b": 0.3803921568627451,
+              "a": 1
+            },
+            "luminance": 1,
+            "indirectColor": {
+              "r": 0.06274509803921569,
+              "g": 0.050980392156862744,
+              "b": 0.03529411764705882,
+              "a": 1
+            }
+          },
+          "objects / usb_scene0 / day": {
+            "directColor": {
+              "r": 0.2823529411764706,
+              "g": 0.23529411764705882,
+              "b": 0.13725490196078433,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.12156862745098039,
+              "g": 0.0784313725490196,
+              "b": 0.03529411764705882,
+              "a": 1
+            }
+          },
+          "objects / usb_scene1 / day": {
+            "indirectColor": {
+              "r": 0.35294117647058826,
+              "g": 0.3058823529411765,
+              "b": 0.24313725490196078,
+              "a": 1
+            },
+            "directColor": {
+              "r": 0.5607843137254902,
+              "g": 0.5176470588235295,
+              "b": 0.4392156862745098,
+              "a": 1
+            }
+          },
+          "objects / socle / day": {
+            "directColor": {
+              "r": 0.2823529411764706,
+              "g": 0.2196078431372549,
+              "b": 0.13333333333333333,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.03529411764705882,
+              "g": 0.027450980392156862,
+              "b": 0.01568627450980392,
+              "a": 1
+            }
+          },
+          "objects / stair_step006 / day": {
+            "directColor": {
+              "r": 0.2823529411764706,
+              "g": 0.2196078431372549,
+              "b": 0.13333333333333333,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.03529411764705882,
+              "g": 0.027450980392156862,
+              "b": 0.01568627450980392,
+              "a": 1
+            }
+          },
+          "objects / mic_head_1 / Material": {
+            "color": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 1
+            }
+          },
+          "objects / mic_head_2 / Material": {
+            "color": {
+              "r": 1,
+              "g": 0.1568627450980392,
+              "b": 0.1568627450980392,
+              "a": 1
+            }
+          },
+          "objects / mic_head_3 / Material": {
+            "color": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 1
+            }
+          },
+          "objects / mic_head_1 / night": {
+            "directColor": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.12156862745098039,
+              "g": 0.050980392156862744,
+              "b": 0.047058823529411764,
+              "a": 1
+            }
+          },
+          "objects / mic_head_2 / night": {
+            "directColor": {
+              "r": 0.03529411764705882,
+              "g": 0.03137254901960784,
+              "b": 0.03137254901960784,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.6470588235294118,
+              "g": 0.6,
+              "b": 0.42745098039215684,
+              "a": 1
+            }
+          },
+          "objects / mic_head_3 / day": {
+            "directColor": {
+              "r": 0.07450980392156863,
+              "g": 0.12156862745098039,
+              "b": 0.11764705882352941,
+              "a": 1
+            }
+          },
+          "objects / mic_head_3 / night": {
+            "directColor": {
+              "r": 0.011764705882352941,
+              "g": 0.011764705882352941,
+              "b": 0.011764705882352941,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.1607843137254902,
+              "g": 0.0392156862745098,
+              "b": 0.03529411764705882,
+              "a": 1
+            }
+          },
+          "objects / estrade / day": {
+            "directColor": {
+              "r": 0.47843137254901963,
+              "g": 0.3764705882352941,
+              "b": 0.23921568627450981,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.06666666666666667,
+              "g": 0.050980392156862744,
+              "b": 0.043137254901960784,
+              "a": 1
+            }
+          },
+          "objects / scene_arch / day": {
+            "directColor": {
+              "r": 0.6901960784313725,
+              "g": 0.6,
+              "b": 0.4196078431372549,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.06666666666666667,
+              "g": 0.050980392156862744,
+              "b": 0.043137254901960784,
+              "a": 1
+            }
+          },
+          "objects / scene_arch / Material": {
+            "randomScale": 1000,
+            "randomIntensity": 0.2799999999999997
+          },
+          "objects / ponton / Material": {
+            "randomIntensity": 0.44000000000000017
+          },
+          "objects / zone_3 / Material": {
+            "randomScale": 30000,
+            "randomIntensity": 0.43999999999999995
+          },
+          "objects / end_porte / day": {
+            "directColor": {
+              "r": 0.5725490196078431,
+              "g": 0.4745098039215686,
+              "b": 0.3568627450980392,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            }
+          },
+          "objects / end_porte / Material": {
+            "randomIntensity": 0.01999999999999997,
+            "randomScale": 5000
+          },
+          "objects / water / Material": {
+            "map": {
+              "type": "image"
+            }
+          },
+          "objects / door / Material": {
+            "randomScale": 20000,
+            "randomIntensity": 0.31000000000000005
+          },
+          "objects / door_left / day": {
+            "directColor": {
+              "r": 0.36470588235294116,
+              "g": 0.24705882352941178,
+              "b": 0.12549019607843137,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.34509803921568627,
+              "g": 0.25098039215686274,
+              "b": 0.11372549019607843,
+              "a": 1
+            }
+          },
+          "objects / base_usb / day": {
+            "directColor": {
+              "r": 0.2823529411764706,
+              "g": 0.2196078431372549,
+              "b": 0.13333333333333333,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.03529411764705882,
+              "g": 0.027450980392156862,
+              "b": 0.01568627450980392,
+              "a": 1
+            }
+          },
+          "objects / big_arch011 / day": {
+            "directColor": {
+              "r": 0.5411764705882353,
+              "g": 0.48627450980392156,
+              "b": 0.37254901960784315,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.10196078431372549,
+              "g": 0.08235294117647059,
+              "b": 0.0392156862745098,
+              "a": 1
+            }
+          },
+          "objects / terasse / day": {
+            "directColor": {
+              "r": 0.7686274509803922,
+              "g": 0.6705882352941176,
+              "b": 0.47058823529411764,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.17647058823529413,
+              "g": 0.13725490196078433,
+              "b": 0.07058823529411765,
+              "a": 1
+            }
+          },
+          "objects / door_right / night": {
+            "directColor": {
+              "r": 0.011764705882352941,
+              "g": 0.011764705882352941,
+              "b": 0.011764705882352941,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            }
+          },
+          "objects / door_right / day": {
+            "directColor": {
+              "r": 0.36470588235294116,
+              "g": 0.24705882352941178,
+              "b": 0.12549019607843137,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.34509803921568627,
+              "g": 0.25098039215686274,
+              "b": 0.11372549019607843,
+              "a": 1
+            }
+          },
+          "objects / arch_water / day": {
+            "directColor": {
+              "r": 0.40784313725490196,
+              "g": 0.3137254901960784,
+              "b": 0.25882352941176473,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.14901960784313725,
+              "g": 0.11372549019607843,
+              "b": 0.07450980392156863,
+              "a": 1
+            }
+          },
+          "objects / arch_water / Material": {
+            "randomScale": 5000
+          },
+          "objects / rock_dune_04_root / Material": {
+            "randomScale": 600
+          },
+          "objects / rock_dune_03_root / Material": {
+            "randomScale": 600
+          },
+          "objects / rock_dune_06_root / Material": {
+            "randomScale": 1500
+          },
+          "objects / arch009 / day": {
+            "directColor": {
+              "r": 0.49411764705882355,
+              "g": 0.43137254901960786,
+              "b": 0.3137254901960784,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.3843137254901961,
+              "g": 0.3215686274509804,
+              "b": 0.20392156862745098,
+              "a": 1
+            }
+          },
+          "objects / door_left_end / day": {
+            "directColor": {
+              "r": 0.40784313725490196,
+              "g": 0.3137254901960784,
+              "b": 0.25882352941176473,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.14901960784313725,
+              "g": 0.11372549019607843,
+              "b": 0.07450980392156863,
+              "a": 1
+            }
+          },
+          "objects / door_right_end / day": {
+            "directColor": {
+              "r": 0.40784313725490196,
+              "g": 0.3137254901960784,
+              "b": 0.25882352941176473,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.14901960784313725,
+              "g": 0.11372549019607843,
+              "b": 0.07450980392156863,
+              "a": 1
+            }
+          },
+          "objects / tronc_logo / night": {
+            "indirectColor": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            },
+            "directColor": {
+              "r": 0.03529411764705882,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            },
+            "luminance": 4.340000000000005
+          },
+          "objects / tronc_logo / Material": {
+            "randomIntensity": 0.9299999999999999,
+            "color": {
+              "r": 0.3568627450980392,
+              "g": 0.3568627450980392,
+              "b": 0.3568627450980392,
+              "a": 1
+            },
+            "randomScale": 1000
+          },
+          "objects / tree / night": {
+            "indirectColor": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            },
+            "directColor": {
+              "r": 1,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            },
+            "luminance": 0.2899999999999999
+          },
+          "objects / vinyle / night": {
+            "indirectColor": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            },
+            "directColor": {
+              "r": 0.3254901960784314,
+              "g": 0.16862745098039217,
+              "b": 0.16862745098039217,
+              "a": 1
+            }
+          },
+          "objects / bidule002 / night": {
+            "indirectColor": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            },
+            "directColor": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            }
+          },
+          "objects / bidule / night": {
+            "indirectColor": {
+              "r": 0.7686274509803922,
+              "g": 0.13725490196078433,
+              "b": 0,
+              "a": 1
+            },
+            "directColor": {
+              "r": 0.3058823529411765,
+              "g": 0.054901960784313725,
+              "b": 0,
+              "a": 1
+            }
+          },
+          "objects / cactus_08_reference001 / night": {
+            "directColor": {
+              "r": 0.21176470588235294,
+              "g": 0.16862745098039217,
+              "b": 0.13725490196078433,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.21568627450980393,
+              "g": 0.21176470588235294,
+              "b": 0.2980392156862745,
+              "a": 1
+            }
+          },
+          "objects / cactus_08_reference001 / day": {
+            "directColor": {
+              "r": 0.2784313725490196,
+              "g": 0.30980392156862746,
+              "b": 0.23921568627450981,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.2784313725490196,
+              "g": 0.30980392156862746,
+              "b": 0.23921568627450981,
+              "a": 1
+            }
+          },
+          "objects / camera / night": {
+            "indirectColor": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            },
+            "directColor": {
+              "r": 1,
+              "g": 0.4,
+              "b": 0.4,
+              "a": 1
+            }
+          },
+          "objects / tige_cam / night": {
+            "directColor": {
+              "r": 1,
+              "g": 0.4,
+              "b": 0.4,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            }
+          },
+          "objects / spirale / day": {
+            "indirectColor": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            },
+            "directColor": {
+              "r": 0.8117647058823529,
+              "g": 0.596078431372549,
+              "b": 0.41568627450980394,
+              "a": 1
+            }
+          },
+          "objects / radio / night": {
+            "indirectColor": {
+              "r": 0.17254901960784313,
+              "g": 0.16862745098039217,
+              "b": 0.24313725490196078,
+              "a": 1
+            },
+            "directColor": {
+              "r": 0.4588235294117647,
+              "g": 0.39215686274509803,
+              "b": 0.3411764705882353,
+              "a": 1
+            }
+          },
+          "objects / grass_01001 / night": {
+            "indirectColor": {
+              "r": 0.16470588235294117,
+              "g": 0.1607843137254902,
+              "b": 0.23529411764705882,
+              "a": 1
+            },
+            "directColor": {
+              "r": 0.45098039215686275,
+              "g": 0.3803921568627451,
+              "b": 0.3254901960784314,
+              "a": 1
+            }
+          },
+          "objects / socle / night": {
+            "directColor": {
+              "r": 0.2823529411764706,
+              "g": 0.2196078431372549,
+              "b": 0.13333333333333333,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.03529411764705882,
+              "g": 0.027450980392156862,
+              "b": 0.01568627450980392,
+              "a": 1
+            }
+          },
+          "objects / big_arch008 / night": {
+            "directColor": {
+              "r": 0.5411764705882353,
+              "g": 0.48627450980392156,
+              "b": 0.37254901960784315,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.10196078431372549,
+              "g": 0.08235294117647059,
+              "b": 0.0392156862745098,
+              "a": 1
+            }
+          },
+          "objects / big_arch011 / night": {
+            "directColor": {
+              "r": 0.5411764705882353,
+              "g": 0.48627450980392156,
+              "b": 0.37254901960784315,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.10196078431372549,
+              "g": 0.08235294117647059,
+              "b": 0.0392156862745098,
+              "a": 1
+            }
+          },
+          "objects / arch009 / night": {
+            "directColor": {
+              "r": 0.49411764705882355,
+              "g": 0.43137254901960786,
+              "b": 0.3137254901960784,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.3843137254901961,
+              "g": 0.3215686274509804,
+              "b": 0.20392156862745098,
+              "a": 1
+            }
+          },
+          "objects / arch010 / night": {
+            "directColor": {
+              "r": 0.49411764705882355,
+              "g": 0.43137254901960786,
+              "b": 0.3137254901960784,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.3843137254901961,
+              "g": 0.3215686274509804,
+              "b": 0.20392156862745098,
+              "a": 1
+            }
+          },
+          "objects / arch021 / night": {
+            "directColor": {
+              "r": 0.4666666666666667,
+              "g": 0.40784313725490196,
+              "b": 0.2980392156862745,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.3843137254901961,
+              "g": 0.3215686274509804,
+              "b": 0.20392156862745098,
+              "a": 1
+            }
+          },
+          "objects / arch022 / night": {
+            "directColor": {
+              "r": 0.49411764705882355,
+              "g": 0.43137254901960786,
+              "b": 0.3137254901960784,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.3843137254901961,
+              "g": 0.3215686274509804,
+              "b": 0.20392156862745098,
+              "a": 1
+            }
+          },
+          "objects / scene_arch / night": {
+            "directColor": {
+              "r": 0.6901960784313725,
+              "g": 0.6,
+              "b": 0.4196078431372549,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.06666666666666667,
+              "g": 0.050980392156862744,
+              "b": 0.043137254901960784,
+              "a": 1
+            }
+          },
+          "objects / palace001 / night": {
+            "directColor": {
+              "r": 0.49411764705882355,
+              "g": 0.43137254901960786,
+              "b": 0.3137254901960784,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.3843137254901961,
+              "g": 0.3215686274509804,
+              "b": 0.20392156862745098,
+              "a": 1
+            }
+          },
+          "objects / stair_impo / night": {
+            "directColor": {
+              "r": 0.5803921568627451,
+              "g": 0.5058823529411764,
+              "b": 0.3607843137254902,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.17647058823529413,
+              "g": 0.13725490196078433,
+              "b": 0.07058823529411765,
+              "a": 1
+            }
+          },
+          "objects / stair_step006 / night": {
+            "directColor": {
+              "r": 0.2823529411764706,
+              "g": 0.2196078431372549,
+              "b": 0.13333333333333333,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.03529411764705882,
+              "g": 0.027450980392156862,
+              "b": 0.01568627450980392,
+              "a": 1
+            }
+          },
+          "objects / base_usb / night": {
+            "directColor": {
+              "r": 0.2823529411764706,
+              "g": 0.2196078431372549,
+              "b": 0.13333333333333333,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.03529411764705882,
+              "g": 0.027450980392156862,
+              "b": 0.01568627450980392,
+              "a": 1
+            }
+          },
+          "objects / estrade / night": {
+            "directColor": {
+              "r": 0.47843137254901963,
+              "g": 0.3764705882352941,
+              "b": 0.23921568627450981,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.06666666666666667,
+              "g": 0.050980392156862744,
+              "b": 0.043137254901960784,
+              "a": 1
+            }
+          }
+        }
+      }
+    },
+    "bike": {
+      "staticOverrides": {
+        "byObject": {
+          "0dadbe7c-48d8-4aa0-8ebf-a61b18ca92b7": {
+            "intensity": 524
+          },
+          "a9569575-6d26-4baa-a047-4550e8324a5b": {
+            "distance": 18
+          },
+          "a9569575": {
+            "translation": {
+              "x": 0,
+              "y": 1
+            }
+          },
+          "a661edc5-1eb6-4932-92de-6dbeb3d9ec55": {
+            "angle": 0.7,
+            "distance": 15,
+            "decay": 2
+          },
+          "objects / yame / day": {
+            "luminance": 1.7800000000000007
+          },
+          "objects / front_mudguard / day": {
+            "directColor": {
+              "r": 0.1803921568627451,
+              "g": 0.25098039215686274,
+              "b": 0.20784313725490197,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            }
+          },
+          "objects / lining / day": {
+            "directColor": {
+              "r": 0.1803921568627451,
+              "g": 0.25098039215686274,
+              "b": 0.20784313725490197,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            }
+          },
+          "objects / seat / day": {
+            "directColor": {
+              "r": 0.12156862745098039,
+              "g": 0.12156862745098039,
+              "b": 0.12941176470588237,
+              "a": 1
+            }
+          },
+          "objects / horn / day": {
+            "directColor": {
+              "r": 0.49411764705882355,
+              "g": 0.40784313725490196,
+              "b": 0.25882352941176473,
+              "a": 1
+            }
+          },
+          "objects / rear_tire / day": {
+            "directColor": {
+              "r": 0.16862745098039217,
+              "g": 0.17254901960784313,
+              "b": 0.17647058823529413,
+              "a": 1
+            }
+          },
+          "objects / motor / day": {
+            "directColor": {
+              "r": 0.6,
+              "g": 0.5725490196078431,
+              "b": 0.5137254901960784,
+              "a": 1
+            }
+          },
+          "objects / rear_rim / day": {
+            "directColor": {
+              "r": 0.6,
+              "g": 0.5725490196078431,
+              "b": 0.5137254901960784,
+              "a": 1
+            }
+          },
+          "objects / fairing / day": {
+            "directColor": {
+              "r": 0.796078431372549,
+              "g": 0.7843137254901961,
+              "b": 0.7568627450980392,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0.08627450980392157,
+              "g": 0.09019607843137255,
+              "b": 0.09411764705882353,
+              "a": 1
+            }
+          },
+          "objects / yame / night": {
+            "directColor": {
+              "r": 0.10980392156862745,
+              "g": 0.043137254901960784,
+              "b": 0.043137254901960784,
+              "a": 1
+            }
+          },
+          "objects / fairing / night": {
+            "directColor": {
+              "r": 0.011764705882352941,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            }
+          },
+          "objects / fork / night": {
+            "directColor": {
+              "r": 0.011764705882352941,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            }
+          },
+          "objects / front_light / night": {
+            "directColor": {
+              "r": 0.011764705882352941,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            }
+          },
+          "objects / front_mudguard / night": {
+            "directColor": {
+              "r": 0.011764705882352941,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            }
+          },
+          "objects / front_rim / night": {
+            "directColor": {
+              "r": 0.011764705882352941,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            }
+          },
+          "objects / front_tire / night": {
+            "directColor": {
+              "r": 0.011764705882352941,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            }
+          },
+          "objects / horn / night": {
+            "directColor": {
+              "r": 0.011764705882352941,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            }
+          },
+          "objects / lining / night": {
+            "directColor": {
+              "r": 0.011764705882352941,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            }
+          },
+          "objects / motor / night": {
+            "directColor": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            }
+          },
+          "objects / rear_rim / night": {
+            "directColor": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            }
+          },
+          "objects / rear_tire / night": {
+            "directColor": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            },
+            "indirectColor": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            }
+          },
+          "objects / seat / night": {
+            "directColor": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            }
+          }
+        }
+      }
+    },
+    "Orbital Sequence": {
+      "staticOverrides": {
+        "byObject": {
+          "Camera / Views / HomeDesktop": {
+            "positionY": 1.5000000000000573,
+            "positionZ": 0,
+            "positionX": -15.500000000000034,
+            "fov": 73,
+            "lookAtX": 0.19999999999998722,
+            "lookAtY": 1.900000000000005,
+            "lookAtZ": -0.49999999999999356,
+            "far": 127.59999999999968
+          },
+          "Day - Night": {
+            "mix": 1
+          },
+          "Door": {
+            "right": 3.141592653589793
+          },
+          "Fog": {
+            "intensity": 0
+          },
+          "DoorEnd": {
+            "left": 0
+          }
+        }
+      },
+      "sequence": {
+        "subUnitsPerUnit": 30,
+        "length": 10,
+        "type": "PositionalSequence",
+        "tracksByObject": {
+          "Camera / Views / HomePhone": {
+            "trackData": {
+              "oS4y9kqLCi": {
+                "type": "BasicKeyframedTrack",
+                "__debugName": "Camera / Views / HomePhone:[\"positionX\"]",
+                "keyframes": [
+                  {
+                    "id": "7lNfgdwln6",
+                    "position": 0.1,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": -5.1999999999999975
+                  },
+                  {
+                    "id": "ApKT-Y6KGb",
+                    "position": 0.467,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": -1.2
+                  },
+                  {
+                    "id": "W5BxyLj8Ra",
+                    "position": 0.567,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": -1.2
+                  },
+                  {
+                    "id": "Gw_a6PnHGs",
+                    "position": 1,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": -16
+                  },
+                  {
+                    "id": "FmulwBTo9O",
+                    "position": 1.2,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": -16
+                  },
+                  {
+                    "id": "WRNkXxWmRn",
+                    "position": 1.6,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": -16
+                  },
+                  {
+                    "id": "ZzA5jD8_x3",
+                    "position": 2.267,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": -13.799999999999974
+                  },
+                  {
+                    "id": "ckRbx9q2Vp",
+                    "position": 3.067,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": -4.5
+                  },
+                  {
+                    "id": "cywE2iVwXY",
+                    "position": 4.567,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": -11.999999999999982
+                  },
+                  {
+                    "id": "HmGEgJO6ks",
+                    "position": 6.067,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": -4.200006340828615
+                  },
+                  {
+                    "id": "gdjUoMTMyE",
+                    "position": 6.533,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": -14.700006340828605
+                  },
+                  {
+                    "id": "YCay4v3b5r",
+                    "position": 7.633,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": -4.000000000000001
+                  },
+                  {
+                    "id": "MbLXh5u9Vj",
+                    "position": 8.467,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": -4.000000000000001
+                  },
+                  {
+                    "id": "8ZcnRC_fq1",
+                    "position": 8.7,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": -4.000000000000001
+                  },
+                  {
+                    "id": "KTdZ--CNK9",
+                    "position": 9.1,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": -15.29999999999998
+                  },
+                  {
+                    "id": "_JQF1tHKiM",
+                    "position": 9.967,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": -5.1999999999999975
+                  }
+                ]
+              },
+              "HWBjfkpKp-": {
+                "type": "BasicKeyframedTrack",
+                "__debugName": "Camera / Views / HomePhone:[\"positionY\"]",
+                "keyframes": [
+                  {
+                    "id": "JALcxKn_aB",
+                    "position": 0.1,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 1.6998604377007753
+                  },
+                  {
+                    "id": "d3Jkqbbdkd",
+                    "position": 0.467,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 0.3
+                  },
+                  {
+                    "id": "6LWA73J7x4",
+                    "position": 0.567,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 0.3
+                  },
+                  {
+                    "id": "Xp8ioXnZnQ",
+                    "position": 1,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 3.5
+                  },
+                  {
+                    "id": "N3CCWVOrWv",
+                    "position": 1.2,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 3.5
+                  },
+                  {
+                    "id": "iIybnxhxhm",
+                    "position": 1.6,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 3.5
+                  },
+                  {
+                    "id": "lfGLCeHk-G",
+                    "position": 3.067,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 1
+                  },
+                  {
+                    "id": "zshVR4eX05",
+                    "position": 4.567,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 0.49900000000000067
+                  },
+                  {
+                    "id": "-EyEFOCeHG",
+                    "position": 5.467,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 0.49900000000000067
+                  },
+                  {
+                    "id": "QSuVM0LIk0",
+                    "position": 6.067,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 2.6989983462006033
+                  },
+                  {
+                    "id": "8GfLR0Hb17",
+                    "position": 6.533,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 4.598998346200603
+                  },
+                  {
+                    "id": "gIq_GVDXTJ",
+                    "position": 7.633,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 1.599999999999995
+                  },
+                  {
+                    "id": "kUVD8rKBUf",
+                    "position": 8.467,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 1.8999999999999941
+                  },
+                  {
+                    "id": "QfphVoK29a",
+                    "position": 8.7,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 1.8999999999999941
+                  },
+                  {
+                    "id": "4qz2j089_r",
+                    "position": 9.1,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 7.1999999999999975
+                  },
+                  {
+                    "id": "ITLsqQ025Q",
+                    "position": 9.967,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 1.6998604377007753
+                  }
+                ]
+              },
+              "Mqjk4pFIsF": {
+                "type": "BasicKeyframedTrack",
+                "__debugName": "Camera / Views / HomePhone:[\"positionZ\"]",
+                "keyframes": [
+                  {
+                    "id": "GiEHLm_qam",
+                    "position": 0.1,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 2.9
+                  },
+                  {
+                    "id": "PW392bwZeM",
+                    "position": 0.467,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 3.1
+                  },
+                  {
+                    "id": "DwBLGQGxOe",
+                    "position": 0.567,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 3.1
+                  },
+                  {
+                    "id": "gpAISlFa5u",
+                    "position": 1,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 0.00030885060413224363
+                  },
+                  {
+                    "id": "fNx-BaK2UH",
+                    "position": 1.2,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 0.00030885060413224363
+                  },
+                  {
+                    "id": "fLQ8nC1B6S",
+                    "position": 1.6,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 0.00030885060413224363
+                  },
+                  {
+                    "id": "8lZsu82DPK",
+                    "position": 2,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": -4.173736072321369
+                  },
+                  {
+                    "id": "g66_zWtZXk",
+                    "position": 2.267,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 1.03
+                  },
+                  {
+                    "id": "hnnA8SQpDH",
+                    "position": 3.067,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 0.00030885060413224363
+                  },
+                  {
+                    "id": "ekZddHmcGB",
+                    "position": 4.567,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": -0.202
+                  },
+                  {
+                    "id": "8P10CCjhjC",
+                    "position": 5.467,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": -0.0019999999999999185
+                  },
+                  {
+                    "id": "aJB9cVooRM",
+                    "position": 6.067,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 0.3000000000000006
+                  },
+                  {
+                    "id": "c3WCyNU_uf",
+                    "position": 7.633,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 0.00030885060413224363
+                  },
+                  {
+                    "id": "l-P5Ud9mkQ",
+                    "position": 8.467,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": -0.09969114939586782
+                  },
+                  {
+                    "id": "_TC1fdJf7v",
+                    "position": 8.7,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": -0.09969114939586782
+                  },
+                  {
+                    "id": "a69KlNIaLA",
+                    "position": 9.967,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 2.9
+                  }
+                ]
+              },
+              "PqIhWKavsi": {
+                "type": "BasicKeyframedTrack",
+                "__debugName": "Camera / Views / HomePhone:[\"lookAtX\"]",
+                "keyframes": [
+                  {
+                    "id": "g1mlhSLg-P",
+                    "position": 0.1,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 0.1
+                  },
+                  {
+                    "id": "_5ZIbgEDsY",
+                    "position": 0.467,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 0.1
+                  },
+                  {
+                    "id": "sNcDl0ysj9",
+                    "position": 0.567,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 0.1
+                  },
+                  {
+                    "id": "nlwv6RWmCj",
+                    "position": 1,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 1.2
+                  },
+                  {
+                    "id": "ceRLYnFDaz",
+                    "position": 1.2,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 1.2
+                  },
+                  {
+                    "id": "WmIOtoQFxd",
+                    "position": 1.6,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 1.2
+                  },
+                  {
+                    "id": "pCl-KB51UY",
+                    "position": 2.267,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 10.7
+                  },
+                  {
+                    "id": "eNCJXMQBoS",
+                    "position": 3.067,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 13.1
+                  },
+                  {
+                    "id": "pWLoKZIip2",
+                    "position": 4.567,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 13.1
+                  },
+                  {
+                    "id": "bis7dt6HND",
+                    "position": 5.467,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 13.1
+                  },
+                  {
+                    "id": "uUgDySqG7f",
+                    "position": 6.067,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 19.000000000000018
+                  },
+                  {
+                    "id": "rKMMnY9mAH",
+                    "position": 7.633,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 13.1
+                  },
+                  {
+                    "id": "D7q_a1vj9W",
+                    "position": 8.467,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 13.1
+                  },
+                  {
+                    "id": "Ay2YrdKMJA",
+                    "position": 8.7,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 13.1
+                  },
+                  {
+                    "id": "Hmcjmvm8l6",
+                    "position": 9.967,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 0.1
+                  }
+                ]
+              },
+              "Wbxq8z2BzH": {
+                "type": "BasicKeyframedTrack",
+                "__debugName": "Camera / Views / HomePhone:[\"lookAtY\"]",
+                "keyframes": [
+                  {
+                    "id": "_zeLdjOFOg",
+                    "position": 0.1,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 0.8
+                  },
+                  {
+                    "id": "xQfA02JznD",
+                    "position": 0.467,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 0.8
+                  },
+                  {
+                    "id": "gx3abcyOdX",
+                    "position": 0.567,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 0.8
+                  },
+                  {
+                    "id": "YhzsZ0rPvc",
+                    "position": 1,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 2
+                  },
+                  {
+                    "id": "DJspJhnXCH",
+                    "position": 1.2,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 2
+                  },
+                  {
+                    "id": "JBxEy8kID_",
+                    "position": 1.6,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 2
+                  },
+                  {
+                    "id": "RA6HysT_uY",
+                    "position": 2.267,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 2.09
+                  },
+                  {
+                    "id": "JYVigyDqlr",
+                    "position": 3.067,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 4.9
+                  },
+                  {
+                    "id": "AqOiFuVxwk",
+                    "position": 4.567,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 4.9
+                  },
+                  {
+                    "id": "R7UHBSm_Ow",
+                    "position": 5.467,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 4.9
+                  },
+                  {
+                    "id": "mhewWHJidU",
+                    "position": 6.067,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": -5.099999999999996
+                  },
+                  {
+                    "id": "-G6eE8BA2X",
+                    "position": 7.633,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 1.9999999999999958
+                  },
+                  {
+                    "id": "NNKf2cDBzS",
+                    "position": 8.467,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 1.9999999999999958
+                  },
+                  {
+                    "id": "zM6_9rFNpa",
+                    "position": 8.7,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 1.9999999999999958
+                  },
+                  {
+                    "id": "JgINJdmIkg",
+                    "position": 9.967,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 0.8
+                  }
+                ]
+              },
+              "Z_kcBJqQAw": {
+                "type": "BasicKeyframedTrack",
+                "__debugName": "Camera / Views / HomePhone:[\"lookAtZ\"]",
+                "keyframes": [
+                  {
+                    "id": "QwykyShx0B",
+                    "position": 0.1,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 0
+                  },
+                  {
+                    "id": "52wsULedaT",
+                    "position": 0.467,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 0
+                  },
+                  {
+                    "id": "dDHNUZGbtC",
+                    "position": 0.567,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 0
+                  },
+                  {
+                    "id": "wk5xhoosUi",
+                    "position": 1,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": -0.2000000000000006
+                  },
+                  {
+                    "id": "AoGHv9h6Go",
+                    "position": 1.2,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": -0.2000000000000006
+                  },
+                  {
+                    "id": "pwytaYb5S4",
+                    "position": 1.6,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": -0.2000000000000006
+                  },
+                  {
+                    "id": "xwVj3eG36D",
+                    "position": 2,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 4.000423055584749
+                  },
+                  {
+                    "id": "O1esJA1h_1",
+                    "position": 2.467,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 1.9
+                  },
+                  {
+                    "id": "I6bb8su2BH",
+                    "position": 3.067,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": -0.2000000000000006
+                  },
+                  {
+                    "id": "gCC5lSs6-o",
+                    "position": 4.567,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": -0.29429194764598865
+                  },
+                  {
+                    "id": "y1giW_eOii",
+                    "position": 5.467,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 0.10570805235401137
+                  },
+                  {
+                    "id": "P65b5GYclG",
+                    "position": 6.067,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": -0.6942919476459879
+                  },
+                  {
+                    "id": "27DbqxOZNT",
+                    "position": 6.333,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 3.005708052354013
+                  },
+                  {
+                    "id": "c0bJV4bRo4",
+                    "position": 6.867,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": -0.29429194764598876
+                  },
+                  {
+                    "id": "iWd6aGRzZr",
+                    "position": 7.633,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 0.09999999999999959
+                  },
+                  {
+                    "id": "rOvW_U2Iz0",
+                    "position": 8.467,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 0.39999999999999947
+                  },
+                  {
+                    "id": "QYv4R1Gvn0",
+                    "position": 8.867,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 3.9000000000000012
+                  },
+                  {
+                    "id": "3DEdywvido",
+                    "position": 9.967,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 0
+                  }
+                ]
+              },
+              "Hi1D9x5oMO": {
+                "type": "BasicKeyframedTrack",
+                "__debugName": "Camera / Views / HomePhone:[\"fov\"]",
+                "keyframes": [
+                  {
+                    "id": "T3D7B6B1aN",
+                    "position": 0.1,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 63
+                  },
+                  {
+                    "id": "ihlTq1bGQ5",
+                    "position": 0.467,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 63
+                  },
+                  {
+                    "id": "d5FJG7ltnf",
+                    "position": 0.567,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 63
+                  },
+                  {
+                    "id": "k3Kukw5_oo",
+                    "position": 1,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 47
+                  },
+                  {
+                    "id": "vZLQooItsQ",
+                    "position": 1.2,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 47
+                  },
+                  {
+                    "id": "cqobPXQfsb",
+                    "position": 1.6,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 47
+                  },
+                  {
+                    "id": "breQfq4bv7",
+                    "position": 3.067,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 90
+                  },
+                  {
+                    "id": "f5WdK6shYP",
+                    "position": 4.567,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 60
+                  },
+                  {
+                    "id": "CHvJocerww",
+                    "position": 5.467,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 60
+                  },
+                  {
+                    "id": "FVkuhzlGUi",
+                    "position": 6.067,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 68
+                  },
+                  {
+                    "id": "_69Mw07eZL",
+                    "position": 7.633,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 90
+                  },
+                  {
+                    "id": "QiWZYd3qpP",
+                    "position": 8.467,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 90
+                  },
+                  {
+                    "id": "KhJDhDqIN3",
+                    "position": 8.7,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 90
+                  },
+                  {
+                    "id": "ZW_QJkZTOh",
+                    "position": 9.967,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 63
+                  }
+                ]
+              },
+              "wFm4wMQuUB": {
+                "type": "BasicKeyframedTrack",
+                "__debugName": "Camera / Views / HomePhone:[\"far\"]",
+                "keyframes": [
+                  {
+                    "id": "TPOO0m8b9x",
+                    "position": 0.1,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 150
+                  },
+                  {
+                    "id": "ZIMUb_ERdm",
+                    "position": 0.467,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 150
+                  },
+                  {
+                    "id": "bG0Pf3MWB3",
+                    "position": 0.567,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 150
+                  },
+                  {
+                    "id": "swHdFmXd64",
+                    "position": 9.967,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 150
+                  }
+                ]
+              }
+            },
+            "trackIdByPropPath": {
+              "[\"positionX\"]": "oS4y9kqLCi",
+              "[\"positionY\"]": "HWBjfkpKp-",
+              "[\"positionZ\"]": "Mqjk4pFIsF",
+              "[\"lookAtX\"]": "PqIhWKavsi",
+              "[\"lookAtY\"]": "Wbxq8z2BzH",
+              "[\"lookAtZ\"]": "Z_kcBJqQAw",
+              "[\"fov\"]": "Hi1D9x5oMO",
+              "[\"far\"]": "wFm4wMQuUB"
+            }
+          },
+          "Camera / Views / HomeDesktop": {
+            "trackData": {
+              "TcwdpBuWqS": {
+                "type": "BasicKeyframedTrack",
+                "__debugName": "Camera / Views / HomeDesktop:[\"positionX\"]",
+                "keyframes": [
+                  {
+                    "id": "-bVR4xKky9",
+                    "position": 0.5,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": -1.102
+                  },
+                  {
+                    "id": "jmdryTQTcW",
+                    "position": 1.033,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": -13.299999999999969
+                  },
+                  {
+                    "id": "Y3eiQdLUXY",
+                    "position": 1.5,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": -2.7
+                  },
+                  {
+                    "id": "3_8ppqdO30",
+                    "position": 1.733,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.2369058017532597, 0.07023024646909613],
+                    "type": "bezier",
+                    "value": -2.7
+                  },
+                  {
+                    "id": "Qu_7IRCho3",
+                    "position": 2.433,
+                    "connectedRight": true,
+                    "handles": [0.32411778155699034, 0.9905876832131454, 0.5184094256259204, -0.00635682641819072],
+                    "type": "bezier",
+                    "value": -14
+                  },
+                  {
+                    "id": "sNPpoz93nd",
+                    "position": 3,
+                    "connectedRight": true,
+                    "handles": [0.6310163681297701, 0.968256021899212, 1, 0.0003104908047987208],
+                    "type": "bezier",
+                    "value": -2.769483294416348
+                  },
+                  {
+                    "id": "5ppP2PyXG0",
+                    "position": 3.533,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.7447229993250797, 0.008211822630890056],
+                    "type": "bezier",
+                    "value": -2.7
+                  },
+                  {
+                    "id": "zME0aYk7EN",
+                    "position": 4.567,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": -14
+                  },
+                  {
+                    "id": "TDKwga-fUR",
+                    "position": 6.033,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": -7.649583536831453
+                  },
+                  {
+                    "id": "TlvJqi767H",
+                    "position": 6.633,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": -20
+                  },
+                  {
+                    "id": "RExPqLjmkw",
+                    "position": 6.733,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": -20
+                  },
+                  {
+                    "id": "RIJni3UrLO",
+                    "position": 7.333,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": -3.303306442892699
+                  },
+                  {
+                    "id": "akXfQvLj1X",
+                    "position": 8.333,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": -7.204345044461843
+                  },
+                  {
+                    "id": "qZyUbblm4_",
+                    "position": 9.2,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.2841519570222565, 0.27879147607673815],
+                    "type": "bezier",
+                    "value": -19.902036394897284
+                  },
+                  {
+                    "id": "GnJ44AEqvi",
+                    "position": 10,
+                    "connectedRight": true,
+                    "handles": [0.39207597851112824, 0.9761035877648511, 0.5, 0],
+                    "type": "bezier",
+                    "value": -1.102
+                  }
+                ]
+              },
+              "LFuOh1Y2Zo": {
+                "type": "BasicKeyframedTrack",
+                "__debugName": "Camera / Views / HomeDesktop:[\"positionY\"]",
+                "keyframes": [
+                  {
+                    "id": "RAighXwpVi",
+                    "position": 0.5,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 0.6
+                  },
+                  {
+                    "id": "AmRuAYDHNd",
+                    "position": 1.033,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 1.100000000000004
+                  },
+                  {
+                    "id": "zA0DNgNWsb",
+                    "position": 1.5,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 0.8
+                  },
+                  {
+                    "id": "wnYnQNBDKQ",
+                    "position": 1.733,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 0.8
+                  },
+                  {
+                    "id": "GmMSbSpqFR",
+                    "position": 2.433,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 2.5
+                  },
+                  {
+                    "id": "dSCvD80e6B",
+                    "position": 2.833,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 0.8
+                  },
+                  {
+                    "id": "DCKHh1Jp-q",
+                    "position": 3.533,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 0.8
+                  },
+                  {
+                    "id": "KG2qv6Hcv4",
+                    "position": 4.567,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 1.01
+                  },
+                  {
+                    "id": "vyKdHberB9",
+                    "position": 6.033,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 1.1000000000000008
+                  },
+                  {
+                    "id": "wEpVZCKvxc",
+                    "position": 6.633,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 5.124605149972712
+                  },
+                  {
+                    "id": "aAUUQX7Wcv",
+                    "position": 7.333,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 0.7056817968953321
+                  },
+                  {
+                    "id": "KktW7qmlSs",
+                    "position": 8.333,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 0.7056817968953321
+                  },
+                  {
+                    "id": "lIBwRbDeOb",
+                    "position": 9.2,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 4.220779023416002
+                  },
+                  {
+                    "id": "P0XGQbJpQD",
+                    "position": 10,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 0.6
+                  }
+                ]
+              },
+              "9-OPqj_ucO": {
+                "type": "BasicKeyframedTrack",
+                "__debugName": "Camera / Views / HomeDesktop:[\"positionZ\"]",
+                "keyframes": [
+                  {
+                    "id": "WPBLBZntOP",
+                    "position": 0.5,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 1.8
+                  },
+                  {
+                    "id": "wSUI5nR-m2",
+                    "position": 1.033,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 0
+                  },
+                  {
+                    "id": "qo3A3sO4je",
+                    "position": 1.5,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 0
+                  },
+                  {
+                    "id": "Kh5zEH3JZC",
+                    "position": 1.733,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 0
+                  },
+                  {
+                    "id": "hSW0Rr3-1q",
+                    "position": 2.433,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": -1.1150726392260388
+                  },
+                  {
+                    "id": "6X8eJELP9C",
+                    "position": 2.833,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 0
+                  },
+                  {
+                    "id": "ilozR5qWpG",
+                    "position": 3.533,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 0
+                  },
+                  {
+                    "id": "TtaIYciq8I",
+                    "position": 4.567,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": -0.29
+                  },
+                  {
+                    "id": "CvmuTIsuSd",
+                    "position": 6.033,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": -0.5
+                  },
+                  {
+                    "id": "ST8of5FiYp",
+                    "position": 7.333,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 1.442378892504745
+                  },
+                  {
+                    "id": "K35BXBB81A",
+                    "position": 8.333,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 1.442378892504745
+                  },
+                  {
+                    "id": "DI-t_NfFIa",
+                    "position": 9.633,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 0.9736360160145009
+                  },
+                  {
+                    "id": "DW_uSOsl69",
+                    "position": 10,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 1.8
+                  }
+                ]
+              },
+              "EqLfnwMFs1": {
+                "type": "BasicKeyframedTrack",
+                "__debugName": "Camera / Views / HomeDesktop:[\"lookAtX\"]",
+                "keyframes": [
+                  {
+                    "id": "nhsltKToCJ",
+                    "position": 0.5,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 0.1
+                  },
+                  {
+                    "id": "7IHzte6KJq",
+                    "position": 1.033,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 0.1
+                  },
+                  {
+                    "id": "DwMy4ugYd-",
+                    "position": 1.5,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 0.1
+                  },
+                  {
+                    "id": "crdeePKiD1",
+                    "position": 1.733,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 0.1
+                  },
+                  {
+                    "id": "KTtoSW7-Vf",
+                    "position": 2.433,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 2.388872876895637
+                  },
+                  {
+                    "id": "lz3T3iVxdC",
+                    "position": 2.833,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 0.1
+                  },
+                  {
+                    "id": "ExNGMztako",
+                    "position": 3.533,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 0.1
+                  },
+                  {
+                    "id": "I6j6TjoUbs",
+                    "position": 4.567,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 0.57
+                  },
+                  {
+                    "id": "smWABsQRTg",
+                    "position": 8.333,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 6.099999999999987
+                  },
+                  {
+                    "id": "4gFcRrF8N3",
+                    "position": 10,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 0.1
+                  }
+                ]
+              },
+              "UyflmLrp2j": {
+                "type": "BasicKeyframedTrack",
+                "__debugName": "Camera / Views / HomeDesktop:[\"lookAtY\"]",
+                "keyframes": [
+                  {
+                    "id": "n1xOmVrxum",
+                    "position": 0.5,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 0.4
+                  },
+                  {
+                    "id": "g5BsKtYJWX",
+                    "position": 1.033,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 0.85
+                  },
+                  {
+                    "id": "ueGXyotE67",
+                    "position": 1.5,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 0.85
+                  },
+                  {
+                    "id": "x5DZE5-jOi",
+                    "position": 1.733,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 0.85
+                  },
+                  {
+                    "id": "byoxjg-4f_",
+                    "position": 2.433,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 2.7000000000000046
+                  },
+                  {
+                    "id": "SMkQJbrxCO",
+                    "position": 2.833,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 0.85
+                  },
+                  {
+                    "id": "KY-p-5NC3a",
+                    "position": 3.533,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 0.85
+                  },
+                  {
+                    "id": "X3K6Z4q50t",
+                    "position": 4.567,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 2.61
+                  },
+                  {
+                    "id": "grpZ5jITN-",
+                    "position": 6.033,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 2.2050741317330567
+                  },
+                  {
+                    "id": "4zolORR6A6",
+                    "position": 10,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 0.4
+                  }
+                ]
+              },
+              "wF2uL-_kQt": {
+                "type": "BasicKeyframedTrack",
+                "__debugName": "Camera / Views / HomeDesktop:[\"lookAtZ\"]",
+                "keyframes": [
+                  {
+                    "id": "5UMYcaHbtO",
+                    "position": 0.5,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 0.2
+                  },
+                  {
+                    "id": "gU2uoXXIOE",
+                    "position": 1.033,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": -0.2
+                  },
+                  {
+                    "id": "Yy7cz8Xvsl",
+                    "position": 1.5,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": -0.2
+                  },
+                  {
+                    "id": "HBVTPvXY7t",
+                    "position": 1.733,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": -0.2
+                  },
+                  {
+                    "id": "6JVGEq0M3w",
+                    "position": 2.433,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": -2.1327041316640964
+                  },
+                  {
+                    "id": "dQMeUX1qQQ",
+                    "position": 2.833,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": -0.2
+                  },
+                  {
+                    "id": "90XX5P3guW",
+                    "position": 3.533,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": -0.2
+                  },
+                  {
+                    "id": "WCkW_BX9nL",
+                    "position": 4.567,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": -0.2
+                  },
+                  {
+                    "id": "KIW7IHCqH-",
+                    "position": 5.033,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": -0.20000000000000004
+                  },
+                  {
+                    "id": "gs5Khj8QB1",
+                    "position": 6.633,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 2
+                  },
+                  {
+                    "id": "xjZETarRVf",
+                    "position": 7.333,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": -0.20000000000000004
+                  },
+                  {
+                    "id": "q0Qo5HY5V4",
+                    "position": 8.333,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 5.199881906093585
+                  },
+                  {
+                    "id": "hHYeda5MIC",
+                    "position": 10,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 0.2
+                  }
+                ]
+              },
+              "S_YcF2Vemf": {
+                "type": "BasicKeyframedTrack",
+                "__debugName": "Camera / Views / HomeDesktop:[\"fov\"]",
+                "keyframes": [
+                  {
+                    "id": "pNfqrKreoL",
+                    "position": 0.5,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 91
+                  },
+                  {
+                    "id": "WUJj_Z82Sr",
+                    "position": 1.033,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 43.00069189918959
+                  },
+                  {
+                    "id": "REz-2XQzhU",
+                    "position": 1.5,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 91
+                  },
+                  {
+                    "id": "bSgByPicf6",
+                    "position": 1.733,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 91
+                  },
+                  {
+                    "id": "RHazW7Inzy",
+                    "position": 2.433,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 73
+                  },
+                  {
+                    "id": "Kc8cJJ-QaU",
+                    "position": 2.833,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 91
+                  },
+                  {
+                    "id": "12_cuWSsko",
+                    "position": 3.533,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 91
+                  },
+                  {
+                    "id": "q8ce8VPUnT",
+                    "position": 4.567,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 50
+                  },
+                  {
+                    "id": "wpQ99J0UDk",
+                    "position": 6.033,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 60
+                  },
+                  {
+                    "id": "ShVzW3PScW",
+                    "position": 7.333,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 74
+                  },
+                  {
+                    "id": "CJcaMHwsR9",
+                    "position": 8.333,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 51
+                  },
+                  {
+                    "id": "VtyZa3L21B",
+                    "position": 9.2,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 42
+                  },
+                  {
+                    "id": "FQ-kWMeUES",
+                    "position": 10,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 91
+                  }
+                ]
+              },
+              "KGA1xYDI3p": {
+                "type": "BasicKeyframedTrack",
+                "__debugName": "Camera / Views / HomeDesktop:[\"far\"]",
+                "keyframes": [
+                  {
+                    "id": "SLoAvDAnoL",
+                    "position": 0.5,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 200
+                  },
+                  {
+                    "id": "CBCImTRgB5",
+                    "position": 2.233,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 250
+                  },
+                  {
+                    "id": "SOYPTUeoop",
+                    "position": 4.567,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 100
+                  },
+                  {
+                    "id": "qm4XeS6wj7",
+                    "position": 6.033,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 200
+                  },
+                  {
+                    "id": "9Te5XCECWL",
+                    "position": 9.2,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 200
+                  },
+                  {
+                    "id": "ioBpMakDjW",
+                    "position": 10,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 200
+                  }
+                ]
+              }
+            },
+            "trackIdByPropPath": {
+              "[\"positionX\"]": "TcwdpBuWqS",
+              "[\"positionY\"]": "LFuOh1Y2Zo",
+              "[\"positionZ\"]": "9-OPqj_ucO",
+              "[\"lookAtX\"]": "EqLfnwMFs1",
+              "[\"lookAtY\"]": "UyflmLrp2j",
+              "[\"lookAtZ\"]": "wF2uL-_kQt",
+              "[\"fov\"]": "S_YcF2Vemf",
+              "[\"far\"]": "KGA1xYDI3p"
+            }
+          },
+          "Zone Visibility": {
+            "trackData": {
+              "RD27TLDp7m": {
+                "type": "BasicKeyframedTrack",
+                "__debugName": "Zone Visibility:[\"zone_0\"]",
+                "keyframes": [
+                  {
+                    "id": "OBAa1cFm4R",
+                    "position": 0,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": true
+                  },
+                  {
+                    "id": "QBFjSbqrS3",
+                    "position": 4.033,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": false
+                  },
+                  {
+                    "id": "gCMOayPEja",
+                    "position": 9.167,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": true
+                  },
+                  {
+                    "id": "nAA8Vaibbj",
+                    "position": 9.2,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": true
+                  }
+                ]
+              },
+              "Y02GSo5_o5": {
+                "type": "BasicKeyframedTrack",
+                "__debugName": "Zone Visibility:[\"zone_1\"]",
+                "keyframes": [
+                  {
+                    "id": "BLSFinOXA_",
+                    "position": 0,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": false
+                  },
+                  {
+                    "id": "KoyclFtE8_",
+                    "position": 2.4,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": true
+                  },
+                  {
+                    "id": "cb8Si_KeZw",
+                    "position": 6.667,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": false
+                  },
+                  {
+                    "id": "e4ruKpv54x",
+                    "position": 9.2,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": false
+                  }
+                ]
+              },
+              "c8ZSdzr5ao": {
+                "type": "BasicKeyframedTrack",
+                "__debugName": "Zone Visibility:[\"zone_2\"]",
+                "keyframes": [
+                  {
+                    "id": "bcJDVFFEPp",
+                    "position": 0,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": false
+                  },
+                  {
+                    "id": "AJYLGmceu1",
+                    "position": 6.033,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": true
+                  },
+                  {
+                    "id": "payH1DdJ75",
+                    "position": 9.833,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": false
+                  }
+                ]
+              },
+              "VLZAwBguY1": {
+                "type": "BasicKeyframedTrack",
+                "__debugName": "Zone Visibility:[\"zone_3\"]",
+                "keyframes": [
+                  {
+                    "id": "r9Twp2csWR",
+                    "position": 0,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": true
+                  },
+                  {
+                    "id": "SeUJaLKiLX",
+                    "position": 2.433,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": false
+                  },
+                  {
+                    "id": "kgYU9U_U--",
+                    "position": 8.4,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": true
+                  },
+                  {
+                    "id": "NXsw0CidWB",
+                    "position": 9.7,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": true
+                  }
+                ]
+              },
+              "FE_x_7rRDp": {
+                "type": "BasicKeyframedTrack",
+                "__debugName": "Zone Visibility:[\"palace_inner\"]",
+                "keyframes": [
+                  {
+                    "id": "VIsaphwArh",
+                    "position": -0.167,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": false
+                  },
+                  {
+                    "id": "uai5EROUbd",
+                    "position": 0,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": false
+                  },
+                  {
+                    "id": "d2BI4cYeNu",
+                    "position": 6.033,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": true
+                  },
+                  {
+                    "id": "LQIy0b8vCP",
+                    "position": 9.833,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": false
+                  }
+                ]
+              },
+              "ydrxbLDaOT": {
+                "type": "BasicKeyframedTrack",
+                "__debugName": "Zone Visibility:[\"palace_outer\"]",
+                "keyframes": []
+              },
+              "Yh4L47OkQz": {
+                "type": "BasicKeyframedTrack",
+                "__debugName": "Zone Visibility:[\"zone_0_1\"]",
+                "keyframes": [
+                  {
+                    "id": "aza1U1wQOe",
+                    "position": 0,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": true
+                  },
+                  {
+                    "id": "Uor4jeyNf6",
+                    "position": 4.033,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": true
+                  },
+                  {
+                    "id": "goxdMmKSEF",
+                    "position": 6.033,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": false
+                  },
+                  {
+                    "id": "Q169Iib4Ed",
+                    "position": 9.2,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": true
+                  },
+                  {
+                    "id": "UWkqjg478p",
+                    "position": 9.667,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": true
+                  }
+                ]
+              },
+              "DTstls32rE": {
+                "type": "BasicKeyframedTrack",
+                "__debugName": "Zone Visibility:[\"zone_1_2\"]",
+                "keyframes": [
+                  {
+                    "id": "85iHTlxLTk",
+                    "position": 0,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": false
+                  },
+                  {
+                    "id": "kTDyS8BafM",
+                    "position": 4.033,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": true
+                  },
+                  {
+                    "id": "9q7407N9BJ",
+                    "position": 7.733,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": false
+                  }
+                ]
+              },
+              "qtDlULSOlQ": {
+                "type": "BasicKeyframedTrack",
+                "__debugName": "Zone Visibility:[\"zone_2_3\"]",
+                "keyframes": [
+                  {
+                    "id": "dYt3txQL4M",
+                    "position": 0,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": true
+                  },
+                  {
+                    "id": "QndWrqGd2q",
+                    "position": 2.433,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": false
+                  },
+                  {
+                    "id": "5SXt-zSOVD",
+                    "position": 8.233,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": true
+                  }
+                ]
+              },
+              "V6_Fl45bHv": {
+                "type": "BasicKeyframedTrack",
+                "__debugName": "Zone Visibility:[\"birds\"]",
+                "keyframes": [
+                  {
+                    "id": "8wCMpJkExC",
+                    "position": 0,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": true
+                  },
+                  {
+                    "id": "PYYDY-74rP",
+                    "position": 3.367,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": false
+                  },
+                  {
+                    "id": "E4-VO139l-",
+                    "position": 9.2,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": true
+                  }
+                ]
+              },
+              "OcNqAs4YkV": {
+                "type": "BasicKeyframedTrack",
+                "__debugName": "Zone Visibility:[\"flare\"]",
+                "keyframes": [
+                  {
+                    "id": "CqNl1kb5pv",
+                    "position": 0,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": false
+                  },
+                  {
+                    "id": "4erpEeVwEY",
+                    "position": 3.967,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": true
+                  },
+                  {
+                    "id": "pRE8t3ZQ4P",
+                    "position": 6.4,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": false
+                  }
+                ]
+              }
+            },
+            "trackIdByPropPath": {
+              "[\"zone_0\"]": "RD27TLDp7m",
+              "[\"zone_1\"]": "Y02GSo5_o5",
+              "[\"zone_2\"]": "c8ZSdzr5ao",
+              "[\"zone_3\"]": "VLZAwBguY1",
+              "[\"palace_inner\"]": "FE_x_7rRDp",
+              "[\"palace_outer\"]": "ydrxbLDaOT",
+              "[\"zone_0_1\"]": "Yh4L47OkQz",
+              "[\"zone_1_2\"]": "DTstls32rE",
+              "[\"zone_2_3\"]": "qtDlULSOlQ",
+              "[\"birds\"]": "V6_Fl45bHv",
+              "[\"flare\"]": "OcNqAs4YkV"
+            }
+          },
+          "Dust": {
+            "trackData": {
+              "LjYzBZfzQc": {
+                "type": "BasicKeyframedTrack",
+                "__debugName": "Dust:[\"rateFactor\"]",
+                "keyframes": [
+                  {
+                    "id": "SCVZ3O1ZsB",
+                    "position": 0,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 0
+                  },
+                  {
+                    "id": "KiEHV0OsPK",
+                    "position": 0.3,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 0
+                  },
+                  {
+                    "id": "DbhMLGBMdX",
+                    "position": 0.333,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 100
+                  },
+                  {
+                    "id": "SU2ojRqoQ-",
+                    "position": 3.167,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 100
+                  },
+                  {
+                    "id": "ryCsmO24Q3",
+                    "position": 3.2,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 70
+                  },
+                  {
+                    "id": "vczxWVnuX9",
+                    "position": 6.733,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 70
+                  },
+                  {
+                    "id": "lu4rT3rqZy",
+                    "position": 6.767,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 0
+                  }
+                ]
+              },
+              "sjBOAu-gCX": {
+                "type": "BasicKeyframedTrack",
+                "__debugName": "Dust:[\"color\"]",
+                "keyframes": [
+                  {
+                    "id": "W6ULhDieoV",
+                    "position": 3.033,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": {
+                      "r": 0.514917665367466,
+                      "g": 0.24228112245478564,
+                      "b": 0.14126329113044458,
+                      "a": 1
+                    }
+                  },
+                  {
+                    "id": "p4uJR0wzd0",
+                    "position": 4,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": {
+                      "r": 0,
+                      "g": 0,
+                      "b": 0,
+                      "a": 1
+                    }
+                  },
+                  {
+                    "id": "V6ZFRSmro7",
+                    "position": 4.433,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": {
+                      "r": 0.0196078431372549,
+                      "g": 0,
+                      "b": 0,
+                      "a": 1
+                    }
+                  },
+                  {
+                    "id": "JOAiELlbg6",
+                    "position": 6.733,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": {
+                      "r": 0.0196078431372549,
+                      "g": 0,
+                      "b": 0,
+                      "a": 1
+                    }
+                  },
+                  {
+                    "id": "QZHHxGgIgv",
+                    "position": 7,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": {
+                      "r": 0.5137254901960784,
+                      "g": 0.23921568627450981,
+                      "b": 0.1411764705882353,
+                      "a": 1
+                    }
+                  }
+                ]
+              }
+            },
+            "trackIdByPropPath": {
+              "[\"rateFactor\"]": "LjYzBZfzQc",
+              "[\"color\"]": "sjBOAu-gCX"
+            }
+          },
+          "Day - Night": {
+            "trackData": {
+              "0Q1l9yqzeS": {
+                "type": "BasicKeyframedTrack",
+                "__debugName": "Day - Night:[\"mix\"]",
+                "keyframes": [
+                  {
+                    "id": "EWlTrphSS7",
+                    "position": 0,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 0
+                  },
+                  {
+                    "id": "HvDQdgb68C",
+                    "position": 2.667,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 0
+                  },
+                  {
+                    "id": "PFd2VKcm9y",
+                    "position": 2.9,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 1
+                  },
+                  {
+                    "id": "fzIxzcK4cU",
+                    "position": 6.633,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 1
+                  },
+                  {
+                    "id": "G5f2liOIPx",
+                    "position": 6.667,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 0
+                  }
+                ]
+              }
+            },
+            "trackIdByPropPath": {
+              "[\"mix\"]": "0Q1l9yqzeS"
+            }
+          },
+          "Door": {
+            "trackData": {
+              "vmbNo1eNpS": {
+                "type": "BasicKeyframedTrack",
+                "__debugName": "Door:[\"left\"]",
+                "keyframes": [
+                  {
+                    "id": "AVWnPnJY4R",
+                    "position": 0,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 0
+                  },
+                  {
+                    "id": "hlI4oKDesp",
+                    "position": 0.1,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 0
+                  },
+                  {
+                    "id": "vhVcKVKYTo",
+                    "position": 6.233,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 0
+                  },
+                  {
+                    "id": "3XL6B8OtJl",
+                    "position": 6.5,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": -1.57
+                  },
+                  {
+                    "id": "ZW4VJfKDXK",
+                    "position": 6.967,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 0
+                  }
+                ]
+              },
+              "L4ty05gUZF": {
+                "type": "BasicKeyframedTrack",
+                "__debugName": "Door:[\"right\"]",
+                "keyframes": [
+                  {
+                    "id": "HBfwFQZpOm",
+                    "position": 0,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 3.141592653589793
+                  },
+                  {
+                    "id": "kw0Wgc-Rnn",
+                    "position": 0.1,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 0
+                  },
+                  {
+                    "id": "sYbWrByRyj",
+                    "position": 6.233,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 0
+                  },
+                  {
+                    "id": "A4L_Q38uK1",
+                    "position": 6.5,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 1.57
+                  },
+                  {
+                    "id": "Dvge773BUl",
+                    "position": 6.967,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 0
+                  }
+                ]
+              }
+            },
+            "trackIdByPropPath": {
+              "[\"left\"]": "vmbNo1eNpS",
+              "[\"right\"]": "L4ty05gUZF"
+            }
+          },
+          "Zone Visibility - Game": {
+            "trackData": {
+              "vJ9R4e_htZ": {
+                "type": "BasicKeyframedTrack",
+                "__debugName": "Zone Visibility - Game:[\"zone_0\"]",
+                "keyframes": [
+                  {
+                    "id": "_0_S5zzfKy",
+                    "position": 0,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": true
+                  },
+                  {
+                    "id": "zuFtFQ05om",
+                    "position": 2.767,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": false
+                  },
+                  {
+                    "id": "7iQK6FEn6t",
+                    "position": 8.833,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": true
+                  }
+                ]
+              },
+              "GjUb-VELCj": {
+                "type": "BasicKeyframedTrack",
+                "__debugName": "Zone Visibility - Game:[\"zone_0_1\"]",
+                "keyframes": [
+                  {
+                    "id": "hrw4EcZypo",
+                    "position": 0,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": true
+                  },
+                  {
+                    "id": "_Ac1ETI7pm",
+                    "position": 6.367,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": false
+                  },
+                  {
+                    "id": "E1wvAR-EUS",
+                    "position": 9.233,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": true
+                  }
+                ]
+              },
+              "mO6yuqhose": {
+                "type": "BasicKeyframedTrack",
+                "__debugName": "Zone Visibility - Game:[\"zone_1\"]",
+                "keyframes": [
+                  {
+                    "id": "3yDXXs28HR",
+                    "position": 0,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": false
+                  },
+                  {
+                    "id": "j_6PA7Kh6D",
+                    "position": 1.9,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": true
+                  },
+                  {
+                    "id": "tr713CvDwH",
+                    "position": 6.733,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": false
+                  }
+                ]
+              },
+              "1UptlVOo5x": {
+                "type": "BasicKeyframedTrack",
+                "__debugName": "Zone Visibility - Game:[\"zone_1_2\"]",
+                "keyframes": [
+                  {
+                    "id": "xvEN_E8qc7",
+                    "position": 0,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": true
+                  }
+                ]
+              },
+              "u56vYpN7Bx": {
+                "type": "BasicKeyframedTrack",
+                "__debugName": "Zone Visibility - Game:[\"zone_2\"]",
+                "keyframes": [
+                  {
+                    "id": "odjZAUQPoQ",
+                    "position": 0,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": false
+                  },
+                  {
+                    "id": "IN6QS3Y-sN",
+                    "position": 6.267,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": true
+                  }
+                ]
+              },
+              "_IigOgWs_t": {
+                "type": "BasicKeyframedTrack",
+                "__debugName": "Zone Visibility - Game:[\"zone_2_3\"]",
+                "keyframes": [
+                  {
+                    "id": "Xqsx9dmT50",
+                    "position": 0,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": true
+                  },
+                  {
+                    "id": "QdjWQAsuHk",
+                    "position": 2.1,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": false
+                  },
+                  {
+                    "id": "uRgcCoFAiT",
+                    "position": 4.733,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": false
+                  },
+                  {
+                    "id": "6QMSMpMGKc",
+                    "position": 7.067,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": true
+                  }
+                ]
+              },
+              "H6-LHo4ZHT": {
+                "type": "BasicKeyframedTrack",
+                "__debugName": "Zone Visibility - Game:[\"zone_3\"]",
+                "keyframes": [
+                  {
+                    "id": "dCbx9jPCwc",
+                    "position": 0,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": true
+                  }
+                ]
+              },
+              "EF130vfcug": {
+                "type": "BasicKeyframedTrack",
+                "__debugName": "Zone Visibility - Game:[\"palace_inner\"]",
+                "keyframes": []
+              },
+              "jd1m4hRRow": {
+                "type": "BasicKeyframedTrack",
+                "__debugName": "Zone Visibility - Game:[\"palace_outer\"]",
+                "keyframes": []
+              },
+              "JcmZkWKAVe": {
+                "type": "BasicKeyframedTrack",
+                "__debugName": "Zone Visibility - Game:[\"shop\"]",
+                "keyframes": []
+              },
+              "FMrnwsbG80": {
+                "type": "BasicKeyframedTrack",
+                "__debugName": "Zone Visibility - Game:[\"flare\"]",
+                "keyframes": [
+                  {
+                    "id": "CqNl1kb5pv",
+                    "position": 0,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": false
+                  },
+                  {
+                    "id": "4erpEeVwEY",
+                    "position": 3.967,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": true
+                  },
+                  {
+                    "id": "pRE8t3ZQ4P",
+                    "position": 6.4,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": false
+                  }
+                ]
+              }
+            },
+            "trackIdByPropPath": {
+              "[\"zone_0\"]": "vJ9R4e_htZ",
+              "[\"zone_0_1\"]": "GjUb-VELCj",
+              "[\"zone_1\"]": "mO6yuqhose",
+              "[\"zone_1_2\"]": "1UptlVOo5x",
+              "[\"zone_2\"]": "u56vYpN7Bx",
+              "[\"zone_2_3\"]": "_IigOgWs_t",
+              "[\"zone_3\"]": "H6-LHo4ZHT",
+              "[\"palace_inner\"]": "EF130vfcug",
+              "[\"palace_outer\"]": "jd1m4hRRow",
+              "[\"shop\"]": "JcmZkWKAVe",
+              "[\"flare\"]": "FMrnwsbG80"
+            }
+          },
+          "Camera / Views / GameDesktop": {
+            "trackData": {
+              "6re2128dG8": {
+                "type": "BasicKeyframedTrack",
+                "__debugName": "Camera / Views / GameDesktop:[\"far\"]",
+                "keyframes": [
+                  {
+                    "id": "PoAnmqdt05",
+                    "position": 0,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 200
+                  },
+                  {
+                    "id": "WuJVvioXIo",
+                    "position": 2.167,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 200
+                  },
+                  {
+                    "id": "uRRVbNpzeS",
+                    "position": 4.133,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 220
+                  },
+                  {
+                    "id": "5QBVEhyqJN",
+                    "position": 6.6,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 220
+                  },
+                  {
+                    "id": "l-FH7HLEz6",
+                    "position": 8.9,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 100
+                  },
+                  {
+                    "id": "JyoSNJux3-",
+                    "position": 9.2,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 200
+                  }
+                ]
+              }
+            },
+            "trackIdByPropPath": {
+              "[\"far\"]": "6re2128dG8"
+            }
+          },
+          "Fog": {
+            "trackData": {
+              "kUl1JHAVHu": {
+                "type": "BasicKeyframedTrack",
+                "__debugName": "Fog:[\"intensity\"]",
+                "keyframes": [
+                  {
+                    "id": "Y8moqO8sTW",
+                    "position": 2.5,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 0
+                  },
+                  {
+                    "id": "b1sVFnXDOc",
+                    "position": 3.4,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 0
+                  },
+                  {
+                    "id": "X6oOKoMPCJ",
+                    "position": 3.833,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 1
+                  },
+                  {
+                    "id": "ZkOXvucMJe",
+                    "position": 6.633,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 1
+                  },
+                  {
+                    "id": "mzk78hV7e3",
+                    "position": 6.667,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 0
+                  }
+                ]
+              },
+              "X1iGMktqyZ": {
+                "type": "BasicKeyframedTrack",
+                "__debugName": "Fog:[\"thichness\"]",
+                "keyframes": [
+                  {
+                    "id": "0m1VKQ6AMc",
+                    "position": 0,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 0.03
+                  },
+                  {
+                    "id": "4nRh5NpgcZ",
+                    "position": 3.067,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 0.03
+                  },
+                  {
+                    "id": "22vqynKrfT",
+                    "position": 3.4,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 0
+                  },
+                  {
+                    "id": "0BygB9Fxdx",
+                    "position": 6.633,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 0
+                  },
+                  {
+                    "id": "CH5iXBAHyY",
+                    "position": 6.667,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 0.03
+                  }
+                ]
+              }
+            },
+            "trackIdByPropPath": {
+              "[\"intensity\"]": "kUl1JHAVHu",
+              "[\"thichness\"]": "X1iGMktqyZ"
+            }
+          },
+          "Sound / Desert": {
+            "trackData": {
+              "wnU78F9sYK": {
+                "type": "BasicKeyframedTrack",
+                "__debugName": "Sound / Desert:[\"volume\"]",
+                "keyframes": [
+                  {
+                    "id": "_OT3e5KldZ",
+                    "position": 3,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 1
+                  },
+                  {
+                    "id": "Y155M79mCb",
+                    "position": 3.267,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 0
+                  },
+                  {
+                    "id": "APFYSyMbll",
+                    "position": 9.2,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 0
+                  },
+                  {
+                    "id": "utWmEFklhv",
+                    "position": 9.367,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 1
+                  }
+                ]
+              }
+            },
+            "trackIdByPropPath": {
+              "[\"volume\"]": "wnU78F9sYK"
+            }
+          },
+          "Sound / Forest": {
+            "trackData": {
+              "cRvGg9f6Vm": {
+                "type": "BasicKeyframedTrack",
+                "__debugName": "Sound / Forest:[\"volume\"]",
+                "keyframes": [
+                  {
+                    "id": "-8AjwXqY7T",
+                    "position": 3,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 0
+                  },
+                  {
+                    "id": "JJLGbG4uCf",
+                    "position": 3.267,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 1
+                  },
+                  {
+                    "id": "D0NYG8Ri1b",
+                    "position": 6.5,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 1
+                  },
+                  {
+                    "id": "OESoxwZTSI",
+                    "position": 6.7,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 0
+                  }
+                ]
+              }
+            },
+            "trackIdByPropPath": {
+              "[\"volume\"]": "cRvGg9f6Vm"
+            }
+          },
+          "Sound / Reverb": {
+            "trackData": {
+              "Sei681MRmD": {
+                "type": "BasicKeyframedTrack",
+                "__debugName": "Sound / Reverb:[\"reverbMix\"]",
+                "keyframes": [
+                  {
+                    "id": "1rvYmYT-Pj",
+                    "position": 6.5,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 0
+                  },
+                  {
+                    "id": "xQgwyewZMF",
+                    "position": 6.7,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 1
+                  },
+                  {
+                    "id": "LXhsB04PC1",
+                    "position": 9.2,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 1
+                  },
+                  {
+                    "id": "U3VDReCYa1",
+                    "position": 9.367,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 0
+                  }
+                ]
+              }
+            },
+            "trackIdByPropPath": {
+              "[\"reverbMix\"]": "Sei681MRmD"
+            }
+          },
+          "DoorEnd": {
+            "trackData": {
+              "AgufvZcd2P": {
+                "type": "BasicKeyframedTrack",
+                "__debugName": "DoorEnd:[\"left\"]",
+                "keyframes": [
+                  {
+                    "id": "MMbxXULGA-",
+                    "position": 8.967,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 0
+                  },
+                  {
+                    "id": "XYj8Unv_Hz",
+                    "position": 9.067,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": -4.4
+                  },
+                  {
+                    "id": "s-zD5jAVLQ",
+                    "position": 9.7,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": -4.4
+                  },
+                  {
+                    "id": "ONFlLE4JuA",
+                    "position": 9.833,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 0
+                  }
+                ]
+              },
+              "ap0Grmerfq": {
+                "type": "BasicKeyframedTrack",
+                "__debugName": "DoorEnd:[\"right\"]",
+                "keyframes": [
+                  {
+                    "id": "2AV1CAJU8x",
+                    "position": 8.967,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 0
+                  },
+                  {
+                    "id": "C-tIWlGWFT",
+                    "position": 9.067,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 4.4
+                  },
+                  {
+                    "id": "XzPoZjnvTy",
+                    "position": 9.7,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 4.4
+                  },
+                  {
+                    "id": "nNIQoit8tN",
+                    "position": 9.833,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 0
+                  }
+                ]
+              }
+            },
+            "trackIdByPropPath": {
+              "[\"left\"]": "AgufvZcd2P",
+              "[\"right\"]": "ap0Grmerfq"
+            }
+          },
+          "Camera / Views / GamePhone": {
+            "trackData": {
+              "WGcOOzo4cK": {
+                "type": "BasicKeyframedTrack",
+                "__debugName": "Camera / Views / GamePhone:[\"far\"]",
+                "keyframes": [
+                  {
+                    "id": "PoAnmqdt05",
+                    "position": 0,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 200
+                  },
+                  {
+                    "id": "WuJVvioXIo",
+                    "position": 2.167,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 200
+                  },
+                  {
+                    "id": "uRRVbNpzeS",
+                    "position": 4.133,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 220
+                  },
+                  {
+                    "id": "5QBVEhyqJN",
+                    "position": 6.6,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 220
+                  },
+                  {
+                    "id": "l-FH7HLEz6",
+                    "position": 8.9,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 100
+                  },
+                  {
+                    "id": "JyoSNJux3-",
+                    "position": 9.2,
+                    "connectedRight": true,
+                    "handles": [0.5, 1, 0.5, 0],
+                    "type": "bezier",
+                    "value": 200
+                  }
+                ]
+              }
+            },
+            "trackIdByPropPath": {
+              "[\"far\"]": "WGcOOzo4cK"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitionVersion": "0.4.0",
+  "revisionHistory": [
+    "cOttVD72q0IbNNSD",
+    "fnebhM16H0n9siaw",
+    "kE9Nz9oFqzyhKhC2",
+    "Hhkr2Y5V2R2kzsIE",
+    "8Gq2X0pv0efrYtCb",
+    "S79q5Zkv4x96X317",
+    "Z8C8dJB2tSoRY6yK",
+    "DVI_3_iB8hC8H26F",
+    "bvrffQGCLSFDe_Zb",
+    "XAwLnK_S9uprD1aB",
+    "k5iX9eEtboaFzSKf",
+    "hK07NZmMej9hnwZn",
+    "loNWFp0z1FowmzQ9",
+    "fIhUmihHrYaY9H7D",
+    "_0-gjp4UxFXPP3Cc",
+    "GBPxsgsObkkGwO-M",
+    "m4Z0zcqujDLNDgXj",
+    "eQITRsU7xoA_BG0w",
+    "yptiQlySpvlXBgd5",
+    "zU_HP4Nzjlj6QXik",
+    "_uzBflMGqNrCTwhT",
+    "py1Cj6ULguwHLEI6",
+    "J1OwqXEk4j_VzfRQ",
+    "DnwJCW04WpG_hOoU",
+    "wdN20D_Yj6gf38f1",
+    "s2u_c08el80_Cu4M",
+    "f4DR240FVupFp1RQ",
+    "10z7D_QRq5W-gVYq",
+    "WNi4N0GPqskeAkbZ",
+    "Da46PukJOZ7MA0Ld",
+    "UyN1Hn65j2lFjoFj",
+    "g4P_6rFVsKUJLgw3",
+    "yaIBYMlE_jJWTzVQ",
+    "QYIgm1j4h2vKNxXa",
+    "6AbnAr5HlO-g6YnK",
+    "LU2FL1-hkPMjXp53",
+    "YLlwFzUHFMcB7-l5",
+    "HN_9-drMb2RMSDgq",
+    "6WzOAPXMYTUrDZXU",
+    "lAqLN6vyUKoux7I7",
+    "LP4tb-x4Lkveqbjd",
+    "Jmd7blvonqQBVwVb",
+    "ORXT3r0nOSkFsp90",
+    "2QhBjhvmCoJailWw",
+    "6Iwy2uXZkHs4XUGS",
+    "PMgHLTnhLv8LuanR",
+    "i66Y2lMH2jwU7j4d",
+    "KrF6MyXNV1KeRoUE",
+    "e25_NALuU0SDYiqW",
+    "JaVsVfPvl4SGqdbH"
+  ]
+}

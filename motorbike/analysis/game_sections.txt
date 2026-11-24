@@ -1,0 +1,213 @@
+
+
+##########################################################################################
+## bikeConfig / gameStore / saveScore  [1693300:1699000]
+##########################################################################################
+},Symbol.toStringTag,{value:"Module"})),bikeConfig={ANIMATION_SPEED:1.5,turnIntensity:2,radiusWheel:.323377,noSpeedWobble:.0012,speedWoobleFactor:.1,INITIAL_SPEED:9e-
+4,INITIAL_PHI:5.92023817104828,DRAG_MOVEMENT_FACTOR:5e-7,SCROLL_SENSITIVITY:5e-5,MAX_SPEED:.01,DAMPING:.95,MIN_SPEED:5e-4};function
+getBikeMoebiusConfig(){return{yame:{day:{directColor:new Color$1(1,1,1),indirectColor:new Color$1(0),luminance:1},night:{directColor:new
+Color$1(6908265),indirectColor:new Color$1(0),luminance:1},randomScale:1500,randomIntensity:.25},front_light:{day:{directColor:new
+Color$1(.792156862745098,.7529411764705882,.7529411764705882),indirectColor:new
+Color$1(.47843137254901963,.3843137254901961,.32941176470588235),luminance:1},night:{directColor:new Color$1(16777215),indirectColor:new
+Color$1(16777215),luminance:1}},rear_lights:{day:{directColor:new Color$1(16777215),indirectColor:new Color$1(16777215),luminance:1},night:{directColor:new
+Color$1(16777215),indirectColor:new Color$1(16777215),luminance:1}},lining:{day:{directColor:new
+Color$1().setRGB(.17254901960784313,.2549019607843137,.18823529411764706),indirectColor:new
+Color$1().setRGB(.047058823529411764,.08627450980392157,.0784313725490196),luminance:1},night:{directColor:new Color$1("#0d1f1a"),indirectColor:new
+Color$1("#040706"),luminance:1},randomScale:1e3,randomIntensity:.35},front_mudguard:{day:{directColor:new
+Color$1(.17254901960784313,.2549019607843137,.18823529411764706),indirectColor:new
+Color$1(.0196078431372549,.03529411764705882,.023529411764705882),luminance:1},night:{directColor:new Color$1(859930),indirectColor:new
+Color$1(263942),luminance:1},randomScale:1e3,randomIntensity:.35},fairing:{day:{directColor:new
+Color$1(.49411764705882355,.5254901960784314,.5333333333333333),indirectColor:new Color$1(5329753),luminance:1},night:{directColor:new
+Color$1(.16862745098039217,.19215686274509805,.23137254901960785),indirectColor:new
+Color$1(328967),luminance:1},randomScale:4e3,randomIntensity:.33},fork:{day:{directColor:new
+Color$1(.3176470588235294,.3254901960784314,.32941176470588235),indirectColor:new Color$1(2434863),luminance:1},night:{directColor:new
+Color$1(.16862745098039217,.19215686274509805,.23137254901960785),indirectColor:new
+Color$1(.01568627450980392,.01568627450980392,.023529411764705882),luminance:1},randomScale:4e3,randomIntensity:.33},motor:{day:{directColor:new
+Color$1(.5411764705882353,.5411764705882353,.5411764705882353),indirectColor:new Color$1(5329753),luminance:1},night:{directColor:new
+Color$1(.16862745098039217,.19215686274509805,.23137254901960785),indirectColor:new
+Color$1(328967),luminance:1},randomScale:4e3,randomIntensity:.33},front_tire:{day:{indirectColor:new Color$1(1841947),directColor:new
+Color$1(5525841),luminance:1},night:{indirectColor:new Color$1(197379),directColor:new
+Color$1(.0196078431372549,.023529411764705882,.027450980392156862),luminance:1},randomScale:3e3},rear_tire:{day:{directColor:new
+Color$1(.06666666666666667,.058823529411764705,.054901960784313725),indirectColor:new Color$1(0,0,0),luminance:1},night:{indirectColor:new Color$1(197379),directColor:new
+Color$1(1512725),luminance:1},randomScale:3e3},front_rim:{day:{indirectColor:new Color$1(.3843137254901961,.3843137254901961,.3843137254901961),directColor:new
+Color$1(.45098039215686275,.4745098039215686,.5137254901960784),luminance:1},night:{indirectColor:new Color$1(0),directColor:new
+Color$1(.2,.21176470588235294,.23529411764705882),luminance:1}},rear_rim:{day:{directColor:new
+Color$1(.48627450980392156,.4470588235294118,.4470588235294118),indirectColor:new Color$1(8488591),luminance:1},night:{indirectColor:new Color$1(0),directColor:new
+Color$1(.2,.21176470588235294,.23529411764705882),luminance:1}},seat:{day:{directColor:new
+Color$1(.07450980392156863,.07450980392156863,.08627450980392157),indirectColor:new Color$1(0,0,0),luminance:1},night:{directColor:new Color$1(592138),indirectColor:new
+Color$1(65793),luminance:1},randomIntensity:.4,randomScale:800},horn:{day:{directColor:new
+Color$1(.7647058823529411,.6666666666666666,.5137254901960784),indirectColor:new
+Color$1(.42745098039215684,.3686274509803922,.27450980392156865),luminance:1},night:{directColor:new Color$1(14597261),indirectColor:new
+Color$1(6772546),luminance:1},randomIntensity:.4,randomScale:5e3}}}const bikeState={root:void 0,group:void 0,gltf:{},cameraConstraintPosition:new
+Object3D,cameraConstraintLookAt:new Object3D,sunConstraintPosition:new Object3D,spotConstraintLookAt:new Object3D,phi:bikeConfig.INITIAL_PHI,frontWheel:null,rearWheel:nul
+l,column:1,isTurning:!1,speed:bikeConfig.INITIAL_SPEED,speedBeforePause:bikeConfig.INITIAL_SPEED,zoneIndex:0,previouszoneIndex:0,cinematicModeSpeed:0,orbitalSequenceSheet
+:null,sounds:[],listener:void 0,rootRotationX:0,fog:void 0},gameStore=reactive({score:0,bestScore:0,isAlive:!1,mode:"cinematic",isPaused:!0,timer:0}),saveScore=()=>{gameS
+tore.bestScore=parseInt(localStorage.getItem("bestScore")||"0")},resetScore=()=>{gameStore.score=0,gameStore.timer=0},incrementGameScore=()=>{gameStore.score+=1,gameStore
+.timer+=1,gameStore.score>gameStore.bestScore&&(gameStore.bestScore=gameStore.score,localStorage.setItem("bestScore",gameStore.bestScore.toString()))},cameraConfig={LERP_
+FACTOR:.1,MOUSE_SENSITIVITY:.5},isMotionValue=S=>!!(S&&S.getVelocity);function isDOMKeyframes(S){return typeof S=="object"&&!Array.isArray(S)}function
+resolveElements(S,y,_){if(S instanceof EventTarget)return[S];if(typeof S=="string"){let E=document;const b=(_==null?void 0:_[S])??E.querySelectorAll(S);return
+b?Array.from(b):[]}return Array.from(S)}function resolveSubjects(S,y,_,E){return typeof S=="string"&&isDOMKeyframes(y)?resolveElements(S,_,E):S instanceof NodeList?A
+
+
+##########################################################################################
+## camera GameView / gameConfig  [1769000:1773100]
+##########################################################################################
+eValues()}}),setCameraView(S)},viewport$4=useViewport();let
+isFirstMouseMove=!1,initialMouseX=0,initialMouseY=0,targetCameraPhi=0,targetCameraTheta=0,initialLerpFactor;async function moveToGameView(){const
+y=n$4("phone")?"GamePhone":"GameDesktop";await animateCameraView(y,{ease:"easeInOut",duration:1}),isFirstMouseMove=!0}async function moveToHomeView(){const
+y=n$4("phone")?"HomePhone":"HomeDesktop";animateCameraView(y,{ease:"easeInOut",duration:1}),isFirstMouseMove=!0}function onMouseMove(S){if(gameStore.mode!=="cinematic"||c
+ameraState.isAnimated)return;if(isFirstMouseMove){initialMouseX=S.clientX,initialMouseY=S.clientY,isFirstMouseMove=!1;return}const y=(S.clientX-
+initialMouseX)/viewport$4.width*.025,_=-((S.clientY-initialMouseY)/viewport$4.height)*.025;targetCameraTheta=y*Math.PI,targetCameraPhi=_*Math.PI}let
+mousePhi=0,mouseTheta=0,spherical=new Spherical;function updateCameraTick(){gameStore.mode!=="cinematic"||cameraState.isAnimated||(cameraState.viewSpherical.setFromVector
+3(getCameraView().position),spherical.setFromVector3(bikeState.cameraConstraintPosition.position),mousePhi+=(targetCameraPhi-
+mousePhi)*cameraConfig.LERP_FACTOR,mouseTheta+=(targetCameraTheta-mouseTheta)*cameraConfig.LERP_FACTOR,spherical.phi=cameraState.viewSpherical.phi+mousePhi,spherical.thet
+a=cameraState.viewSpherical.theta+mouseTheta,bikeState.cameraConstraintPosition.position.setFromSpherical(spherical))}function
+resetMouseValues(){mousePhi=0,mouseTheta=0,targetCameraPhi=0,targetCameraTheta=0,cameraState.isAnimated=!1}const initMouseMove=()=>{n$4("phone")||(initialMouseX=window.in
+nerWidth/2,initialMouseY=window.innerHeight/2,window.addEventListener("mousemove",onMouseMove,{passive:!0}),o$3(updateCameraTick,60))};let lastPosition=new
+Vector3$1().copy(bikeState.cameraConstraintPosition.position);function isGameCameraSequencePlaying(){gameStore.mode!=="game"||bikeState.isTurning||(cameraState.isAnimated
+=!lastPosition.equals(bikeState.cameraConstraintPosition.position),lastPosition.copy(bikeState.cameraConstraintPosition.position))}o$3(isGameCameraSequencePlaying,60);fun
+ction disableParallax(){initialLerpFactor=cameraConfig.LERP_FACTOR,cameraConfig.LERP_FACTOR=0}function enableParallax(){cameraConfig.LERP_FACTOR=initialLerpFactor}const
+gui$5=S=>{S.object("Camera Config on Mousemove",{LERP_FACTOR:distExports.types.number(cameraConfig.LERP_FACTOR,{range:[0,1],nudgeMultiplier:.01}),MOUSE_SENSITIVITY:distEx
+ports.types.number(cameraConfig.MOUSE_SENSITIVITY,{range:[0,2],nudgeMultiplier:.1})}).onValuesChange(({LERP_FACTOR:y,MOUSE_SENSITIVITY:_})=>{cameraConfig.LERP_FACTOR=y,ca
+meraConfig.MOUSE_SENSITIVITY=_})},name$7="Camera",create$9=async()=>{const
+S=n$4("phone");setCameraView(S?"HomePhone":"HomeDesktop")},mount$4=async()=>{initMouseMove()},render$8=()=>{const S=getCamera();bikeState.cameraConstraintPosition.positio
+n.x+=cameraState.columnOffset,bikeState.cameraConstraintLookAt.position.x+=cameraState.columnOffset,S.position.copy(bikeState.cameraConstraintPosition.getWorldPosition(m(
+))),S.lookAt(bikeState.cameraConstraintLookAt.getWorldPosition(m())),bikeState.cameraConstraintPosition.position.x-
+=cameraState.columnOffset,bikeState.cameraConstraintLookAt.position.x-
+=cameraState.columnOffset},CameraBundle=Object.freeze(Object.defineProperty({__proto__:null,create:create$9,gui:gui$5,mount:mount$4,name:name$7,render:render$8},Symbol.to
+StringTag,{value:"Module"})),gameConfig={SPEED_INCREMENT:1e-
+4,MAX_SPEED:.012,OBSTACLE_DIFFICULTY:.8,OBSTACLE_DISTANCE:Math.PI/6,OBSTACLE_MIN_INTERVAL:.125,SWIPE_THRESOLD:10},OBSTACLE_MOEBIUS_CONFIG={cactus_02_v11_reference:{day:{d
+irectColor:new Color$1(.4823529411764706,.5176470588235295,.37254901960784315),indirectColor:new
+Color$1(.29411764705882354,.3176470588235294,.2196078431372549),luminance:1},night:{directColor:new Color$1(1453358),indirectColor:new
+Color$1(197893),luminance:1}},cactus_03_v2_reference:{day:{directColor:new Color$1(.4823529411764706,.5176470588235295,.37254901960784315),indirectColor:new
+Color$1(3296817),luminance:1},night:{directColor:new Color$1(1453358),indirectColor:new Color$1(197893),luminance:1}},c
+
+
+##########################################################################################
+## zones / gameState / columnCount  [1774200:1776200]
+##########################################################################################
+ctColor:new Color$1(1844783),indirectColor:new Color$1(197381),luminance:1}}},worldState={ground:null,sun:null},degToRad$1=S=>S*Math.PI/180,zones=[{name:"Desert",phiStart
+:degToRad$1(-14.4),phiEnd:degToRad$1(-118.8),root:null,instancedObjects:[],inactiveObstacles:[]},{name:"Forest",phiStart:degToRad$1(-118.8),phiEnd:degToRad$1(-
+239.4),root:null,instancedObjects:[],inactiveObstacles:[]},{name:"Castle",phiStart:degToRad$1(-239.4),phiEnd:degToRad$1(-
+374.4),root:null,instancedObjects:[],inactiveObstacles:[]}],gameState={lastObstaclePhi:bikeConfig.INITIAL_PHI,activeObstacle:[],phi:0};function delay(S){return new
+Promise(y=>setTimeout(y,S))}const columnCount$1=3,actions=new Map,state$4={rightActions:void 0,leftActions:void 0,keyPressed:!1,mixer:void 0,hairMixer:void
+0,skinnedMesh:void 0};function startAnimation(){var S;actions.get("start")||console.warn("Bike Service, no start action"),(S=actions.get("start"))==null||S()}function
+stopAnimation(){var S;(S=actions.get("stop"))==null||S(),actions.get("stop")||console.warn("Bike Service, no start action")}function
+getOffsetFromColumn(S,y){return-1*(bikeConfig.turnIntensity*y*S-(columnCount$1-1)/2*bikeConfig.turnIntensity*y)}function
+turn(S=!1,{animateCamera:y=!0,toOrigin:_=!1}={}){const
+E=!!S,b=E?state$4.rightActions:state$4.leftActions,M=E&&bikeState.column<2||!E&&bikeState.column>0;if(state$4.keyPressed||!b.length||!M)return;state$4.keyPressed=!0;const
+w=1.4,P=.7,N=300,L=Math.max(1,bikeState.speed/bikeConfig.INITIAL_SPEED*.15),D=L*w,F=P/L,k=N/L;if((!bikeState.isTurning&&gameStore.isAlive&&!gameStore.isPaused||_)&&(bikeS
+tate.column+=E?1:-1,bikeState.isTurning=!0,b.forEach(O=>{O.stop(),O.fadeIn(.5),O.play(),state$4.mixer.timeScale=D}),animate(bikeState.root.position,{x:(bikeState.column-
+1)*-2},{duration:F,ease:"easeInOut"}),y)){const O=n$4("phone")?.5:1,$={value:getOffsetFromColumn(bikeState.column,O)};animate(cameraState,{columnOffset:$.value},{duration
+:F,ease:"easeInOut"})}setTimeout(()=>{state$4.keyPressed=!1,bikeState.isTu
+
+
+##########################################################################################
+## keyboard / swipe input  [1779500:1780800]
+##########################################################################################
+mationBlendMode,H}),state$4.rightActions=M.map(j=>{AnimationUtils.makeClipAdditive(j);const H=state$4.mixer.clipAction(j);return
+H.setLoop(LoopOnce,1),H.blendMode=AdditiveAnimationBlendMode,H}),state$4.keyPressed=!1;const U=useStudioSheet("bike");addObject(U,bikeState.root),document.addEventListene
+r("keydown",j=>{if(["ArrowRight","ArrowLeft"].indexOf(j.key)<0)return;j.key==="ArrowRight"?turnRight():turnLeft()},{passive:!0}),o$3(()=>{state$4.mixer.update(bikeConfig.
+ANIMATION_SPEED*state$5.delta),state$4.hairMixer.update(bikeConfig.ANIMATION_SPEED*state$5.delta),O.time=MathUtils$1.lerp(O.time,bikeState.speed*L.duration/gameConfig.MAX
+_SPEED,.1),$.weight=MathUtils$1.lerp($.weight,bikeState.speed/gameConfig.MAX_SPEED,.1)},60)}}const detectZoneBasedOnAngle=S=>{for(let y=0;y<zones.length;y++){const _=zone
+s[y],E=(_.phiStart%(2*Math.PI)+2*Math.PI)%(2*Math.PI)-2*Math.PI,b=(_.phiEnd%(2*Math.PI)+2*Math.PI)%(2*Math.PI)-2*Math.PI;if(E>=b&&S<=E&&S>=b||E<b&&(S<=E||S>=b))return
+y}};function glsl(S){return S[0]}const lights_toon_pars_fragment=`varying vec3 vViewPosition;  struct ToonMaterial {   vec3 diffuseColor; };  void RE_Direct_Toon( const
+in IncidentLight directLight, const in vec3 geometryPosition, const in vec3 geometryNormal, const in vec3 geometryViewDir, const in vec3 geometryClearcoatN
+
+
+##########################################################################################
+## swipe listener  [1799800:1800600]
+##########################################################################################
+n.x;Math.abs(y)>gameConfig.SWIPE_THRESOLD?turn(y>0):turn(S.startPosition.x>viewport$3.width/2)},onDragEndThrottled=throttle(onDragEnd,200),initSwipeListener=()=>{renderTa
+rget=document.body.querySelector(".webglRenderTarget"),renderTarget.addEventListener("custom:dragend",onDragEndThrottled,{passive:!0})},removeSwipeListener=()=>{renderTar
+get&&renderTarget.removeEventListener("custom:dragend",onDragEndThrottled)};function u(S,y=2){const _=10**y;return~~(S*_)/_}class
+System{constructor(){sn(this,"particles");sn(this,"emitters");this.particles=[],this.emitters=[]}addEmitter(y){this.emitters.push(y)}update(y){for(const _ of
+this.emitters){_.emit(y);for(const E of _.particles)E.update(y),_.particles=_.particles.filter(b=>b.alive)}}}class UvTileMaterial extends
+ShaderMaterial{constructor(_){var
+
+
+##########################################################################################
+## handleVisibility / moveToGameView  [1922000:1923400]
+##########################################################################################
+h.PI*2/10)+Math.PI*2)%(Math.PI*2);bikeState.phi=N}needsUpdate=!1}),visibilityCinematic=bindOrbitalObject("Zone Visibility",y),visibilityGame=bindOrbitalObject("Zone
+Visibility - Game",y),visibilityCinematic.onValuesChange(w=>{handleVisibility()}),visibilityGame.onValuesChange(w=>{handleVisibility()});const _=new Color$1,E=new
+Color$1().setFromVector3((b=state$2.material)==null?void
+0:b.uniforms.uDiffuseColor.value);bindOrbitalObject("Dust",{opacity:distExports.types.number((M=state$2.material)==null?void 0:M.opacity),color:distExports.types.rgba({r:
+E.r,g:E.g,b:E.b,a:1}),rateFactor:distExports.types.number(state$2.rateFactor,{range:[0,200],nudgeMultiplier:1})}).onValuesChange(({opacity:w,color:P,rateFactor:N})=>{var
+L;state$2.material.opacity=w,_.setRGB(P.r,P.g,P.b,LinearSRGBColorSpace$1),(L=state$2.material)==null||L.uniforms.uDiffuseColor.value.set(_.r,_.g,_.b),state$2.rateFactor=N
+})}function mount$1(){sequenceState.preventVisibilityUpdate=!1,handleVisibility()}function handleVisibility(S=gameStore.mode){sequenceState.preventVisibilityUpdate||objec
+ts.forEach(y=>{S==="cinematic"?y.visible=visibilityCinematic.value[y.name]:y.visible=visibilityGame.value[y.name]})}const cameraSequenceGui=S=>{const
+y=getCamera();cameraViews.forEach((w,P)=>{S.object(`Camera / Views /
+${w.name}`,{positionX:distExports.types.number(w.position.x,{range:[-100,100],nudgeMultiplier:.1}),positionY:distExp
+
+
+##########################################################################################
+## moveObstaclesUp / switchToGameMode  [1927700:1928400]
+##########################################################################################
+tAnimation(),moveToHomeView(),cinematicStrategyOn(),clearInterval(gameStore.scoreInterval),gameStore.isAlive=!1,gameStore.mode="cinematic",await hideObstacles(),handleVis
+ibility(),setDecorVisibility(!1),moveObstaclesUp(),stop({animation:!1}),resetScore(),bikeState.speed=bikeConfig.INITIAL_SPEED,resetTargetPhi(),n$4("phone")&&(removeSwipeL
+istener(),initDragListeners()))}function pause({animation:S=!0,instant:y=!1}={}){S&&stopAnimation(),clearInterval(gameStore.scoreInterval),bikeState.speedBeforePause=bike
+State.speed,y?bikeState.speed=0:animate(bikeState,{speed:0},{duration:1}),gameStore.isPaused=!0,toggleObstacleTick(!1)}function
+resume({animation:S=!0}={}){S&&startAnimation(),animate(bikeSt
+
+
+##########################################################################################
+## MainBundle 全部实现  [1941500:1947900]
+##########################################################################################
+is.dashArray=y.dashArray,this.dashOffset=y.dashOffset,this.dashRatio=y.dashRatio,this.useDash=y.useDash,this.useGradient=y.useGradient,this.visibility=y.visibility,this.a
+lphaTest=y.alphaTest,this.repeat.copy(y.repeat),this}}async function initGameHelperCurve(){const
+S=[worldConfig.RADIUS-3,worldConfig.RADIUS-1,worldConfig.RADIUS+1,worldConfig.RADIUS+3],y=64,_=Math.PI*2*.15,E=new Group,b=new Vector2$1;getRenderer().getSize(b);const
+M=new MeshLineMaterial({color:16777215,opacity:.06,transparent:!0,resolution:b,sizeAttenuation:1,lineWidth:.1});S.forEach(L=>{const D=[];for(let O=0;O<y;O++){const
+$=_/y*O-_*.1;D.push(new Vector3$1(Math.cos($)*L,.1,-Math.sin($)*L))}const F=new MeshLineGeometry;F.setPoints(D);const k=new
+Mesh(F,M);k.frustumCulled=!1,E.add(k)}),getScene().add(E);function w(){E&&(E.rotation.y=-bikeState.phi)}function
+P(){E.visible=!0,o$3(w),animate(M,{opacity:.06},{ease:"linear",duration:1,delay:1})}function
+N(){animate(M,{opacity:0},{ease:"linear",duration:.5}).then(()=>{E.visible=!1,c$2(w)})}watchEffect(()=>{gameStore.isAlive?P():N()})}const gui$1=S=>{const y=S.object("Spee
+d",{SPEED_INCREMENT:distExports.types.number(gameConfig.SPEED_INCREMENT,{range:[0,.5],nudgeMultiplier:.001}),MAX_SPEED:distExports.types.number(gameConfig.MAX_SPEED,{rang
+e:[0,5],nudgeMultiplier:.01})}),_=S.object("Obstacles",{difficulty:distExports.types.number(gameConfig.OBSTACLE_DIFFICULTY,{range:[.01,1],nudgeMultiplier:.01}),distance:d
+istExports.types.number(gameConfig.OBSTACLE_DISTANCE,{range:[.1,2],nudgeMultiplier:.01}),minInterval:distExports.types.number(gameConfig.OBSTACLE_MIN_INTERVAL,{range:[.1,
+5],nudgeMultiplier:.01})});y.onValuesChange(({SPEED_INCREMENT:E,MAX_SPEED:b})=>{gameConfig.MAX_SPEED=b,gameConfig.SPEED_INCREMENT=E}),_.onValuesChange(({difficulty:E,dist
+ance:b,minInterval:M})=>{gameConfig.OBSTACLE_DIFFICULTY=E,gameConfig.OBSTACLE_DISTANCE=b,gameConfig.OBSTACLE_MIN_INTERVAL=M})},name$1="game",columnCount=3,create$3=async(
+)=>{initializeObstacles(),cinematicStrategyOn(),initGameHelperCurve()},render$2=()=>{gameModeTick(),gameState.phi=-(Math.PI*2-
+bikeState.phi%(Math.PI*2)+Math.PI*2)%(Math.PI*2)};function toggleObstacleTick(S){S?o$3(generateObstacleTick,10):c$2(generateObstacleTick,10)}function
+gameModeTick(){detectCollision(),checkObstaclesPassed()}function
+incrementGameSpeed(){bikeState.speed=Math.min(bikeState.speed+gameConfig.SPEED_INCREMENT,gameConfig.MAX_SPEED)}function
+start({animation:S=!0}={}){bikeState.speedBeforePause=bikeConfig.INITIAL_SPEED,resume({animation:S})}function
+stop({animation:S=!0}={}){S&&stopAnimation(),saveScore(),bikeState.speedBeforePause=bikeConfig.INITIAL_SPEED,pause({animation:S,instant:!0})}function
+onEndGame(){gameStore.isAlive=!1,toggleObstacleTick(!1),bikeState.speed=0,stop()}let obstacleBox=new Box3$1;function
+detectCollision(){if(!gameStore.isAlive||gameStore.mode==="cinematic")return;const S=bikeState.group;if(!S)return;const y=S==null?void
+0:S.children[0].matrixWorld,_=m(1).set(0,0,1.5).applyMatrix4(y),E=m(2).set(0,0,-.7).applyMatrix4(y);gameState.activeObstacle.forEach(b=>{var
+w;(w=b.instance)==null||w.getMatrixAt(b.instanceIndex,s$2(1)),m(3).setFromMatrixPosition(s$2(1));const
+M=m(4).set(1,1,1);obstacleBox.setFromCenterAndSize(m(3),M),(obstacleBox.containsPoint(_)||obstacleBox.containsPoint(E))&&(onEndGame(),stopAnimation())})}async function
+initializeObstacles(S=10){await worldResolved;const y=getResource("scene").scene;for(let _=0;_<zones.length;_++){const
+E=y.getObjectByName(`obstacle_${_}`);if(!E)return;const b=Math.floor(S/E.children.length);for(const M in E.children){const P=E.children[M],N=new
+InstancedMesh(P.geometry,P.material.clone(),b);N.morphTargetInfluences=void 0,N.morphTargetDictionary=void 0,N.geometry.morphAttributes={},N.name=P.name,N.userData.zoneIn
+dex=_,N.visible=!1,generateMeshRampNoiseToonMaterial(N,{name:name$1},OBSTACLE_MOEBIUS_CONFIG[P.name]||{}),N.frustumCulled=!1,N.castShadow=!0,zones[_].instancedObjects.pus
+h(N),getScene().add(N);for(let L=0;L<b;L++)zones[_].inactiveObstacles.push({instanceIndex:L,initialPhi:0,instance:N})}}}function getInstancedObjects(){return
+zones.reduce((S,y)=>(S.push(...y.instancedObjects),S),[])}async function hideObstacles(){getInstancedObjects().length&&(await
+animate(getInstancedObjects().map(y=>[y.position,{y:-3},{duration:.5,at:0}])),clearAllActiveObstacles())}function
+moveObstaclesUp(){getInstancedObjects().length&&animate(getInstancedObjects().map(y=>[y.position,{y:0},{duration:0,at:0}]))}function
+setDecorVisibility(S){getInstancedObjects().forEach(y=>{y.visible=S})}function generateObstacle(S,y,_=!1){const
+E=gameState.phi,b=detectZoneBasedOnAngle(S%(Math.PI*2)),M=zones[b];let
+w=E-gameState.lastObstaclePhi;if(w>0&&(w-=Math.PI*2),w>-gameConfig.OBSTACLE_MIN_INTERVAL&&!_)return!1;const
+P=Math.floor(Math.random()*M.inactiveObstacles.length),N=M.inactiveObstacles[P];if(!N)throw new Error(`No obstacle available in zone
+${b}`);M.inactiveObstacles.splice(P,1);const L=worldConfig.RADIUS+(y-1)*bikeConfig.turnIntensity;let D=-2;const
+F=[Math.random()*.1-.05,Math.random()*Math.PI*2,Math.random()*.1-.05,1],k=Math.random()*.5+.75;return
+N.initialPhi=S,gameState.lastObstaclePhi=gameState.phi,gameState.activeObstacle.push(N),animate(D,0,{ease:"easeOut",duration:.5,onUpdate:O=>{var j;const $=m().set(Math.co
+s(S)*L,O,Math.sin(S)*L),V=m(1).setScalar(k),z=h$1().set(...F).normalize(),U=s$2().compose($,z,V);(j=N.instance)==null||j.setMatrixAt(N.instanceIndex,U),N.instance.instanc
+eMatrix.needsUpdate=!0}}),!0}function generateObstacleTick(){if(Math.random()>gameConfig.OBSTACLE_DIFFICULTY)return;const
+S=Math.floor(Math.random()*columnCount),y=gameState.phi-gameConfig.OBSTACLE_DISTANCE;generateObstacle(y,S)}function
+checkObstaclesPassed(){gameState.activeObstacle.forEach((S,y)=>{let _=gameState.phi-S.initialPhi;_>Math.PI&&(_-=Math.PI*2),_<-
+.2&&(S.instance.setMatrixAt(S.instanceIndex,s$2().identity()),S.instance.instanceMatrix.needsUpdate=!0,gameState.activeObstacle.splice(y,1),zones[S.instance.userData.zone
+Index].inactiveObstacles.push(S))})}function clearAllActiveObstacles(){for(s$2().identity();gameState.activeObstacle.length>0;){const S=gameState.activeObstacle.pop();S&&
+(zones[S.instance.userData.zoneIndex].inactiveObstacles.push(S),S.instance.setMatrixAt(S.instanceIndex,s$2()))}zones.forEach(S=>{S.instancedObjects.forEach(y=>{y.instance
+Matrix.needsUpdate=!0})})}const MainBundle=Object.freeze(Object.defineProperty(
+
+
+##########################################################################################
+## leaderboard UI  [2181600:2182400]
+##########################################################################################
+ult")]),_:2},[$.$slots.footer?{name:"footer",fn:withCtx(()=>[renderSlot($.$slots,"footer")]),key:"0"}:void 0]),1064,["theme"]))]))}}),_hoisted_1$8={class:"body"},_hoisted
+_2$3={class:"content"},_hoisted_3$3={class:"leaderboard"},_hoisted_4$3={class:"left"},_hoisted_5$2={class:"position"},_hoisted_6$2={class:"username"},_hoisted_7$1={class:
+"right"},_hoisted_8={class:"score"},_hoisted_9={class:"username"},_hoisted_10={class:"label"},_hoisted_11={class:"deathFooter"},_hoisted_12={class:"gameCta"},_sfc_main$c=
+defineComponent({__name:"DeathInterface",emits:["completed","validated","submit","clear-error"],setup(S,{emit:y}){const{t:_}=useI18n(),E=useRuntimeConfig(),b=ref(!1),M=re
+f("AAAAA"),w=ref(),P=ref(),N=ref(!0),L=ref(),D=ref(),F=ref(!1),k=ref(!1),O=ref(null),$=ref(!1),V=c$1();function z(){retu
