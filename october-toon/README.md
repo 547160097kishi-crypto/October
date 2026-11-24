@@ -18,8 +18,50 @@ npm run build      # 产物在 dist/（相对路径，可直接丢到任意静�
 npm run preview    # 预览生产构建
 ```
 
-操作：空格 播放/暂停；底部面板有时间轴、`镜头：动画/自由` 切换（自由镜头 = OrbitControls）、暮色、描边开关、线宽、雾、速度。
+操作：空格 播放/暂停、H 隐藏界面、F 全屏；底部面板有时间轴、`镜头：动画/自由` 切换（自由镜头 = OrbitControls）、暮色、描边开关、线宽、雾、速度。
 调试入口：控制台 `__october`（`setTime(t)`、`setDusk(v)`、`setFog(v)`、`freeCam(pos, target)`、`animCam()`、`info()`）。
+
+## 发布会现场（10527×1024 长条屏）
+
+**最简单：双击 `start-stage.bat`**（Windows）。它会自动：安装依赖（仅第一次，需要联网）→ 打包 → 启动本地服务 → Chrome 全屏打开发布会模式。
+需要提前装好 [Node.js](https://nodejs.org)（LTS 版）和 Chrome。
+
+发布会模式网址：`http://localhost:4173/?stage`
+- 固定按 **10527×1024** 渲染（与模型里 C4D 相机的宽高比 10.2803 完全一致，镜头构图就是为这块屏做的），界面和鼠标隐藏，自动循环播放；
+- 窗口不是这个尺寸时等比缩放，四周黑边；
+- 如果显卡不支持这么宽（软件渲染 / 部分老核显上限 8192），会自动降分辨率再拉伸铺满，不会黑屏。
+
+现场调参都写在网址里，**不用改代码**（多个参数用 `&` 连接）：
+
+| 参数 | 作用 | 例子 |
+| --- | --- | --- |
+| `thickness` | 描边粗细，默认 0.35，越小越细 | `?stage&thickness=0.2` |
+| `outline=0` | 关闭描边 | `?stage&outline=0` |
+| `scale` | 显卡卡顿时降低内部渲染分辨率（画面仍铺满） | `?stage&scale=0.75` |
+| `dusk` | 暮色 0～1 | `?stage&dusk=0.6` |
+| `fog` | 雾 0～3，默认 1 | `?stage&fog=1.5` |
+| `speed` | 播放速度，默认 1 | `?stage&speed=0.8` |
+| `w` / `h` | 换别的固定分辨率 | `?stage&w=5263&h=512` |
+
+快捷键：空格 播放/暂停 · H 显示/隐藏界面 · F 全屏。
+
+## 代码更新后怎么同步（给新手）
+
+`october-toon` 文件夹是**自包含**的，不依赖仓库里其他文件夹，所以你只保留它是没问题的。
+
+**推荐：用 GitHub Desktop（不用敲命令）**
+1. 安装 [GitHub Desktop](https://desktop.github.com)，登录 GitHub。
+2. File → Clone repository → 选 `547160097kishi-crypto/October` → 选一个本地位置 → Clone。
+3. 顶部 **Current branch** 切到 `ccr-c9a8c133-916vgu`。
+4. 以后有更新：点顶部 **Fetch origin**，再点 **Pull origin**，就同步好了。
+5. 只用里面的 `october-toon` 文件夹，其他文件夹不用管（别删，删了 GitHub Desktop 会把它当成你的修改）。
+
+**备选：继续用下载压缩包**
+GitHub 网页 → 切到上面那个分支 → Code → Download ZIP → 解压后用新的 `october-toon` 整个替换旧的。
+可以把旧文件夹里的 `node_modules` 挪过去省得重新安装（不挪也行，`start-stage.bat` 会自动装）。
+注意：这样会覆盖你自己改过的文件，改过的话先备份。
+
+**自己调参数**优先用上面的网址参数；要改颜色在 `src/palettes.ts`，改完浏览器会自动刷新（`npm run dev` 时）。
 
 ## motorbike 的 shader 实现（移植了什么）
 
@@ -40,7 +82,7 @@ npm run preview    # 预览生产构建
    - 与 motorbike 场景同源的资源（`arch0xx`、`big_arch`、`palace*`、`stair_*`、`terasse`、`rock_dune_*_root`、`batiment`）直接用 motorbike 的 `toon-colors.json` 原值；
    - 十月独有的（凯旋门、圣心教堂、巴黎圣母院、枫树/枫叶、老爷车……）按秋日主题配色；老爷车按 C4D 子材质名（漆面 / 镍银 / 枪灰 / 胎面 / 皮革 / 尾灯）上色。
 3. **地面延伸**：模型地面是一块不规则圆盘，镜头会拍到外面的虚空。运行时提取地面网格外边界环，向外做两圈过渡环（河道在边界的下切收回地平面），再 earcut 铺满 ±2500，远处交给雾融进天际线。
-4. **相机**：C4D 导出的 `yfov=0.14 / aspectRatio=10.28` 实际是「水平 FOV 71.5°」，按窗口比例换算竖直 FOV（宽屏锁 16:9 构图，竖屏锁水平 FOV，上限 80°）。
+4. **相机**：C4D 相机 `yfov=8° / aspectRatio=10.28` 是为 10527×1024 长条屏设定的（水平 FOV 71.5°）。始终保持水平 FOV、按窗口比例换算竖直 FOV：长条屏上与 C4D 完全一致，普通 16:9 屏上下多看一些，竖屏上限 80°。
 
 ## 修掉的 motorbike 描边 bug（已在本项目修复，motorbike 本身未改）
 
@@ -50,5 +92,5 @@ npm run preview    # 预览生产构建
 
 ## 已知事项
 
-- 255 万三角 × 3 个 pass（阴影 / identity / 颜色），独显流畅；核显或手机上可把线宽、阴影调低（移动端阴影贴图已自动降到 2048）。
+- 255 万三角 × 3 个 pass（阴影 / identity / 颜色）。10527×1024 是 1080p 的 5 倍像素，建议用独立显卡；卡顿就加 `&scale=0.75` 或 `0.5`。
 - 截图是在无 GPU 的 headless Chromium（SwiftShader）里跑的，真实浏览器效果一致。

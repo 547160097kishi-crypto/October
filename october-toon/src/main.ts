@@ -32,10 +32,34 @@ const MODEL_URL = `${import.meta.env.BASE_URL}models/october.glb`
 const params = {
   dusk: 0, // 0 = 白天, 1 = 暮色（色板插值，与 motorbike Day-Night 轨道同公式）
   outline: true,
-  thickness: 1.0,
+  thickness: 0.35, // 描边采样偏移（像素）；越小越细
   fog: 1.0, // 雾强度倍数
   speed: 1
 }
+
+// ---------------------------------------------------------------------------
+// 网址参数（现场调参不用改代码）
+//   ?stage            发布会模式：固定 10527×1024 渲染、隐藏界面和鼠标、自动循环播放
+//   ?w=10527&h=1024   自定义固定渲染分辨率（stage 模式默认就是这个）
+//   ?scale=0.5        显卡吃力时降低内部渲染分辨率（画面仍铺满）
+//   ?thickness=0.35   描边粗细    ?outline=0 关闭描边
+//   ?dusk=0..1  暮色   ?fog=0..3  雾   ?speed=0.1..2  播放速度
+// ---------------------------------------------------------------------------
+const query = new URLSearchParams(location.search)
+const num = (k: string, def: number) => {
+  const v = query.get(k)
+  return v !== null && v !== '' && Number.isFinite(Number(v)) ? Number(v) : def
+}
+const STAGE = query.has('stage')
+/** 发布会长条屏：10527×1024（与 C4D 相机 aspectRatio 10.2803 一致） */
+const FIXED_SIZE =
+  STAGE || query.has('w') ? { w: Math.round(num('w', 10527)), h: Math.round(num('h', 1024)) } : null
+params.thickness = num('thickness', params.thickness)
+params.dusk = num('dusk', params.dusk)
+params.fog = num('fog', params.fog)
+params.speed = num('speed', params.speed)
+if (query.get('outline') === '0') params.outline = false
+if (STAGE) document.body.classList.add('stage')
 
 /** 天空 / 雾色：白天与暮色两套，与 Toon 色板一起插值 */
 const SKY = {
@@ -58,7 +82,8 @@ const renderer = new THREE.WebGLRenderer({
   alpha: false,
   depth: true
 })
-renderer.setPixelRatio(Math.min(2, window.devicePixelRatio))
+// 固定分辨率时 pixelRatio=1，画布内部就是精确的 w×h 像素
+renderer.setPixelRatio(FIXED_SIZE ? 1 : Math.min(2, window.devicePixelRatio))
 renderer.setSize(window.innerWidth, window.innerHeight, false)
 renderer.outputColorSpace = THREE.SRGBColorSpace
 renderer.shadowMap.enabled = true
@@ -67,6 +92,15 @@ renderer.shadowMap.autoUpdate = false // outline.render 里每帧手动 needsUpd
 
 const scene = new THREE.Scene()
 scene.background = SKY.day.horizon.clone()
+
+/** 显卡能渲染的最大边长（独显一般 16384+；软件渲染/部分核显只有 8192） */
+const GPU_MAX = (() => {
+  const gl = renderer.getContext()
+  const vp = gl.getParameter(gl.MAX_VIEWPORT_DIMS) as Int32Array
+  return Math.min(vp[0]!, vp[1]!, gl.getParameter(gl.MAX_RENDERBUFFER_SIZE), gl.getParameter(gl.MAX_TEXTURE_SIZE))
+})()
+/** ?scale=0.5：显卡吃力时降低内部渲染分辨率（画面仍铺满屏幕） */
+const RENDER_SCALE = Math.min(1, Math.max(0.1, num('scale', 1)))
 
 const outline = new MoebiusOutline(renderer)
 const syncOutlineSize = () => {
@@ -155,18 +189,31 @@ function activeCamera(): THREE.PerspectiveCamera {
 }
 
 function resize() {
-  const w = window.innerWidth
-  const h = window.innerHeight
+  let w = window.innerWidth
+  let h = window.innerHeight
+  if (FIXED_SIZE) {
+    // CSS 上等比缩放塞进窗口（窗口正好 10527×1024 时 1:1）
+    const fit = Math.min(window.innerWidth / FIXED_SIZE.w, window.innerHeight / FIXED_SIZE.h)
+    canvas.style.width = `${FIXED_SIZE.w * fit}px`
+    canvas.style.height = `${FIXED_SIZE.h * fit}px`
+    canvas.style.left = `${(window.innerWidth - FIXED_SIZE.w * fit) / 2}px`
+    canvas.style.top = `${(window.innerHeight - FIXED_SIZE.h * fit) / 2}px`
+    // 内部渲染分辨率 = 固定分辨率 × ?scale，且不超过显卡上限（超了会黑屏），超了就等比降下来再拉伸
+    const k = Math.min(RENDER_SCALE, GPU_MAX / FIXED_SIZE.w, GPU_MAX / FIXED_SIZE.h)
+    if (k < RENDER_SCALE) console.warn(`[october] 显卡最大只支持 ${GPU_MAX}px，渲染分辨率降为 ×${k.toFixed(3)}`)
+    w = Math.round(FIXED_SIZE.w * k)
+    h = Math.round(FIXED_SIZE.h * k)
+  }
   renderer.setSize(w, h, false)
   syncOutlineSize()
   const aspect = w / h
   freeCamera.aspect = aspect
   freeCamera.updateProjectionMatrix()
   if (animCamera) {
-    // 宽屏：保持 16:9 时的竖直 FOV；竖屏：保持水平 FOV（不裁掉两侧），上限 80°
-    const v169 = 2 * Math.atan(Math.tan(animHFov / 2) / (16 / 9))
+    // 始终保持 C4D 相机的水平视角（71.5°）：10527×1024 时竖直视角正好还原成原始 yfov 8°；
+    // 普通 16:9 屏幕上下多看一些；竖屏上限 80°
     const vKeepH = 2 * Math.atan(Math.tan(animHFov / 2) / aspect)
-    const v = aspect >= 16 / 9 ? v169 : Math.min(vKeepH, THREE.MathUtils.degToRad(80))
+    const v = Math.min(vKeepH, THREE.MathUtils.degToRad(80))
     animCamera.fov = THREE.MathUtils.radToDeg(v)
     animCamera.aspect = aspect
     animCamera.updateProjectionMatrix()
@@ -527,6 +574,10 @@ camBtn.onclick = () => {
   camBtn.textContent = useAnimCamera ? '镜头：动画' : '镜头：自由'
 }
 
+for (const [id, v] of [['dusk', params.dusk], ['thickness', params.thickness], ['fog', params.fog], ['speed', params.speed]] as const) {
+  $<HTMLInputElement>(id).value = String(v)
+}
+$<HTMLInputElement>('outline').checked = params.outline
 const bindRange = (id: string, fn: (v: number) => void) => {
   const el = $<HTMLInputElement>(id)
   el.addEventListener('input', () => fn(Number(el.value)))
@@ -548,9 +599,15 @@ bindRange('speed', (v) => (params.speed = v))
 $<HTMLInputElement>('outline').addEventListener('change', (e) => (params.outline = (e.target as HTMLInputElement).checked))
 
 window.addEventListener('keydown', (e) => {
-  if (e.code === 'Space' && (e.target as HTMLElement).tagName !== 'INPUT') {
+  if ((e.target as HTMLElement).tagName === 'INPUT') return
+  if (e.code === 'Space') {
     e.preventDefault()
     playBtn.click()
+  } else if (e.code === 'KeyH') {
+    document.body.classList.toggle('ui-hidden') // H：显示/隐藏界面
+  } else if (e.code === 'KeyF') {
+    if (document.fullscreenElement) document.exitFullscreen()
+    else document.documentElement.requestFullscreen().catch(() => {}) // F：全屏
   }
 })
 
