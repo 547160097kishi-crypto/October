@@ -22,7 +22,8 @@ import {
   type ToonPalette
 } from './toonMaterial'
 import { MoebiusOutline, INK_DEFAULTS } from './outlinePass'
-import { paletteForPath } from './palettes'
+import { paletteForPath, PALETTES } from './palettes'
+import { createFountain, type Fountain } from './fountain'
 import { createDustTrail, type DustTrail } from './dust'
 
 const MODEL_URL = `${import.meta.env.BASE_URL}models/october.glb`
@@ -58,8 +59,12 @@ const num = (k: string, def: number) => {
 }
 const STAGE = query.has('stage')
 /** 发布会长条屏：10527×1024（与 C4D 相机 aspectRatio 10.2803 一致） */
-const FIXED_SIZE =
-  STAGE || query.has('w') ? { w: Math.round(num('w', 10527)), h: Math.round(num('h', 1024)) } : null
+const TARGET = { w: Math.round(num('w', 10527)), h: Math.round(num('h', 1024)) }
+/** stage / 指定 ?w：按精确分辨率渲染 */
+const FIXED_SIZE = STAGE || query.has('w') ? TARGET : null
+/** 默认模式也用长屏比例（10527:1024）居中显示；?fit=window 恢复铺满窗口 */
+const FIT_WINDOW = query.get('fit') === 'window'
+const STRIP_MODE = !FIXED_SIZE && !FIT_WINDOW
 params.thickness = num('thickness', params.thickness)
 params.ink = num('ink', params.ink)
 if (query.get('fxaa') === '0') params.fxaa = false
@@ -69,6 +74,7 @@ params.speed = num('speed', params.speed)
 params.dust = num('dust', params.dust)
 if (query.get('outline') === '0') params.outline = false
 if (STAGE) document.body.classList.add('stage')
+if (STRIP_MODE) document.body.classList.add('strip')
 
 /** 天空 / 雾色：白天与暮色两套，与 Toon 色板一起插值 */
 const SKY = {
@@ -116,9 +122,12 @@ const syncOutlineSize = () => {
   const s = renderer.getDrawingBufferSize(new THREE.Vector2())
   outline.setSize(s.x, s.y)
   dust?.setViewportHeight(s.y)
+  fountain?.setViewportHeight(s.y)
+  fountain?.setLineWidth(outline.pixelWidth)
 }
 /** 车后扬尘（motorbike dust.ts 移植）*/
 let dust: DustTrail | null = null
+let fountain: Fountain | null = null
 let rearWheels: THREE.Object3D[] = []
 const carPrev = new THREE.Vector3()
 let carPrevValid = false
@@ -208,18 +217,23 @@ function activeCamera(): THREE.PerspectiveCamera {
 function resize() {
   let w = window.innerWidth
   let h = window.innerHeight
-  if (FIXED_SIZE) {
-    // CSS 上等比缩放塞进窗口（窗口正好 10527×1024 时 1:1）
-    const fit = Math.min(window.innerWidth / FIXED_SIZE.w, window.innerHeight / FIXED_SIZE.h)
-    canvas.style.width = `${FIXED_SIZE.w * fit}px`
-    canvas.style.height = `${FIXED_SIZE.h * fit}px`
-    canvas.style.left = `${(window.innerWidth - FIXED_SIZE.w * fit) / 2}px`
-    canvas.style.top = `${(window.innerHeight - FIXED_SIZE.h * fit) / 2}px`
-    // 内部渲染分辨率 = 固定分辨率 × ?scale，且不超过显卡上限（超了会黑屏），超了就等比降下来再拉伸
-    const k = Math.min(RENDER_SCALE, GPU_MAX / FIXED_SIZE.w, GPU_MAX / FIXED_SIZE.h)
-    if (k < RENDER_SCALE) console.warn(`[october] 显卡最大只支持 ${GPU_MAX}px，渲染分辨率降为 ×${k.toFixed(3)}`)
-    w = Math.round(FIXED_SIZE.w * k)
-    h = Math.round(FIXED_SIZE.h * k)
+  if (FIXED_SIZE || STRIP_MODE) {
+    // CSS 上等比缩放塞进窗口（stage 且窗口正好 10527×1024 时 1:1）
+    const fit = Math.min(window.innerWidth / TARGET.w, window.innerHeight / TARGET.h)
+    const cssW = TARGET.w * fit
+    const cssH = TARGET.h * fit
+    canvas.style.width = `${cssW}px`
+    canvas.style.height = `${cssH}px`
+    canvas.style.left = `${(window.innerWidth - cssW) / 2}px`
+    canvas.style.top = `${(window.innerHeight - cssH) / 2}px`
+    // stage：内部按 10527×1024 渲染；默认长屏预览：按显示尺寸 × 设备像素比 × 2 渲染（不超过现场分辨率），
+    // 浏览器再缩小 → 细线的观感接近现场。两者都 × ?scale，且不超过显卡上限（超了会黑屏）
+    const want = FIXED_SIZE ? RENDER_SCALE : Math.min(1, (cssH * Math.min(2, window.devicePixelRatio) * 2) / TARGET.h) * RENDER_SCALE
+    const k = Math.min(want, GPU_MAX / TARGET.w, GPU_MAX / TARGET.h)
+    if (k < want) console.warn(`[october] 显卡最大只支持 ${GPU_MAX}px，渲染分辨率降为 ×${k.toFixed(3)}`)
+    renderer.setPixelRatio(1)
+    w = Math.max(1, Math.round(TARGET.w * k))
+    h = Math.max(1, Math.round(TARGET.h * k))
   } else {
     // 普通窗口：设备像素比（≤2）× ?scale，同样不超过显卡上限
     const want = Math.min(2, window.devicePixelRatio) * RENDER_SCALE
@@ -490,8 +504,27 @@ async function load() {
     tex.colorSpace = THREE.NoColorSpace // 只当遮罩用
     dust = createDustTrail(tex)
     scene.add(dust.object)
+    outline.idExtras.add(dust.idObject)
+    // 前景喷泉的动画水流（与烟尘共用硬边团块图集做水花）
+    let fountainRoot: THREE.Object3D | null = null
+    root.traverse((o) => {
+      if (!fountainRoot && o.name === '水池') fountainRoot = o
+    })
+    if (fountainRoot) {
+      fountain = createFountain({
+        fountainRoot,
+        gradientMap,
+        waterPalette: PALETTES.water!,
+        spriteMap: tex,
+        idScene: outline.idExtras,
+        allocId: () => outline.allocIdentity()
+      })
+      scene.add(fountain.group)
+      toonMaterials.push(...fountain.toonMaterials)
+      outline.register(fountain.group, (m) => fountain!.surfaces.includes(m))
+    }
   } catch (err) {
-    console.warn('[october] dust unavailable', err)
+    console.warn('[october] dust / fountain unavailable', err)
   }
 
   resize()
@@ -522,6 +555,7 @@ function applyDusk() {
   skyUniforms.uSunColor.value.lerpColors(new THREE.Color('#fff1d6'), new THREE.Color('#ffb070'), m)
   ;(scene.background as THREE.Color).copy(skyUniforms.uHorizon.value)
   setFogColors(_c1.lerpColors(SKY.day.fogNear, SKY.dusk.fogNear, m), _c2.lerpColors(SKY.day.fogFar, SKY.dusk.fogFar, m))
+  fountain?.setDusk(m)
   dust?.setColor(_c1.lerpColors(DUST_DAY, DUST_DUSK, m))
   // 暮色时太阳压低
   const dir = SUN_DIR.clone().lerp(new THREE.Vector3(-0.85, 0.28, 0.45), m).normalize()
@@ -581,6 +615,7 @@ function updateDust(animDt: number) {
     _carVel.set(0, 0, 0)
   }
   dust.object.visible = params.dust > 0
+  dust.idObject.visible = params.dust > 0
   dust.update(animDt, _emitters.slice(0, rearWheels.length), _carVel, params.dust)
 }
 
@@ -603,6 +638,8 @@ function frame() {
   cam.updateMatrixWorld()
   syncShadow(cam)
   tickFog(dt)
+  // 喷泉按真实时间流动（暂停时间轴也不停）
+  fountain?.update(dt)
   outline.enabled = params.outline
   outline.render(scene, cam)
 }
@@ -668,6 +705,7 @@ bindRange('dusk', (v) => {
 bindRange('thickness', (v) => {
   params.thickness = v
   outline.setThickness(v)
+  fountain?.setLineWidth(outline.pixelWidth)
 })
 bindRange('fog', (v) => {
   params.fog = v

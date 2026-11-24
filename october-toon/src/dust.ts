@@ -17,10 +17,67 @@
  *  - 粒子随机旋转，避免 4 种形状重复感
  */
 import * as THREE from 'three'
+import { ID_FAR } from './outlinePass'
+
+/** 点精灵通用顶点着色器：世界直径 → 像素，带每粒子图集格与旋转 */
+export const SPRITE_VERT = /* glsl */ `
+  attribute float aSize;
+  attribute float aTile;
+  attribute float aRot;
+  uniform float uViewportHeight;
+  varying float vTile;
+  varying float vRot;
+  varying float vViewZ;
+  void main() {
+    vTile = aTile;
+    vRot = aRot;
+    vec4 mv = modelViewMatrix * vec4(position, 1.0);
+    vViewZ = -mv.z;
+    gl_Position = projectionMatrix * mv;
+    // 世界直径 → 像素：size · P[1][1] · 视口高 / 2 / 深度
+    gl_PointSize = aSize * projectionMatrix[1][1] * uViewportHeight * 0.5 / max(0.001, -mv.z);
+  }
+`
+
+/** 取图集形状（随机旋转后取 2×2 图集的一格），形状外 discard；返回旋转后的坐标供月牙阴影用 */
+export const SPRITE_MASK = /* glsl */ `
+  uniform sampler2D uMap;
+  varying float vTile;
+  varying float vRot;
+  vec2 spriteCell() { return vec2(mod(vTile, 2.0), floor(vTile / 2.0)) * 0.5; }
+  vec2 spriteCoord() {
+    vec2 pc = gl_PointCoord - 0.5;
+    float c = cos(vRot), s = sin(vRot);
+    return mat2(c, -s, s, c) * pc + 0.5;
+  }
+  bool spriteInside(vec2 pc) {
+    if (pc.x < 0.0 || pc.x > 1.0 || pc.y < 0.0 || pc.y > 1.0) return false;
+    return texture2D(uMap, spriteCell() + pc * 0.5).r >= 0.5;
+  }
+`
+
+/** 点精灵的 identity 材质（写 identity + 深度 + 朝向镜头的法线），与可见粒子形状完全一致 */
+export function spriteIdMaterial(map: THREE.Texture, identity: number, viewportHeight: { value: number }) {
+  return new THREE.ShaderMaterial({
+    uniforms: { uMap: { value: map }, uViewportHeight: viewportHeight, uIdent: { value: identity }, uFar: { value: ID_FAR } },
+    vertexShader: SPRITE_VERT,
+    fragmentShader: /* glsl */ `
+      uniform float uIdent;
+      uniform float uFar;
+      varying float vViewZ;
+      ${SPRITE_MASK}
+      void main() {
+        if (!spriteInside(spriteCoord())) discard;
+        gl_FragColor = vec4(uIdent, vViewZ / uFar, 0.0, 0.0);
+      }
+    `
+  })
+}
 
 const COUNT = 1600
 /** 原站 0.4s 是给高速摩托的；老爷车慢、体量大，烟团停留更久 */
-const LIFETIME = 0.8
+/** 原站 0.4s：尘带长度 ≈ 车速 × 寿命，约 12 个单位（之前 0.8s 拖得太长） */
+const LIFETIME = 0.42
 /** 速度 → 浓度的参考值：老爷车巡航约 30 单位/秒 */
 const REF_SPEED = 30
 /** 每个后轮每秒最大发射数（原站 speed·2.6·rateFactor·200 的量级） */
@@ -42,6 +99,8 @@ interface Particle {
 
 export interface DustTrail {
   object: THREE.Points
+  /** 加到 outline.idExtras 里 */
+  idObject: THREE.Points
   /** emitters：后轮世界坐标；carVel：车的世界速度（单位/秒） */
   update(dt: number, emitters: THREE.Vector3[], carVel: THREE.Vector3, density: number): void
   setColor(color: THREE.Color): void
@@ -49,7 +108,7 @@ export interface DustTrail {
   reset(): void
 }
 
-export function createDustTrail(map: THREE.Texture): DustTrail {
+export function createDustTrail(map: THREE.Texture, identity = 0.96): DustTrail {
   const positions = new Float32Array(COUNT * 3)
   const sizes = new Float32Array(COUNT)
   const tiles = new Float32Array(COUNT)
@@ -61,56 +120,31 @@ export function createDustTrail(map: THREE.Texture): DustTrail {
   geometry.setAttribute('aTile', new THREE.BufferAttribute(tiles, 1))
   geometry.setAttribute('aRot', new THREE.BufferAttribute(rots, 1))
 
+  const viewportHeight = { value: 720 }
   const material = new THREE.ShaderMaterial({
-    transparent: true,
-    depthWrite: false,
+    // 不透明 + 写深度：烟团之间按真实前后遮挡（与 identity pass 一致）
     uniforms: {
       uMap: { value: map },
       uColor: { value: new THREE.Color('#f1e0c2') },
       uShade: { value: new THREE.Color('#e5cba6') },
-      uOpacity: { value: 1 },
-      uViewportHeight: { value: 720 }
+      uViewportHeight: viewportHeight
     },
-    vertexShader: /* glsl */ `
-      attribute float aSize;
-      attribute float aTile;
-      attribute float aRot;
-      uniform float uViewportHeight;
-      varying float vTile;
-      varying float vRot;
-      void main() {
-        vTile = aTile;
-        vRot = aRot;
-        vec4 mv = modelViewMatrix * vec4(position, 1.0);
-        gl_Position = projectionMatrix * mv;
-        // 世界直径 → 像素：size · P[1][1] · 视口高 / 2 / 深度
-        gl_PointSize = aSize * projectionMatrix[1][1] * uViewportHeight * 0.5 / max(0.001, -mv.z);
-      }
-    `,
+    vertexShader: SPRITE_VERT,
     fragmentShader: /* glsl */ `
-      uniform sampler2D uMap;
       uniform vec3 uColor;
       uniform vec3 uShade;
-      uniform float uOpacity;
-      varying float vTile;
-      varying float vRot;
+      ${SPRITE_MASK}
       void main() {
-        // 随机旋转后再取图集的一格（原站 2×2 图集，tile 0.5）
-        vec2 pc = gl_PointCoord - 0.5;
-        float c = cos(vRot), s = sin(vRot);
-        pc = mat2(c, -s, s, c) * pc + 0.5;
-        if (pc.x < 0.0 || pc.x > 1.0 || pc.y < 0.0 || pc.y > 1.0) discard;
-        vec2 cell = vec2(mod(vTile, 2.0), floor(vTile / 2.0)) * 0.5;
-        float mask = texture2D(uMap, cell + pc * 0.5).r;
+        vec2 pc = spriteCoord();
         // 硬边：Toon 风格，不做软羽化
-        if (mask < 0.5) discard;
+        if (!spriteInside(pc)) discard;
         // 月牙阴影：把形状往「光来的方向」（屏幕右上）挪一点再取样，
         // 挪过去后落在形状外的像素 = 背光边缘 → 暗色（与 Toon 物体的受光 / 背光两色一致）
-        vec2 toLight = mat2(c, s, -s, c) * vec2(0.16, -0.16); // 抵消粒子自身旋转，保证暗面始终在左下
+        float c = cos(vRot), s = sin(vRot);
+        vec2 toLight = mat2(c, s, -s, c) * vec2(0.16, -0.16); // 抵消粒子自身旋转，暗面始终在左下
         vec2 q = clamp(pc + toLight, 0.0, 1.0);
-        float lit = texture2D(uMap, cell + q * 0.5).r;
-        vec3 col = lit > 0.5 ? uColor : uShade;
-        gl_FragColor = vec4(col, uOpacity);
+        float lit = texture2D(uMap, spriteCell() + q * 0.5).r;
+        gl_FragColor = vec4(lit > 0.5 ? uColor : uShade, 1.0);
         #include <colorspace_fragment>
       }
     `
@@ -119,9 +153,12 @@ export function createDustTrail(map: THREE.Texture): DustTrail {
   const points = new THREE.Points(geometry, material)
   points.name = '烟尘'
   points.frustumCulled = false
-  points.renderOrder = 10
-  // layer 1：不进描边的 identity pass
+  // layer 1：不走 override 材质的 identity pass（那样画不出烟团形状），改由下面的孪生体写 identity
   points.layers.set(1)
+  /** identity 孪生体：共享几何，放进 outline.idExtras → 烟团有外轮廓，也挡住后面物体的描边 */
+  const idPoints = new THREE.Points(geometry, spriteIdMaterial(map, identity, viewportHeight))
+  idPoints.name = '烟尘-identity'
+  idPoints.frustumCulled = false
 
   const particles: Particle[] = []
   for (let i = 0; i < COUNT; i++) {
@@ -151,6 +188,7 @@ export function createDustTrail(map: THREE.Texture): DustTrail {
 
   return {
     object: points,
+    idObject: idPoints,
     reset,
     update(dt, emitters, carVel, density) {
       if (dt <= 0) return
@@ -247,7 +285,7 @@ export function createDustTrail(map: THREE.Texture): DustTrail {
       ;(material.uniforms.uShade!.value as THREE.Color).copy(color).multiply(SHADE_TINT)
     },
     setViewportHeight(px) {
-      material.uniforms.uViewportHeight!.value = px
+      viewportHeight.value = px
     }
   }
 }

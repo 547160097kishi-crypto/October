@@ -26,6 +26,8 @@ npm run preview    # 预览生产构建
 **最简单：双击 `start-stage.bat`**（Windows）。它会自动：安装依赖（仅第一次，需要联网）→ 打包 → 启动本地服务 → Chrome 全屏打开发布会模式。
 需要提前装好 [Node.js](https://nodejs.org)（LTS 版）和 Chrome。
 
+默认模式（`npm run dev` 打开的页面）也按 10527:1024 长屏比例居中显示，构图与现场一致（`?fit=window` 可恢复铺满窗口）。
+
 发布会模式网址：`http://localhost:4173/?stage`
 - 固定按 **10527×1024** 渲染（与模型里 C4D 相机的宽高比 10.2803 完全一致，镜头构图就是为这块屏做的），界面和鼠标隐藏，自动循环播放；
 - 窗口不是这个尺寸时等比缩放，四周黑边；
@@ -44,7 +46,8 @@ npm run preview    # 预览生产构建
 | `fog` | 雾 0～3，默认 1 | `?stage&fog=1.5` |
 | `speed` | 播放速度，默认 1 | `?stage&speed=0.8` |
 | `dust` | 车后扬尘浓度，默认 1，0 = 关闭 | `?stage&dust=0.6` |
-| `w` / `h` | 换别的固定分辨率 | `?stage&w=5263&h=512` |
+| `w` / `h` | 换别的固定分辨率 / 比例 | `?stage&w=5263&h=512` |
+| `fit=window` | 默认模式不用长屏比例，铺满窗口 | `?fit=window` |
 
 快捷键：空格 播放/暂停 · H 显示/隐藏界面 · F 全屏。
 
@@ -73,8 +76,8 @@ GitHub 网页 → 切到上面那个分支 → Code → Download ZIP → 解压�
 | Toon 材质 | `toonMaterial.ts` → 原站 `MeshRampNoiseToonMaterial` | `MeshToonMaterial` + `onBeforeCompile` 替换 `<lights_toon_pars_fragment>`：直射光只取 3 阶梯度贴图（46/158/255，Nearest）的灰度，间接光清零；`<opaque_fragment>` 里用灰度在 `uDirectColor`/`uIndirectColor` 两色间混合 → 纯平色块 + 硬阴影。太阳光强 3（× 1/π ≈ 0.955 → 受光面 ≈ directColor） |
 | Toon 阴影（十月改动） | — | 原站把 PCF 阴影（0~1 连续值）直接乘进梯度，阴影是一团软边灰阶。这里把阴影二值化（`fwidth` 抗锯齿的 1px 硬边），在阴影里的像素直接落到梯度最暗一阶 → 阴影与背光面同色、纯平；并设 `shadowSide = DoubleSide`，避免单层面片（车身、建筑）漏光 |
 | 雾 | 原站 `FogBundle` | 强制 `USE_FOG + FOG_EXP2`，3D Perlin 噪声扰动雾深度、`fogTime` 缓慢流动，近/远两色 |
-| 描边 | `outlinePass.ts` → 原站 `MoebiusEffect` | 原站：identity（灰度 + 深度项）→ 3×3 Sobel → ×100 截断成黑线。**十月改写为 5 个 pass**：① identity（R=物体 ID，G=线性深度）② 颜色 ③ 1 像素边缘：物体边只标在**前景一侧**，另加 1/z 二阶差分的深度边（同一模型自己前后遮挡处也出线，斜看的地面不误报）④ 墨线合成：以边缘像素为中心按距离场画线，**线宽 = 每 1080 像素高 N 像素**（分辨率无关、覆盖率自带抗锯齿）；线色 = 所属物体颜色压暗 + 深梅棕墨色；按距离变细变淡 ⑤ FXAA |
-| 车后扬尘 | `dust.ts` → 原站 `initBikeParticles` | 同一张 `dust.png`（2×2 硬边团块图集）、同样的尺寸曲线（1→6→11→5→0）与「速度 × rateFactor」发射率。为老爷车改为：两个后轮发射、世界坐标模拟（车开走烟留在原地）、按动画真实车速驱动（停车不扬尘）、按世界尺寸换算像素（任何分辨率一样大）、帧间插值发射（低帧率不断成一簇簇）、Toon 两色（受光 + 背光月牙） |
+| 描边 | `outlinePass.ts` → 原站 `MoebiusEffect` | 原站：identity（灰度 + 深度项）→ 3×3 Sobel → ×100 截断成黑线。**十月改写为 5 个 pass**：① identity（R=物体 ID，G=线性深度）② 颜色 ③ 1 像素边缘：物体边只标在**前景一侧**；1/z 二阶差分的深度边（同一模型自己前后遮挡处也出线）；**法线折线**（同一物体相邻像素法线夹角 > 42°，160 单位内），作为细一档、淡一档的次线④ 墨线合成：以边缘像素为中心按距离场画线，**线宽 = 每 1080 像素高 N 像素**（分辨率无关、覆盖率自带抗锯齿）；线色 = 所属物体颜色压暗 + 深梅棕墨色；按距离变细变淡 ⑤ FXAA |
+| 车后扬尘 | `dust.ts` → 原站 `initBikeParticles` | 同一张 `dust.png`（2×2 硬边团块图集）、同样的寿命 0.4s、尺寸曲线（1→6→11→5→0）与「速度 × rateFactor」发射率。烟团写进 identity（孪生体），所以有轮廓线、也挡住后面物体的描边。为老爷车改为：两个后轮发射、世界坐标模拟（车开走烟留在原地）、按动画真实车速驱动（停车不扬尘）、按世界尺寸换算像素（任何分辨率一样大）、帧间插值发射（低帧率不断成一簇簇）、Toon 两色（受光 + 背光月牙） |
 | 日夜 | `setToonPaletteMix` | 每个色板 day / night 两套，按 mix 插值 —— 这里用作「暮色」滑杆 |
 | 渲染器 | `RENDERER_CONFIG` | `antialias:false`、`pixelRatio ≤ 2`、PCF 阴影、`shadowMap.autoUpdate=false` 每帧手动更新 |
 
@@ -94,6 +97,14 @@ GitHub 网页 → 切到上面那个分支 → Code → Download ZIP → 解压�
 - **地面上的假横线**：identity 叠加了 `gl_FragCoord.z * 0.05`，8-bit RT 每跨一个 1/255 台阶，Sobel ×100 就画出一条横贯画面的黑线。identity RT 改为 HalfFloat。
 - **扬尘画成实心方块**：`dust.png` 的 alpha 通道全是 255，移植版用 `max(tex.a, tex.r)` 当透明度恒为 1。改为只用 R 通道作遮罩。
 - **地面 / 水面 identity 不确定**：它们不注册 identity 时会沿用上一个物体的值。改为写固定常量（`registerFlat`）。
+
+## 喷泉水流（约 21s 起前景）
+
+`src/fountain.ts`。先按高度切片分析模型轮廓（底池 / 中碗 / 上碗 / 顶碟的高度与半径），剔除模型里雕出的静态水滴三角面，再加：
+- 三层水流：顶部冠状 6 股、上碗溢出 8 股、中碗溢出 10 股，按抛物线生成、沿程变细，受光侧断续高光随水流下移，末段碎成水珠；
+- 四个水面：落水圈扩散的涟漪色带 + 色带边缘细墨线 + 白沫；
+- 落点水花（烟尘同款硬边团块）。
+全部用场景同一套 Toon 材质（色带、阴影、雾、暮色一致），全部参与描边（镂空的水流 / 水花用 identity 孪生体）。喷泉按真实时间流动，暂停时间轴也不停。
 
 ## 描边 / 上色技法选型
 

@@ -33,17 +33,23 @@ export const INK_DEFAULTS = {
   fadeNear: 80,
   fadeFar: 450,
   farWidth: 0.75,
-  farAlpha: 0.7
+  farAlpha: 0.7,
+  /** 折线（法线夹角）：阈值角度、相对主线的宽度与浓度、最远绘制距离 */
+  creaseAngle: 42,
+  creaseWidth: 0.75,
+  creaseAlpha: 0.7,
+  creaseMaxZ: 160
 }
 
 /** identity pass 的深度归一化（= 相机 far） */
-const ID_FAR = 3000
+export const ID_FAR = 3000
 
 const SELECT_VERT = /* glsl */ `
   uniform vec3 uIdentity;
   attribute vec3 aIdentity;
   varying float vIdent;
   varying float vViewZ;
+  varying vec3 vNormal;
 
   #include <skinning_pars_vertex>
 
@@ -64,7 +70,17 @@ const SELECT_VERT = /* glsl */ `
 
     mvPosition = modelViewMatrix * mvPosition;
     vViewZ = -mvPosition.z;
+    vNormal = normalize( normalMatrix * normal );
     gl_Position = projectionMatrix * mvPosition;
+  }
+`
+
+/** 八面体编码：单位法线 → 2 个分量（写进 identity 的 B、A） */
+export const OCT_ENCODE = /* glsl */ `
+  vec2 octEncode( vec3 n ) {
+    n /= ( abs( n.x ) + abs( n.y ) + abs( n.z ) );
+    vec2 s = vec2( n.x >= 0.0 ? 1.0 : -1.0, n.y >= 0.0 ? 1.0 : -1.0 );
+    return n.z >= 0.0 ? n.xy : ( 1.0 - abs( n.yx ) ) * s;
   }
 `
 
@@ -72,8 +88,13 @@ const SELECT_FRAG = /* glsl */ `
   uniform float uFar;
   varying float vIdent;
   varying float vViewZ;
+  varying vec3 vNormal;
+  ${OCT_ENCODE}
   void main() {
-    gl_FragColor = vec4( vIdent, vViewZ / uFar, 0.0, 1.0 );
+    vec3 n = normalize( vNormal );
+    // 背面（双面材质）翻转，保证折线判断一致
+    if ( !gl_FrontFacing ) n = -n;
+    gl_FragColor = vec4( vIdent, vViewZ / uFar, octEncode( n ) );
   }
 `
 
@@ -91,7 +112,25 @@ const EDGE_FRAG = /* glsl */ `
   uniform float uDepthK;
   varying vec2 vUv;
 
+  uniform float uCreaseCos;
+  uniform float uCreaseMaxZ;
+  uniform float uFar;
+
   vec2 S( vec2 o ) { return texture2D( uId, vUv + o * uTexel ).rg; }
+  vec4 S4( vec2 o ) { return texture2D( uId, vUv + o * uTexel ); }
+
+  vec3 octDecode( vec2 e ) {
+    vec3 n = vec3( e, 1.0 - abs( e.x ) - abs( e.y ) );
+    if ( n.z < 0.0 ) n.xy = ( 1.0 - abs( n.yx ) ) * vec2( n.x >= 0.0 ? 1.0 : -1.0, n.y >= 0.0 ? 1.0 : -1.0 );
+    return normalize( n );
+  }
+
+  // 折线：同一物体、深度连续，但法线夹角大于阈值（只和 +x、+y 邻居比，线只落在一侧 → 1 像素）
+  float crease( vec4 c, vec4 n ) {
+    if ( abs( c.x - n.x ) >= 0.015 ) return 0.0;
+    if ( abs( c.y - n.y ) > 0.02 * c.y ) return 0.0;
+    return dot( octDecode( c.ba ), octDecode( n.ba ) ) < uCreaseCos ? 1.0 : 0.0;
+  }
 
   // c 与邻居 n 是不同物体，且 c 在前（更近；几乎等深时 identity 大的一侧）
   float idEdge( vec2 c, vec2 n ) {
@@ -104,6 +143,8 @@ const EDGE_FRAG = /* glsl */ `
 
   // 1/z 在平面上沿屏幕是仿射的 → 二阶差分 ≈ 0；c 在深度断层的前侧时 lap 明显为负
   float depthEdge( vec2 c, vec2 a, vec2 b ) {
+    // 地面（identity 0）不做深度边：斜看时地形坡度的拐折会让 1/z 二阶差分误报成横贯画面的线
+    if ( c.x < 0.01 ) return 0.0;
     float ic = 1.0 / max( c.y, 1e-5 );
     float ia = 1.0 / max( a.y, 1e-5 );
     float ib = 1.0 / max( b.y, 1e-5 );
@@ -120,7 +161,13 @@ const EDGE_FRAG = /* glsl */ `
     vec2 d = S( vec2( 0.0, -1.0 ) );
     float e = max( max( idEdge( c, r ), idEdge( c, l ) ), max( idEdge( c, u ), idEdge( c, d ) ) );
     e = max( e, max( depthEdge( c, r, l ), depthEdge( c, u, d ) ) );
-    gl_FragColor = vec4( e, 0.0, 0.0, 1.0 );
+    float k = 0.0;
+    if ( e < 0.5 && c.y * uFar < uCreaseMaxZ ) {
+      vec4 C = S4( vec2( 0.0 ) );
+      k = max( crease( C, S4( vec2( 1.0, 0.0 ) ) ), crease( C, S4( vec2( 0.0, 1.0 ) ) ) );
+    }
+    // R = 轮廓 / 深度线（主线），G = 折线（次线）
+    gl_FragColor = vec4( e, k, 0.0, 1.0 );
   }
 `
 
@@ -140,6 +187,9 @@ const INK_FRAG = /* glsl */ `
   uniform float uFadeFar;
   uniform float uFarWidth;
   uniform float uFarAlpha;
+  uniform float uCreaseWidth;
+  uniform float uCreaseAlpha;
+  uniform float uInkMaxLum;
   varying vec2 vUv;
 
   vec3 toSRGB( vec3 c ) {
@@ -159,12 +209,15 @@ const INK_FRAG = /* glsl */ `
           float dist = length( o );
           if ( dist >= reach ) continue;
           vec2 uv = vUv + o * uTexel;
-          if ( texture2D( uEdge, uv ).r < 0.5 ) continue;
+          vec2 eg = texture2D( uEdge, uv ).rg;
+          if ( eg.r < 0.5 && eg.g < 0.5 ) continue;
+          // 主线（轮廓 / 深度）满宽满浓；次线（折线）更细更淡
+          bool isCrease = eg.r < 0.5;
           // 距离衰减：按边缘像素自己的深度
           float z = texture2D( uId, uv ).g * uFar;
           float f = smoothstep( uFadeNear, uFadeFar, z );
-          float w = uWidth * mix( 1.0, uFarWidth, f );
-          float cov = clamp( w * 0.5 + 0.5 - dist, 0.0, 1.0 ) * mix( 1.0, uFarAlpha, f );
+          float w = uWidth * mix( 1.0, uFarWidth, f ) * ( isCrease ? uCreaseWidth : 1.0 );
+          float cov = clamp( w * 0.5 + 0.5 - dist, 0.0, 1.0 ) * mix( 1.0, uFarAlpha, f ) * ( isCrease ? uCreaseAlpha : 1.0 );
           if ( cov > best ) { best = cov; bestOff = o; }
         }
       }
@@ -174,6 +227,9 @@ const INK_FRAG = /* glsl */ `
       // 线色：所属物体（边缘像素处）的颜色压暗，再混入墨色
       vec3 src = texture2D( uColor, vUv + bestOff * uTexel ).rgb;
       vec3 ink = mix( uInk, src * uInkTint, uColorMix );
+      // 亮度封顶：保留色相，但亮物体（白色教堂、奶油色烟尘）的线不会比别的线浅
+      float lum = dot( ink, vec3( 0.2126, 0.7152, 0.0722 ) );
+      ink *= min( 1.0, uInkMaxLum / max( lum, 1e-4 ) );
       col = mix( base, ink, best * uStrength );
     }
     gl_FragColor = vec4( toSRGB( col ), 1.0 );
@@ -216,6 +272,12 @@ export class MoebiusOutline {
   /** 线宽：每 1080 像素高多少像素 */
   private lineWidth1080 = INK_DEFAULTS.width
   private identityPass = false
+  /**
+   * 自带 identity 着色器的物体（粒子、带镂空的动画水流……）：override 材质画不出它们的真实形状，
+   * 所以它们各有一个「孪生体」（共享几何、identity 材质）放在这个场景里，identity pass 末尾不清屏追加绘制，
+   * 与场景共用深度 → 能被前面的物体挡住，也能挡住后面物体的描边。
+   */
+  readonly idExtras = new THREE.Scene()
   private bgColor = new THREE.Color()
   /** 是否画描边 */
   enabled = true
@@ -237,7 +299,10 @@ export class MoebiusOutline {
     this.edgeMaterial = quadMat(EDGE_FRAG, {
       uId: { value: null },
       uTexel: { value: new THREE.Vector2() },
-      uDepthK: { value: 0.045 }
+      uDepthK: { value: 0.045 },
+      uCreaseCos: { value: Math.cos(THREE.MathUtils.degToRad(INK_DEFAULTS.creaseAngle)) },
+      uCreaseMaxZ: { value: INK_DEFAULTS.creaseMaxZ },
+      uFar: { value: ID_FAR }
     })
 
     this.inkMaterial = quadMat(INK_FRAG, {
@@ -256,7 +321,11 @@ export class MoebiusOutline {
       uFadeNear: { value: INK_DEFAULTS.fadeNear },
       uFadeFar: { value: INK_DEFAULTS.fadeFar },
       uFarWidth: { value: INK_DEFAULTS.farWidth },
-      uFarAlpha: { value: INK_DEFAULTS.farAlpha }
+      uFarAlpha: { value: INK_DEFAULTS.farAlpha },
+      uCreaseWidth: { value: INK_DEFAULTS.creaseWidth },
+      uCreaseAlpha: { value: INK_DEFAULTS.creaseAlpha },
+      // 线色最大亮度（线性）：≈ sRGB 60
+      uInkMaxLum: { value: 0.045 }
     })
 
     // three 的 FXAA（NVIDIA FXAA 3.11 思路）；子像素混合从 1.0 降到 0.6，保住细线和硬色块的锐度
@@ -307,6 +376,11 @@ export class MoebiusOutline {
     if (opts.fadeFar !== undefined) u.uFadeFar!.value = opts.fadeFar
     if (opts.farWidth !== undefined) u.uFarWidth!.value = opts.farWidth
     if (opts.farAlpha !== undefined) u.uFarAlpha!.value = opts.farAlpha
+    if (opts.creaseWidth !== undefined) u.uCreaseWidth!.value = opts.creaseWidth
+    if (opts.creaseAlpha !== undefined) u.uCreaseAlpha!.value = opts.creaseAlpha
+    const e = this.edgeMaterial.uniforms
+    if (opts.creaseAngle !== undefined) e.uCreaseCos!.value = Math.cos(THREE.MathUtils.degToRad(opts.creaseAngle))
+    if (opts.creaseMaxZ !== undefined) e.uCreaseMaxZ!.value = opts.creaseMaxZ
   }
 
   /** 当前分辨率下的实际线宽（像素） */
@@ -378,6 +452,11 @@ export class MoebiusOutline {
     this.selectMaterial.uniformsNeedUpdate = true
   }
 
+  /** 给自定义 identity 的物体分配一个 identity 值 */
+  allocIdentity(): number {
+    return nextIdentity(this.tmpIdentity).x
+  }
+
   /** 不单独描边的大面（地面 / 水面）：写固定 identity。地面各块之间没有接缝线，水岸有线 */
   registerFlat(root: THREE.Object3D, filter: (obj: THREE.Mesh) => boolean, value = 0.0) {
     const id = new THREE.Vector3(value, value, value)
@@ -414,6 +493,13 @@ export class MoebiusOutline {
       renderer.clear()
       renderer.render(scene, camera)
       this.identityPass = false
+      scene.overrideMaterial = prevOverride
+      if (this.idExtras.children.length) {
+        const prevAuto = renderer.autoClear
+        renderer.autoClear = false
+        renderer.render(this.idExtras, camera)
+        renderer.autoClear = prevAuto
+      }
       scene.overrideMaterial = prevOverride
       scene.background = prevBg
       renderer.setClearColor(this.bgColor, prevAlpha)

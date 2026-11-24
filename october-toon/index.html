@@ -47,6 +47,11 @@
       @keyframes spin { to { transform: rotate(360deg); } }
       #loading-pct { font-size: 12px; font-weight: 700; letter-spacing: .2em; margin-top: 6px; }
 
+      .panel, #loading { color: var(--ink); }
+      /* 默认长屏预览：画面按 10527:1024 居中，四周深色 */
+      body.strip { background: #17120f; color: #f3e6d6; }
+      body.strip #c { inset: auto; }
+      body.strip .hint { opacity: .55; }
       /* 发布会模式（?stage）：只有画面，无界面无鼠标，四周黑边 */
       body.stage { background: #000; cursor: none; }
       body.stage #c { inset: auto; }
