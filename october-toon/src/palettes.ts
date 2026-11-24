@@ -75,6 +75,8 @@ export const PALETTES: Record<string, ToonPalette> = {
   ground: pal('#d8b98e', '#8d6f68', { dusk: ['#c78a62', '#4f3a52'] }),
   groundAlt: pal('#b99a6c', '#6e5852'),
   water: pal('#7fb3c2', '#3a5f7a', { dusk: ['#a07f9c', '#2a2f55'] }),
+  // 喷泉水柱：更浅、更亮（接近天空色），受光 / 背光差距小 → 显得轻、透
+  waterJet: pal('#bfe3e6', '#93c4cf', { dusk: ['#e6bfc0', '#a99ab8'] }),
 
   // ---- 老爷车（按 C4D 材质名：漆面 / 镍银 / 枪灰 / 胎面 / 皮革 / 尾灯 / 玻璃）----
   carPaint: pal('#8e1f2b', '#3d0d1c', { dusk: ['#8a1c24', '#260a1e'] }), // 酒红

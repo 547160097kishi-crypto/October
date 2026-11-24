@@ -362,6 +362,8 @@ export function createFountain(opts: {
   fountainRoot: THREE.Object3D
   gradientMap: THREE.Texture
   waterPalette: ToonPalette
+  /** 水柱专用的浅色色板（两阶明暗） */
+  jetPalette: ToonPalette
   spriteMap: THREE.Texture
   idScene: THREE.Scene
   allocId: () => number
@@ -470,11 +472,16 @@ export function createFountain(opts: {
       uJetLen: { value: length },
       uBeads: { value: spec.beads }
     }
-    const mat = createToonMaterial({ palette: opts.waterPalette, gradientMap: opts.gradientMap })
+    const mat = createToonMaterial({ palette: opts.jetPalette, gradientMap: opts.gradientMap })
     const baseCompile = mat.onBeforeCompile
     mat.onBeforeCompile = (shader, r) => {
       baseCompile.call(mat, shader, r)
       Object.assign(shader.uniforms, shapeUniforms)
+      // 只用两阶明暗：中间一阶并入受光面，只有背光 / 阴影里才是浅一点的蓝（体积感减弱）
+      shader.fragmentShader = shader.fragmentShader.replace(
+        'float toonIrradiance = reflectedLight.directDiffuse.r * uLuminance;',
+        'float toonIrradiance = step( 0.35, reflectedLight.directDiffuse.r * uLuminance );'
+      )
       // 法线 / 位置都换成 jetShape 的结果（beginnormal 在 begin_vertex 之前执行）
       shader.vertexShader = shader.vertexShader
         .replace('#include <common>', `#include <common>\n${JET_SHAPE}`)
@@ -489,7 +496,7 @@ export function createFountain(opts: {
     // layer 1：不走 override identity（override 材质没有这段变形），由孪生体写 identity
     mesh.layers.set(1)
     group.add(mesh)
-    toonMaterials.push({ mat, palette: opts.waterPalette })
+    toonMaterials.push({ mat, palette: opts.jetPalette })
 
     const twin = new THREE.Mesh(geom, jetIdMaterial(opts.allocId(), shapeUniforms))
     twin.name = `${mesh.name}-identity`

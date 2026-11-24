@@ -515,6 +515,7 @@ async function load() {
         fountainRoot,
         gradientMap,
         waterPalette: PALETTES.water!,
+        jetPalette: PALETTES.waterJet!,
         spriteMap: tex,
         idScene: outline.idExtras,
         allocId: () => outline.allocIdentity()
