@@ -1,0 +1,26 @@
+{
+  "name": "october-toon",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "十月模型的 Toon（赛璐璐）Web 渲染，shader 移植自 motorbike（MeshRampNoiseToon + Moebius 描边 + 噪波雾）",
+  "scripts": {
+    "dev": "vite --host",
+    "build": "vite build",
+    "preview": "vite preview --host",
+    "typecheck": "tsc -p .",
+    "model": "node --max-old-space-size=12000 scripts/optimize-model.mjs"
+  },
+  "dependencies": {
+    "three": "^0.187.0"
+  },
+  "devDependencies": {
+    "@gltf-transform/core": "^4.1.1",
+    "@gltf-transform/extensions": "^4.1.1",
+    "@gltf-transform/functions": "^4.1.1",
+    "@types/three": "^0.187.0",
+    "meshoptimizer": "^0.22.0",
+    "typescript": "^5.9.3",
+    "vite": "^6.3.5"
+  }
+}

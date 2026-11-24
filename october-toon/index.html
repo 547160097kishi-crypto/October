@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>十月 · October</title>
+    <style>
+      @font-face { font-family: Kern; src: url(./fonts/Kern-Regular.woff2) format('woff2'); font-weight: 400; }
+      @font-face { font-family: Kern; src: url(./fonts/Kern-Medium.woff2) format('woff2'); font-weight: 500; }
+      @font-face { font-family: Kern; src: url(./fonts/Kern-Bold.woff2) format('woff2'); font-weight: 700; }
+      :root {
+        --ink: #1c1418;
+        --paper: rgba(250, 242, 230, 0.86);
+        --accent: #e0532a;
+        --line: rgba(28, 20, 24, 0.18);
+      }
+      * { box-sizing: border-box; }
+      html, body { margin: 0; height: 100%; overflow: hidden; background: #f3dcc0; color: var(--ink);
+        font: 500 12px/1.4 Kern, "PingFang SC", "Noto Sans SC", system-ui, sans-serif; }
+      #c { position: fixed; inset: 0; width: 100%; height: 100%; display: block; touch-action: none; }
+
+      header { position: fixed; top: 24px; left: 28px; right: 28px; display: flex; justify-content: space-between; align-items: flex-start; pointer-events: none; }
+      .brand { display: flex; align-items: baseline; gap: 10px; }
+      .brand h1 { margin: 0; font-size: 28px; font-weight: 700; letter-spacing: .04em; }
+      .brand span { font-size: 10px; font-weight: 700; letter-spacing: .3em; text-transform: uppercase; }
+      .hint { font-size: 10px; letter-spacing: .08em; opacity: .7; text-align: right; }
+
+      .panel { position: fixed; left: 50%; bottom: 20px; transform: translateX(-50%); width: min(760px, calc(100% - 32px));
+        background: var(--paper); border: 1.5px solid var(--ink); border-radius: 14px; padding: 12px 14px;
+        display: grid; gap: 10px; backdrop-filter: blur(6px); box-shadow: 4px 4px 0 var(--ink); }
+      .row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+      button { font: inherit; font-weight: 700; font-size: 11px; letter-spacing: .06em; color: var(--ink); background: #fff8ee;
+        border: 1.5px solid var(--ink); border-radius: 999px; padding: 6px 14px; cursor: pointer; }
+      button:hover { background: var(--ink); color: #fff8ee; }
+      #timeline { flex: 1; min-width: 160px; }
+      #time { font-variant-numeric: tabular-nums; min-width: 92px; text-align: right; font-size: 11px; }
+      label.ctl { display: flex; align-items: center; gap: 6px; font-size: 11px; }
+      label.ctl input[type=range] { width: 96px; }
+      input[type=range] { accent-color: var(--accent); }
+      input[type=checkbox] { accent-color: var(--accent); }
+
+      #loading { position: fixed; inset: 0; display: grid; place-items: center; background: #f3dcc0; transition: opacity .6s; z-index: 5; }
+      #loading.done { opacity: 0; pointer-events: none; }
+      #loading .box { text-align: center; }
+      #loading .big { font-size: 56px; font-weight: 700; letter-spacing: .05em; }
+      #loading .leaf { width: 54px; height: 54px; margin: 0 auto 14px; animation: spin 3s linear infinite; }
+      @keyframes spin { to { transform: rotate(360deg); } }
+      #loading-pct { font-size: 12px; font-weight: 700; letter-spacing: .2em; margin-top: 6px; }
+
+      @media (max-width: 640px) {
+        header { top: 14px; left: 16px; right: 16px; }
+        .brand h1 { font-size: 22px; }
+        .hint { display: none; }
+        .panel { bottom: 12px; padding: 10px; }
+        label.ctl input[type=range] { width: 70px; }
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="c"></canvas>
+
+    <header>
+      <div class="brand"><h1>十月</h1><span>October · Toon</span></div>
+      <div class="hint">空格 播放/暂停<br />自由镜头：拖拽旋转 · 滚轮缩放 · 右键平移</div>
+    </header>
+
+    <div class="panel" role="group" aria-label="播放控制">
+      <div class="row">
+        <button id="play" aria-pressed="false">暂停</button>
+        <input id="timeline" type="range" min="0" max="1" step="0.01" value="0" aria-label="时间轴" />
+        <span id="time">0.0s</span>
+        <button id="cam">镜头：动画</button>
+      </div>
+      <div class="row">
+        <label class="ctl">暮色 <input id="dusk" type="range" min="0" max="1" step="0.01" value="0" /></label>
+        <label class="ctl">描边 <input id="outline" type="checkbox" checked /></label>
+        <label class="ctl">线宽 <input id="thickness" type="range" min="0.2" max="3" step="0.1" value="1" /></label>
+        <label class="ctl">雾 <input id="fog" type="range" min="0" max="3" step="0.05" value="1" /></label>
+        <label class="ctl">速度 <input id="speed" type="range" min="0.1" max="2" step="0.05" value="1" /></label>
+      </div>
+    </div>
+
+    <div id="loading">
+      <div class="box">
+        <svg class="leaf" viewBox="0 0 64 64" aria-hidden="true">
+          <path d="M32 4l5 12 9-6-2 12 12-2-6 9 12 5-14 6 4 8-12-3-2 13h-12l-2-13-12 3 4-8-14-6 12-5-6-9 12 2-2-12 9 6z" fill="#e0532a" stroke="#1c1418" stroke-width="2" stroke-linejoin="round"/>
+          <path d="M32 60V28" stroke="#1c1418" stroke-width="2"/>
+        </svg>
+        <div class="big">十月</div>
+        <div id="loading-pct">0%</div>
+      </div>
+    </div>
+
+    <script type="module" src="./src/main.ts"></script>
+  </body>
+</html>
