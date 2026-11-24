@@ -266,7 +266,9 @@ function buildJets(spec: JetSpec, defs: JetDef[], center: THREE.Vector3, baseY: 
       for (let j = 0; j < RAD; j++) {
         const a = i * (RAD + 1) + j
         const b = (i + 1) * (RAD + 1) + j
-        index.push(a, b, a + 1, b, b + 1, a + 1)
+        // 绕向：(b-a)×((a+1)-a) = T × ∂dir/∂θ 指向管内，所以反过来连，面朝外
+        // （之前连反了：看到的是管子远端内壁，明暗上下颠倒）
+        index.push(a, a + 1, b, b, a + 1, b + 1)
       }
     }
     const g = new THREE.BufferGeometry()
@@ -756,9 +758,9 @@ export function createFountain(opts: {
     const p = opts.waterPalette
     const d = p.d.map((v, i) => v + ((p.nd ?? p.d)[i]! - v) * m)
     baseCol.setRGB(d[0]!, d[1]!, d[2]!)
-    // 团块颜色 = 水柱 Toon 中间色带（three-tone 中间一阶：受光 0.59 + 背光 0.41），两段同一种蓝
+    // 团块颜色 = 水柱 Toon 受光色带（three-tone 最亮一阶：受光 0.955 + 背光 0.045），与水柱受光面同一种蓝
     const ii = p.i.map((v, k) => v + ((p.ni ?? p.i)[k]! - v) * m)
-    waterLit.value.setRGB(ii[0]!, ii[1]!, ii[2]!).lerp(baseCol, 0.59)
+    waterLit.value.setRGB(ii[0]!, ii[1]!, ii[2]!).lerp(baseCol, 0.955)
     ;(sMat.uniforms.uBase!.value as THREE.Color).copy(baseCol)
   }
   setDusk(0)
