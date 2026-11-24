@@ -21,7 +21,7 @@ import {
   TOON_SUN,
   type ToonPalette
 } from './toonMaterial'
-import { MoebiusOutline } from './outlinePass'
+import { MoebiusOutline, INK_DEFAULTS } from './outlinePass'
 import { paletteForPath } from './palettes'
 import { createDustTrail, type DustTrail } from './dust'
 
@@ -33,7 +33,9 @@ const MODEL_URL = `${import.meta.env.BASE_URL}models/october.glb`
 const params = {
   dusk: 0, // 0 = 白天, 1 = 暮色（色板插值，与 motorbike Day-Night 轨道同公式）
   outline: true,
-  thickness: 0.35, // 描边采样偏移（像素）；越小越细
+  thickness: INK_DEFAULTS.width, // 线宽：画面每 1080 像素高对应的像素数（换任何分辨率比例都一样）
+  ink: INK_DEFAULTS.colorMix, // 线色：0 = 深梅棕墨色，1 = 取物体颜色压暗
+  fxaa: true, // 抗锯齿
   fog: 1.0, // 雾强度倍数
   speed: 1,
   dust: 1 // 车后扬尘浓度倍数，0 = 关闭
@@ -43,8 +45,10 @@ const params = {
 // 网址参数（现场调参不用改代码）
 //   ?stage            发布会模式：固定 10527×1024 渲染、隐藏界面和鼠标、自动循环播放
 //   ?w=10527&h=1024   自定义固定渲染分辨率（stage 模式默认就是这个）
-//   ?scale=0.5        显卡吃力时降低内部渲染分辨率（画面仍铺满）
-//   ?thickness=0.35   描边粗细    ?outline=0 关闭描边
+//   ?scale=0.5        显卡吃力时降低内部渲染分辨率（画面仍铺满）；1.5 / 2 = 超采样（更顺滑、更吃显卡）
+//   ?thickness=1.2    线宽：每 1080 像素高多少像素（1080p 上就是像素数，4K 上自动 ×2）
+//   ?ink=0.35         线色：0 = 深梅棕墨色，1 = 取物体颜色压暗
+//   ?outline=0 关闭描边    ?fxaa=0 关闭抗锯齿
 //   ?dusk=0..1  暮色   ?fog=0..3  雾   ?speed=0.1..2  播放速度   ?dust=0..2  车后扬尘（0 关闭）
 // ---------------------------------------------------------------------------
 const query = new URLSearchParams(location.search)
@@ -57,6 +61,8 @@ const STAGE = query.has('stage')
 const FIXED_SIZE =
   STAGE || query.has('w') ? { w: Math.round(num('w', 10527)), h: Math.round(num('h', 1024)) } : null
 params.thickness = num('thickness', params.thickness)
+params.ink = num('ink', params.ink)
+if (query.get('fxaa') === '0') params.fxaa = false
 params.dusk = num('dusk', params.dusk)
 params.fog = num('fog', params.fog)
 params.speed = num('speed', params.speed)
@@ -102,8 +108,8 @@ const GPU_MAX = (() => {
   const vp = gl.getParameter(gl.MAX_VIEWPORT_DIMS) as Int32Array
   return Math.min(vp[0]!, vp[1]!, gl.getParameter(gl.MAX_RENDERBUFFER_SIZE), gl.getParameter(gl.MAX_TEXTURE_SIZE))
 })()
-/** ?scale=0.5：显卡吃力时降低内部渲染分辨率（画面仍铺满屏幕） */
-const RENDER_SCALE = Math.min(1, Math.max(0.1, num('scale', 1)))
+/** ?scale=0.5：显卡吃力时降低内部渲染分辨率（画面仍铺满屏幕）；>1 为超采样，上限 2 */
+const RENDER_SCALE = Math.min(2, Math.max(0.1, num('scale', 1)))
 
 const outline = new MoebiusOutline(renderer)
 const syncOutlineSize = () => {
@@ -118,6 +124,8 @@ const carPrev = new THREE.Vector3()
 let carPrevValid = false
 syncOutlineSize()
 outline.setThickness(params.thickness)
+outline.setInk({ colorMix: params.ink })
+outline.fxaa = params.fxaa
 
 // ---------------------------------------------------------------------------
 // 天空：内翻球 + 竖向渐变（motorbike 的 skybox-day 渐变条思路），放在 layer 1 → 不参与描边
@@ -212,6 +220,10 @@ function resize() {
     if (k < RENDER_SCALE) console.warn(`[october] 显卡最大只支持 ${GPU_MAX}px，渲染分辨率降为 ×${k.toFixed(3)}`)
     w = Math.round(FIXED_SIZE.w * k)
     h = Math.round(FIXED_SIZE.h * k)
+  } else {
+    // 普通窗口：设备像素比（≤2）× ?scale，同样不超过显卡上限
+    const want = Math.min(2, window.devicePixelRatio) * RENDER_SCALE
+    renderer.setPixelRatio(Math.min(want, GPU_MAX / w, GPU_MAX / h))
   }
   renderer.setSize(w, h, false)
   syncOutlineSize()
@@ -229,6 +241,8 @@ function resize() {
   }
 }
 window.addEventListener('resize', resize)
+// 第一帧之前就按最终尺寸建缓冲（否则 10527 宽在显卡上限 8192 的机器上会先建出非法尺寸的缓冲）
+resize()
 
 // ---------------------------------------------------------------------------
 // 加载 + 材质替换
@@ -434,7 +448,9 @@ async function load() {
   // 描边：地面 / 水面不打独立 identity（写常量），其余每个 mesh 一个 identity
   const flat = (m: THREE.Mesh) => ['ground', 'groundAlt', 'water'].includes(m.userData.toonKey)
   outline.register(root, (m) => !flat(m))
-  outline.registerFlat(scene, flat)
+  // 地面各块同一个 identity（不出接缝线）；水面单独一个 → 河岸有线
+  outline.registerFlat(scene, (m) => flat(m) && m.userData.toonKey !== 'water', 0.0)
+  outline.registerFlat(scene, (m) => m.userData.toonKey === 'water', 0.035)
 
   // 相机：glTF 里的 Octane Camera
   root.traverse((o) => {
@@ -701,6 +717,9 @@ window.addEventListener('keydown', (e) => {
   },
   get time() {
     return currentTime
+  },
+  ink(opts: Parameters<typeof outline.setInk>[0]) {
+    outline.setInk(opts)
   },
   setFog(v: number) {
     params.fog = v

@@ -1,134 +1,182 @@
 /**
- * 原站描边后处理移植 —— MoebiusEffect
+ * 描边 + 合成 + 抗锯齿（十月版，基于 motorbike 的 MoebiusEffect 移植改写）
  *
- * 原站渲染分三步（gpNsPhdA.js create$7）：
- *   1) 用 MoebiusSelectMaterial 作为 scene.overrideMaterial，把场景画进一张 RT：
- *      每个 mesh 输出一个「唯一 identity 颜色 + gl_FragCoord.z * 0.05」，
- *      没有 identity 的对象（地面 / 天空）discard → 保持背景色。
- *   2) 正常渲染场景（EffectComposer 的 RenderPass）。
- *   3) MoebiusEffect 用 3×3 Sobel 对 identity RT 的 luma 求边缘，
- *      outline = length(gradient) * uIntensity，再把颜色 mix 成黑色。
+ * motorbike / 原站做法：identity pass（每个物体一个灰度 + gl_FragCoord.z·0.05）→ 3×3 Sobel，
+ * 采样偏移 uThickness 个像素，结果 ×100 截断成黑线。问题：
+ *   - 线宽以「像素」计：1080p 上粗、5K 上细，换屏就要重调；
+ *   - ×100 截断让线宽在 0.05~1 之间几乎不随参数变化；
+ *   - 纯黑线，远近一样重，远景小石子变成一片黑点；
+ *   - 整个画面没有抗锯齿（渲染器 antialias:false）。
  *
- * 由于 identity 图内部是纯色块，Sobel 只会在物体轮廓处响应 → 得到「手绘描边」，
- * 且保留透明度边缘。这里用一张 RT + 一个全屏合成 pass 复刻同样流程。
+ * 现在的管线（每帧 5 个 pass）：
+ *   1. identity pass  → idTarget   R = 物体 identity，G = 线性深度 / far（HalfFloat）
+ *   2. color pass     → colorTarget（线性 HDR，HalfFloat）
+ *   3. edge pass      → edgeTarget  只在「前景一侧」标 1 像素边：
+ *        - 物体边：相邻像素 identity 不同，深度更近的那一侧（等深时 identity 大的一侧）；
+ *        - 深度边：1/z 的二阶差分（平面上恒为 0，斜看的地面不会误报），
+ *          同一个模型自己前后遮挡的地方也能出线。
+ *   4. ink composite  → ldrTarget   以边缘像素为中心按距离场画线，线宽 = 每 1080 像素高 N 像素
+ *        （与分辨率无关），覆盖率自带抗锯齿；线色 = 所属物体颜色压暗 + 深梅棕墨色；
+ *        按距离变细变淡（远处的线也带着雾色）；最后手动编码 sRGB。
+ *   5. FXAA           → 画布        补上几何边、色带边、阴影边的抗锯齿。
  */
 import * as THREE from 'three'
+import { FXAAShader } from 'three/examples/jsm/shaders/FXAAShader.js'
 
-/** 原站 rendererConfig.moebius（desktop） */
-export const MOEBIUS_CONFIG = {
-  frequency: 0.3,
-  amplitude: 0,
-  intensity: 100,
-  /** 原站创建时用的是 mobile 值，GUI 未操作过就是 0.02 */
-  thickness: 0.02
+/** 描边参数（可由 main.ts / 网址参数覆盖） */
+export const INK_DEFAULTS = {
+  /** 线宽：每 1080 像素画面高度对应的像素数（1024 高的长条屏 ≈ 0.95 倍） */
+  width: 1.2,
+  /** 线色：0 = 纯墨色（深梅棕），1 = 完全取物体颜色压暗 */
+  colorMix: 0.35,
+  /** 距离衰减（世界单位）：near 之内满宽满浓，far 之外降到 farWidth / farAlpha */
+  fadeNear: 80,
+  fadeFar: 450,
+  farWidth: 0.75,
+  farAlpha: 0.7
 }
+
+/** identity pass 的深度归一化（= 相机 far） */
+const ID_FAR = 3000
 
 const SELECT_VERT = /* glsl */ `
   uniform vec3 uIdentity;
   attribute vec3 aIdentity;
-
-  varying vec4 vColor;
+  varying float vIdent;
+  varying float vViewZ;
 
   #include <skinning_pars_vertex>
 
   void main() {
     vec3 transformed = position;
-
     #include <skinbase_vertex>
     #include <skinning_vertex>
 
     vec4 mvPosition = vec4( transformed, 1.0 );
-
     #ifdef USE_INSTANCING
       mvPosition = instanceMatrix * mvPosition;
     #endif
 
-    vec3 ident = uIdentity;
+    vIdent = uIdentity.r;
     #ifdef USE_INSTANCING
-      ident = aIdentity;
+      vIdent = aIdentity.r;
     #endif
 
-    vColor = vec4( ident, 1.0 );
-
     mvPosition = modelViewMatrix * mvPosition;
+    vViewZ = -mvPosition.z;
     gl_Position = projectionMatrix * mvPosition;
   }
 `
 
 const SELECT_FRAG = /* glsl */ `
-  varying vec4 vColor;
-
+  uniform float uFar;
+  varying float vIdent;
+  varying float vViewZ;
   void main() {
-    float depth = gl_FragCoord.z * 0.05;
-    gl_FragColor = vec4( vColor.rgb + vec3( depth ), 1.0 );
+    gl_FragColor = vec4( vIdent, vViewZ / uFar, 0.0, 1.0 );
   }
 `
 
-const COMPOSITE_FRAG = /* glsl */ `
-  uniform float uIntensity;
-  uniform float uAmplitude;
-  uniform float uFrequency;
-  uniform float uThickness;
-  uniform sampler2D uSource;
-  uniform sampler2D uColor;
-  uniform vec2 resolution;
+const QUAD_VERT = /* glsl */ `
+  varying vec2 vUv;
+  void main() {
+    vUv = uv;
+    gl_Position = vec4( position.xy, 0.0, 1.0 );
+  }
+`
 
+const EDGE_FRAG = /* glsl */ `
+  uniform sampler2D uId;
+  uniform vec2 uTexel;
+  uniform float uDepthK;
   varying vec2 vUv;
 
-  const mat3 Sx = mat3( -1, -2, -1, 0, 0, 0, 1, 2, 1 );
-  const mat3 Sy = mat3( -1, 0, 1, -2, 0, 2, -1, 0, 1 );
+  vec2 S( vec2 o ) { return texture2D( uId, vUv + o * uTexel ).rg; }
 
-  float hash(vec2 p) {
-      vec3 p3  = fract(vec3(p.xyx) * .1031);
-      p3 += dot(p3, p3.yzx + 33.33);
-      return fract((p3.x + p3.y) * p3.z);
+  // c 与邻居 n 是不同物体，且 c 在前（更近；几乎等深时 identity 大的一侧）
+  float idEdge( vec2 c, vec2 n ) {
+    if ( abs( c.x - n.x ) < 0.015 ) return 0.0;
+    float tie = 0.004 * max( n.y, 1e-4 );
+    if ( c.y < n.y - tie ) return 1.0;
+    if ( abs( c.y - n.y ) <= tie && c.x > n.x ) return 1.0;
+    return 0.0;
   }
 
-  float lumaText(sampler2D tex, vec2 uv) {
-      const vec3 magic = vec3(0.2125, 0.7154, 0.0721);
-      return dot(magic, texture2D(tex, uv).rgb);
+  // 1/z 在平面上沿屏幕是仿射的 → 二阶差分 ≈ 0；c 在深度断层的前侧时 lap 明显为负
+  float depthEdge( vec2 c, vec2 a, vec2 b ) {
+    float ic = 1.0 / max( c.y, 1e-5 );
+    float ia = 1.0 / max( a.y, 1e-5 );
+    float ib = 1.0 / max( b.y, 1e-5 );
+    float lap = ia + ib - 2.0 * ic;
+    return lap < -uDepthK * ic ? 1.0 : 0.0;
   }
 
   void main() {
-    vec2 texel = vec2( 1.0 / resolution.x, 1.0 / resolution.y );
+    vec2 c = S( vec2( 0.0 ) );
+    if ( c.y >= 0.999 ) { gl_FragColor = vec4( 0.0 ); return; } // 背景
+    vec2 r = S( vec2( 1.0, 0.0 ) );
+    vec2 l = S( vec2( -1.0, 0.0 ) );
+    vec2 u = S( vec2( 0.0, 1.0 ) );
+    vec2 d = S( vec2( 0.0, -1.0 ) );
+    float e = max( max( idEdge( c, r ), idEdge( c, l ) ), max( idEdge( c, u ), idEdge( c, d ) ) );
+    e = max( e, max( depthEdge( c, r, l ), depthEdge( c, u, d ) ) );
+    gl_FragColor = vec4( e, 0.0, 0.0, 1.0 );
+  }
+`
 
-    vec4 outlineColor = vec4(0.0, 0.0, 0.0, 1.0);
+const INK_FRAG = /* glsl */ `
+  uniform sampler2D uColor;
+  uniform sampler2D uEdge;
+  uniform sampler2D uId;
+  uniform vec2 uTexel;
+  uniform int uR;
+  uniform float uWidth;
+  uniform float uStrength;
+  uniform vec3 uInk;
+  uniform vec3 uInkTint;
+  uniform float uColorMix;
+  uniform float uFar;
+  uniform float uFadeNear;
+  uniform float uFadeFar;
+  uniform float uFarWidth;
+  uniform float uFarAlpha;
+  varying vec2 vUv;
 
-    vec2 displacement = vec2(
-      (hash(gl_FragCoord.xy) * sin(gl_FragCoord.y * uFrequency)) ,
-      (hash(gl_FragCoord.xy) * cos(gl_FragCoord.x * uFrequency))
-    ) * uAmplitude / resolution.xy;
+  vec3 toSRGB( vec3 c ) {
+    c = max( c, vec3( 0.0 ) );
+    return mix( c * 12.92, 1.055 * pow( c, vec3( 1.0 / 2.4 ) ) - 0.055, step( vec3( 0.0031308 ), c ) );
+  }
 
-    float depth00 = lumaText(uSource, vUv + displacement + uThickness * texel * vec2(-1, 1));
-    float depth01 = lumaText(uSource, vUv + displacement + uThickness * texel * vec2(-1, 0));
-    float depth02 = lumaText(uSource, vUv + displacement + uThickness * texel * vec2(-1, -1));
-
-    float depth10 = lumaText(uSource, vUv + displacement + uThickness * texel * vec2(0, -1));
-    float depth11 = lumaText(uSource, vUv + displacement + uThickness * texel * vec2(0, 0));
-    float depth12 = lumaText(uSource, vUv + displacement + uThickness * texel * vec2(0, 1));
-
-    float depth20 = lumaText(uSource, vUv + displacement + uThickness * texel * vec2(1, -1));
-    float depth21 = lumaText(uSource, vUv + displacement + uThickness * texel * vec2(1, 0));
-    float depth22 = lumaText(uSource, vUv + displacement + uThickness * texel * vec2(1, 1));
-
-    float xSobelValueDepth =
-      Sx[0][0] * depth00 + Sx[1][0] * depth01 + Sx[2][0] * depth02 +
-      Sx[0][1] * depth10 + Sx[1][1] * depth11 + Sx[2][1] * depth12 +
-      Sx[0][2] * depth20 + Sx[1][2] * depth21 + Sx[2][2] * depth22;
-
-    float ySobelValueDepth =
-      Sy[0][0] * depth00 + Sy[1][0] * depth01 + Sy[2][0] * depth02 +
-      Sy[0][1] * depth10 + Sy[1][1] * depth11 + Sy[2][1] * depth12 +
-      Sy[0][2] * depth20 + Sy[1][2] * depth21 + Sy[2][2] * depth22;
-
-    float outline = clamp(sqrt(pow(xSobelValueDepth, 2.0) + pow(ySobelValueDepth, 2.0)) * uIntensity, 0.0, 1.0);
-
-    vec3 color = texture2D(uColor, vUv).rgb;
-
-    gl_FragColor = vec4( mix(color, outlineColor.rgb, outline), 1.0 );
-
-    #include <tonemapping_fragment>
-    #include <colorspace_fragment>
+  void main() {
+    vec3 base = texture2D( uColor, vUv ).rgb;
+    float best = 0.0;
+    vec2 bestOff = vec2( 0.0 );
+    if ( uStrength > 0.0 ) {
+      float reach = uWidth * 0.5 + 0.5;
+      for ( int y = -uR; y <= uR; y++ ) {
+        for ( int x = -uR; x <= uR; x++ ) {
+          vec2 o = vec2( float( x ), float( y ) );
+          float dist = length( o );
+          if ( dist >= reach ) continue;
+          vec2 uv = vUv + o * uTexel;
+          if ( texture2D( uEdge, uv ).r < 0.5 ) continue;
+          // 距离衰减：按边缘像素自己的深度
+          float z = texture2D( uId, uv ).g * uFar;
+          float f = smoothstep( uFadeNear, uFadeFar, z );
+          float w = uWidth * mix( 1.0, uFarWidth, f );
+          float cov = clamp( w * 0.5 + 0.5 - dist, 0.0, 1.0 ) * mix( 1.0, uFarAlpha, f );
+          if ( cov > best ) { best = cov; bestOff = o; }
+        }
+      }
+    }
+    vec3 col = base;
+    if ( best > 0.0 ) {
+      // 线色：所属物体（边缘像素处）的颜色压暗，再混入墨色
+      vec3 src = texture2D( uColor, vUv + bestOff * uTexel ).rgb;
+      vec3 ink = mix( uInk, src * uInkTint, uColorMix );
+      col = mix( base, ink, best * uStrength );
+    }
+    gl_FragColor = vec4( toSRGB( col ), 1.0 );
   }
 `
 
@@ -137,100 +185,155 @@ const IDENTITY_LEVELS = [0.5, 0.19, 0.82, 0.34, 0.66, 0.07, 0.93, 0.44, 0.58, 0.
 let identityCursor = 3
 
 function nextIdentity(out: THREE.Vector3) {
-  const v = IDENTITY_LEVELS[identityCursor % IDENTITY_LEVELS.length]
+  const v = IDENTITY_LEVELS[identityCursor % IDENTITY_LEVELS.length]!
   identityCursor++
   out.set(v, v, v)
   return out
 }
 
+const _lin = new THREE.Color()
+function linear(hex: string) {
+  _lin.set(hex)
+  return new THREE.Vector3(_lin.r, _lin.g, _lin.b)
+}
+
 export class MoebiusOutline {
   private renderer: THREE.WebGLRenderer
   private selectMaterial: THREE.ShaderMaterial
-  private compositeMaterial: THREE.ShaderMaterial
-  private identityTarget: THREE.WebGLRenderTarget
+  private edgeMaterial: THREE.ShaderMaterial
+  private inkMaterial: THREE.ShaderMaterial
+  private fxaaMaterial: THREE.ShaderMaterial
+  private idTarget: THREE.WebGLRenderTarget
   private colorTarget: THREE.WebGLRenderTarget
+  private edgeTarget: THREE.WebGLRenderTarget
+  private ldrTarget: THREE.WebGLRenderTarget
   private quadScene: THREE.Scene
   private quadCamera: THREE.OrthographicCamera
   private quad: THREE.Mesh
   private tmpIdentity = new THREE.Vector3()
   private width = 1
   private height = 1
-  /** identity pass 期间为 true，onBeforeRender 据此写入逐物体 identity */
+  /** 线宽：每 1080 像素高多少像素 */
+  private lineWidth1080 = INK_DEFAULTS.width
   private identityPass = false
-  /** 是否启用描边（调试用） */
+  private bgColor = new THREE.Color()
+  /** 是否画描边 */
   enabled = true
-
-  /** 原站 `rendererState.moebiusEffect.thickness`：由 `Fog / thichness` 轨道驱动 */
-  setThickness(v: number) {
-    this.compositeMaterial.uniforms.uThickness!.value = v
-  }
+  /** 是否做 FXAA */
+  fxaa = true
 
   constructor(renderer: THREE.WebGLRenderer) {
     this.renderer = renderer
 
     this.selectMaterial = new THREE.ShaderMaterial({
-      uniforms: { uIdentity: { value: new THREE.Vector3(0, 0, 0) } },
+      uniforms: { uIdentity: { value: new THREE.Vector3() }, uFar: { value: ID_FAR } },
       vertexShader: SELECT_VERT,
       fragmentShader: SELECT_FRAG
     })
 
-    this.compositeMaterial = new THREE.ShaderMaterial({
-      uniforms: {
-        uIntensity: { value: MOEBIUS_CONFIG.intensity },
-        uAmplitude: { value: MOEBIUS_CONFIG.amplitude },
-        uFrequency: { value: MOEBIUS_CONFIG.frequency },
-        uThickness: { value: MOEBIUS_CONFIG.thickness },
-        uSource: { value: null },
-        uColor: { value: null },
-        resolution: { value: new THREE.Vector2(1, 1) }
-      },
-      vertexShader: /* glsl */ `
-        varying vec2 vUv;
-        void main() {
-          vUv = uv;
-          gl_Position = vec4( position.xy, 0.0, 1.0 );
-        }
-      `,
-      fragmentShader: COMPOSITE_FRAG,
+    const quadMat = (frag: string, uniforms: Record<string, THREE.IUniform>) =>
+      new THREE.ShaderMaterial({ uniforms, vertexShader: QUAD_VERT, fragmentShader: frag, depthTest: false, depthWrite: false })
+
+    this.edgeMaterial = quadMat(EDGE_FRAG, {
+      uId: { value: null },
+      uTexel: { value: new THREE.Vector2() },
+      uDepthK: { value: 0.045 }
+    })
+
+    this.inkMaterial = quadMat(INK_FRAG, {
+      uColor: { value: null },
+      uEdge: { value: null },
+      uId: { value: null },
+      uTexel: { value: new THREE.Vector2() },
+      uR: { value: 1 },
+      uWidth: { value: 1 },
+      uStrength: { value: 1 },
+      // 深梅棕墨色（线性）+ 物体色压暗系数（偏暖偏紫，不发灰）
+      uInk: { value: linear('#24161d') },
+      uInkTint: { value: new THREE.Vector3(0.24, 0.17, 0.21) },
+      uColorMix: { value: INK_DEFAULTS.colorMix },
+      uFar: { value: ID_FAR },
+      uFadeNear: { value: INK_DEFAULTS.fadeNear },
+      uFadeFar: { value: INK_DEFAULTS.fadeFar },
+      uFarWidth: { value: INK_DEFAULTS.farWidth },
+      uFarAlpha: { value: INK_DEFAULTS.farAlpha }
+    })
+
+    // three 的 FXAA（NVIDIA FXAA 3.11 思路）；子像素混合从 1.0 降到 0.6，保住细线和硬色块的锐度
+    this.fxaaMaterial = new THREE.ShaderMaterial({
+      uniforms: THREE.UniformsUtils.clone(FXAAShader.uniforms),
+      vertexShader: QUAD_VERT,
+      fragmentShader: FXAAShader.fragmentShader.replace('float _SubpixelBlending = 1.0;', 'float _SubpixelBlending = 0.6;'),
       depthTest: false,
       depthWrite: false
     })
 
     const size = renderer.getDrawingBufferSize(new THREE.Vector2())
-    this.width = size.x
-    this.height = size.y
-    this.compositeMaterial.uniforms.resolution.value.set(size.x, size.y)
-    // identity 里叠加了 gl_FragCoord.z * 0.05 的深度项：8-bit RT 下它每跨一个 1/255 台阶，
-    // Sobel × 100 就会在地面上画出一条横贯画面的假描边，所以用 HalfFloat
-    this.identityTarget = this.makeTarget(size.x, size.y, THREE.HalfFloatType)
-    this.colorTarget = this.makeTarget(size.x, size.y, THREE.HalfFloatType)
+    this.idTarget = this.makeTarget(size.x, size.y, THREE.HalfFloatType, THREE.NearestFilter)
+    this.colorTarget = this.makeTarget(size.x, size.y, THREE.HalfFloatType, THREE.NearestFilter)
+    this.edgeTarget = this.makeTarget(size.x, size.y, THREE.UnsignedByteType, THREE.NearestFilter, false)
+    this.ldrTarget = this.makeTarget(size.x, size.y, THREE.UnsignedByteType, THREE.LinearFilter, false)
+    this.setSize(size.x, size.y)
 
     this.quadScene = new THREE.Scene()
     this.quadCamera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1)
-    this.quad = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), this.compositeMaterial)
+    this.quad = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), this.inkMaterial)
     this.quad.frustumCulled = false
     this.quadScene.add(this.quad)
   }
 
-  private makeTarget(w: number, h: number, type: THREE.TextureDataType) {
+  private makeTarget(w: number, h: number, type: THREE.TextureDataType, filter: THREE.MagnificationTextureFilter, depth = true) {
     return new THREE.WebGLRenderTarget(Math.max(1, w), Math.max(1, h), {
-      minFilter: THREE.LinearFilter,
-      magFilter: THREE.LinearFilter,
-      depthBuffer: true,
+      minFilter: filter,
+      magFilter: filter,
+      depthBuffer: depth,
+      generateMipmaps: false,
       type,
       colorSpace: THREE.NoColorSpace
     })
   }
 
+  /** 线宽（每 1080 像素高的像素数）。兼容旧接口名 */
+  setThickness(v: number) {
+    this.lineWidth1080 = Math.max(0.3, v)
+    this.updateWidth()
+  }
+
+  setInk(opts: Partial<typeof INK_DEFAULTS>) {
+    const u = this.inkMaterial.uniforms
+    if (opts.width !== undefined) this.setThickness(opts.width)
+    if (opts.colorMix !== undefined) u.uColorMix!.value = opts.colorMix
+    if (opts.fadeNear !== undefined) u.uFadeNear!.value = opts.fadeNear
+    if (opts.fadeFar !== undefined) u.uFadeFar!.value = opts.fadeFar
+    if (opts.farWidth !== undefined) u.uFarWidth!.value = opts.farWidth
+    if (opts.farAlpha !== undefined) u.uFarAlpha!.value = opts.farAlpha
+  }
+
+  /** 当前分辨率下的实际线宽（像素） */
+  get pixelWidth() {
+    return (this.lineWidth1080 * this.height) / 1080
+  }
+
+  private updateWidth() {
+    const w = Math.max(0.75, this.pixelWidth)
+    const u = this.inkMaterial.uniforms
+    u.uWidth!.value = w
+    // 只需要搜索覆盖率 > 0 的邻域：|o| < w/2 + 0.5
+    u.uR!.value = Math.min(6, Math.max(0, Math.ceil(w * 0.5 + 0.5) - 1))
+  }
+
   setSize(width: number, height: number) {
     const w = Math.max(1, Math.floor(width))
     const h = Math.max(1, Math.floor(height))
-    this.compositeMaterial.uniforms.resolution.value.set(w, h)
-    if (w === this.width && h === this.height) return
+    this.edgeMaterial.uniforms.uTexel!.value.set(1 / w, 1 / h)
+    this.inkMaterial.uniforms.uTexel!.value.set(1 / w, 1 / h)
+    this.fxaaMaterial.uniforms.resolution!.value.set(1 / w, 1 / h)
     this.width = w
     this.height = h
-    this.identityTarget.setSize(w, h)
-    this.colorTarget.setSize(w, h)
+    this.updateWidth()
+    for (const t of [this.idTarget, this.colorTarget, this.edgeTarget, this.ldrTarget]) {
+      if (t && (t.width !== w || t.height !== h)) t.setSize(w, h)
+    }
   }
 
   /**
@@ -247,20 +350,16 @@ export class MoebiusOutline {
         const geom = mesh.geometry
         if (!geom.getAttribute('aIdentity')) {
           const im = mesh as unknown as THREE.InstancedMesh
-          const count = im.count
-          const colors = new Float32Array(count * 3)
+          const colors = new Float32Array(im.count * 3)
           const v = new THREE.Vector3()
-          for (let i = 0; i < count; i++) {
+          for (let i = 0; i < im.count; i++) {
             nextIdentity(v)
-            colors[i * 3] = v.x
-            colors[i * 3 + 1] = v.y
-            colors[i * 3 + 2] = v.z
+            colors.set([v.x, v.y, v.z], i * 3)
           }
           geom.setAttribute('aIdentity', new THREE.InstancedBufferAttribute(colors, 3, false))
         }
       }
-      nextIdentity(this.tmpIdentity)
-      const id = this.tmpIdentity.clone()
+      const id = nextIdentity(this.tmpIdentity).clone()
       mesh.userData.moebiusIdentity = true
       mesh.onBeforeRender = () => {
         if (this.identityPass) this.setIdentity(id)
@@ -270,22 +369,16 @@ export class MoebiusOutline {
 
   /**
    * 写入当前物体的 identity。
-   * 注意 three 对「同一个材质连续绘制」不会重新上传 uniform（refreshMaterial=false），
-   * override 材质在整个 identity pass 里都是同一个，所以必须置 uniformsNeedUpdate，
-   * 否则所有物体都会用同一个 identity → 物体之间、物体与地面之间都没有描边，
-   * 只剩与背景（天空）交界处的轮廓。motorbike 的 outlinePass.ts 也有这个问题。
+   * three 对「同一个材质连续绘制」不会重新上传 uniform，override 材质在整个 identity pass
+   * 里都是同一个，所以必须置 uniformsNeedUpdate（motorbike 的 outlinePass.ts 漏了这步，
+   * 导致所有物体同一个 identity，只剩与天空交界处有线）。
    */
   private setIdentity(id: THREE.Vector3) {
     this.selectMaterial.uniforms.uIdentity!.value.copy(id)
     this.selectMaterial.uniformsNeedUpdate = true
   }
 
-  /**
-   * 不描边的对象（地面 / 水面）：identity pass 里写固定 identity。
-   * 原站注释说这类对象应「保持背景色」，但移植版没给它们设 onBeforeRender，
-   * 结果它们会沿用上一个物体的 identity（随绘制顺序闪烁出假描边）。这里统一写一个常量，
-   * 地面与其上的物体之间仍有轮廓线，而地面各块之间不会出现接缝线。
-   */
+  /** 不单独描边的大面（地面 / 水面）：写固定 identity。地面各块之间没有接缝线，水岸有线 */
   registerFlat(root: THREE.Object3D, filter: (obj: THREE.Mesh) => boolean, value = 0.0) {
     const id = new THREE.Vector3(value, value, value)
     root.traverse((obj) => {
@@ -297,38 +390,60 @@ export class MoebiusOutline {
     })
   }
 
+  private drawQuad(material: THREE.Material, target: THREE.WebGLRenderTarget | null) {
+    this.quad.material = material
+    this.renderer.setRenderTarget(target)
+    this.renderer.render(this.quadScene, this.quadCamera)
+  }
+
   render(scene: THREE.Scene, camera: THREE.PerspectiveCamera) {
     const renderer = this.renderer
     const prevOverride = scene.overrideMaterial
-    const prevTarget = renderer.getRenderTarget()
 
     if (this.enabled) {
-      // 1) identity pass：layer 1（天空 / 不做描边的物体）不参与
+      // 1) identity pass：layer 1（天空 / 烟尘）不参与；背景 = identity 1、深度 1
+      const prevBg = scene.background
+      const prevAlpha = renderer.getClearAlpha()
+      renderer.getClearColor(this.bgColor)
+      scene.background = null
+      renderer.setClearColor(new THREE.Color(1, 1, 0), 1)
       camera.layers.disable(1)
       scene.overrideMaterial = this.selectMaterial
       this.identityPass = true
-      renderer.setRenderTarget(this.identityTarget)
+      renderer.setRenderTarget(this.idTarget)
       renderer.clear()
       renderer.render(scene, camera)
       this.identityPass = false
       scene.overrideMaterial = prevOverride
+      scene.background = prevBg
+      renderer.setClearColor(this.bgColor, prevAlpha)
+    }
 
-      // 2) 正常颜色 pass
-      renderer.shadowMap.needsUpdate = true
-      camera.layers.enable(1)
-      renderer.setRenderTarget(this.colorTarget)
-      renderer.clear()
-      renderer.render(scene, camera)
+    // 2) 颜色 pass
+    renderer.shadowMap.needsUpdate = true
+    camera.layers.enable(1)
+    renderer.setRenderTarget(this.colorTarget)
+    renderer.clear()
+    renderer.render(scene, camera)
 
-      // 3) 描边合成到画布
-      this.compositeMaterial.uniforms.uSource.value = this.identityTarget.texture
-      this.compositeMaterial.uniforms.uColor.value = this.colorTarget.texture
-      renderer.setRenderTarget(null)
-      renderer.render(this.quadScene, this.quadCamera)
-    } else {
-      camera.layers.enable(1)
-      renderer.setRenderTarget(prevTarget)
-      renderer.render(scene, camera)
+    // 3) 边缘
+    if (this.enabled) {
+      this.edgeMaterial.uniforms.uId!.value = this.idTarget.texture
+      this.drawQuad(this.edgeMaterial, this.edgeTarget)
+    }
+
+    // 4) 墨线合成（关描边时只做 sRGB 编码，保证开关前后颜色 / 抗锯齿一致）
+    const u = this.inkMaterial.uniforms
+    u.uColor!.value = this.colorTarget.texture
+    u.uEdge!.value = this.edgeTarget.texture
+    u.uId!.value = this.idTarget.texture
+    u.uStrength!.value = this.enabled ? 1 : 0
+    this.drawQuad(this.inkMaterial, this.fxaa ? this.ldrTarget : null)
+
+    // 5) FXAA → 画布
+    if (this.fxaa) {
+      this.fxaaMaterial.uniforms.tDiffuse!.value = this.ldrTarget.texture
+      this.drawQuad(this.fxaaMaterial, null)
     }
   }
 
@@ -345,10 +460,8 @@ export class MoebiusOutline {
   }
 
   dispose() {
-    this.identityTarget.dispose()
-    this.colorTarget.dispose()
-    this.selectMaterial.dispose()
-    this.compositeMaterial.dispose()
+    for (const t of [this.idTarget, this.colorTarget, this.edgeTarget, this.ldrTarget]) t.dispose()
+    for (const m of [this.selectMaterial, this.edgeMaterial, this.inkMaterial, this.fxaaMaterial]) m.dispose()
     this.quad.geometry.dispose()
   }
 }

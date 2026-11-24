@@ -35,9 +35,11 @@ npm run preview    # 预览生产构建
 
 | 参数 | 作用 | 例子 |
 | --- | --- | --- |
-| `thickness` | 描边粗细，默认 0.35，越小越细 | `?stage&thickness=0.2` |
+| `thickness` | 线宽：画面每 1080 像素高对应的像素数，默认 1.2。**与分辨率无关**：1080p、4K、长条屏上粗细比例一致 | `?stage&thickness=0.9` |
+| `ink` | 线色：0 = 深梅棕墨色，1 = 取物体颜色压暗，默认 0.35 | `?stage&ink=0.2` |
+| `fxaa=0` | 关闭抗锯齿（默认开） | `?stage&fxaa=0` |
 | `outline=0` | 关闭描边 | `?stage&outline=0` |
-| `scale` | 显卡卡顿时降低内部渲染分辨率（画面仍铺满） | `?stage&scale=0.75` |
+| `scale` | 内部渲染分辨率倍数：<1 显卡卡顿时降低；1.5 / 2 = 超采样（更顺滑、更吃显卡） | `?stage&scale=0.75` |
 | `dusk` | 暮色 0～1 | `?stage&dusk=0.6` |
 | `fog` | 雾 0～3，默认 1 | `?stage&fog=1.5` |
 | `speed` | 播放速度，默认 1 | `?stage&speed=0.8` |
@@ -71,7 +73,7 @@ GitHub 网页 → 切到上面那个分支 → Code → Download ZIP → 解压�
 | Toon 材质 | `toonMaterial.ts` → 原站 `MeshRampNoiseToonMaterial` | `MeshToonMaterial` + `onBeforeCompile` 替换 `<lights_toon_pars_fragment>`：直射光只取 3 阶梯度贴图（46/158/255，Nearest）的灰度，间接光清零；`<opaque_fragment>` 里用灰度在 `uDirectColor`/`uIndirectColor` 两色间混合 → 纯平色块 + 硬阴影。太阳光强 3（× 1/π ≈ 0.955 → 受光面 ≈ directColor） |
 | Toon 阴影（十月改动） | — | 原站把 PCF 阴影（0~1 连续值）直接乘进梯度，阴影是一团软边灰阶。这里把阴影二值化（`fwidth` 抗锯齿的 1px 硬边），在阴影里的像素直接落到梯度最暗一阶 → 阴影与背光面同色、纯平；并设 `shadowSide = DoubleSide`，避免单层面片（车身、建筑）漏光 |
 | 雾 | 原站 `FogBundle` | 强制 `USE_FOG + FOG_EXP2`，3D Perlin 噪声扰动雾深度、`fogTime` 缓慢流动，近/远两色 |
-| 描边 | `outlinePass.ts` → 原站 `MoebiusEffect` | ① override 材质把每个 mesh 画成唯一灰度 identity（+ 深度项）② 正常颜色 pass ③ 对 identity 图做 3×3 Sobel，`× intensity(100)` 后混成黑线 |
+| 描边 | `outlinePass.ts` → 原站 `MoebiusEffect` | 原站：identity（灰度 + 深度项）→ 3×3 Sobel → ×100 截断成黑线。**十月改写为 5 个 pass**：① identity（R=物体 ID，G=线性深度）② 颜色 ③ 1 像素边缘：物体边只标在**前景一侧**，另加 1/z 二阶差分的深度边（同一模型自己前后遮挡处也出线，斜看的地面不误报）④ 墨线合成：以边缘像素为中心按距离场画线，**线宽 = 每 1080 像素高 N 像素**（分辨率无关、覆盖率自带抗锯齿）；线色 = 所属物体颜色压暗 + 深梅棕墨色；按距离变细变淡 ⑤ FXAA |
 | 车后扬尘 | `dust.ts` → 原站 `initBikeParticles` | 同一张 `dust.png`（2×2 硬边团块图集）、同样的尺寸曲线（1→6→11→5→0）与「速度 × rateFactor」发射率。为老爷车改为：两个后轮发射、世界坐标模拟（车开走烟留在原地）、按动画真实车速驱动（停车不扬尘）、按世界尺寸换算像素（任何分辨率一样大）、帧间插值发射（低帧率不断成一簇簇）、Toon 两色（受光 + 背光月牙） |
 | 日夜 | `setToonPaletteMix` | 每个色板 day / night 两套，按 mix 插值 —— 这里用作「暮色」滑杆 |
 | 渲染器 | `RENDERER_CONFIG` | `antialias:false`、`pixelRatio ≤ 2`、PCF 阴影、`shadowMap.autoUpdate=false` 每帧手动更新 |
@@ -92,6 +94,12 @@ GitHub 网页 → 切到上面那个分支 → Code → Download ZIP → 解压�
 - **地面上的假横线**：identity 叠加了 `gl_FragCoord.z * 0.05`，8-bit RT 每跨一个 1/255 台阶，Sobel ×100 就画出一条横贯画面的黑线。identity RT 改为 HalfFloat。
 - **扬尘画成实心方块**：`dust.png` 的 alpha 通道全是 255，移植版用 `max(tex.a, tex.r)` 当透明度恒为 1。改为只用 R 通道作遮罩。
 - **地面 / 水面 identity 不确定**：它们不注册 identity 时会沿用上一个物体的值。改为写固定常量（`registerFlat`）。
+
+## 描边 / 上色技法选型
+
+参考了主流三渲二做法（罪恶装备 Xrd 的背面外扩 + 贴图内线、原神的 ramp + 外扩描边 + 边缘高光、墨比斯风格的后处理边缘检测）。
+本项目用后处理边缘检测：模型是 C4D 白模、面片不封闭、没有 UV，背面外扩会破面且要多画 254 万三角，贴图内线无从下手。
+在此基础上解决了后处理描边的三个通病：线宽随分辨率变（→ 按画面高度比例）、纯黑线发重 / 远景噪点（→ 物体色墨线 + 距离衰减）、无抗锯齿（→ 覆盖率 + FXAA）。
 
 ## 已知事项
 
