@@ -394,6 +394,8 @@ function jetIdMaterial(identity: number, shapeUniforms: Record<string, THREE.IUn
 export function createFountain(opts: {
   fountainRoot: THREE.Object3D
   gradientMap: THREE.Texture
+  /** 太阳方向（世界，指向太阳），与场景平行光一致；暮色时会变 */
+  sunDir: THREE.Vector3
   waterPalette: ToonPalette
   spriteMap: THREE.Texture
   idScene: THREE.Scene
@@ -536,7 +538,8 @@ export function createFountain(opts: {
   }
 
   const viewportHeight = { value: 720 }
-  const waterLit = { value: new THREE.Color() }
+  const waterD = { value: new THREE.Color() }
+  const waterI = { value: new THREE.Color() }
   const PUFFS = 3200
   const pPos = new Float32Array(PUFFS * 3)
   const pSize = new Float32Array(PUFFS)
@@ -547,16 +550,75 @@ export function createFountain(opts: {
   pGeom.setAttribute('aSize', new THREE.BufferAttribute(pSize, 1).setUsage(THREE.DynamicDrawUsage))
   pGeom.setAttribute('aTile', new THREE.BufferAttribute(pTile, 1).setUsage(THREE.DynamicDrawUsage))
   pGeom.setAttribute('aRot', new THREE.BufferAttribute(pRot, 1).setUsage(THREE.DynamicDrawUsage))
+  // 整股水的理想中轴（当前飞行时刻）、切线、水流半径：团块按「整股水」做圆柱式 Toon 明暗
+  const pAxis = new Float32Array(PUFFS * 3)
+  const pTan = new Float32Array(PUFFS * 3)
+  const pRad = new Float32Array(PUFFS)
+  pGeom.setAttribute('aAxis', new THREE.BufferAttribute(pAxis, 3).setUsage(THREE.DynamicDrawUsage))
+  pGeom.setAttribute('aTan', new THREE.BufferAttribute(pTan, 3).setUsage(THREE.DynamicDrawUsage))
+  pGeom.setAttribute('aRad', new THREE.BufferAttribute(pRad, 1).setUsage(THREE.DynamicDrawUsage))
   const pMat = new THREE.ShaderMaterial({
-    uniforms: { uMap: { value: opts.spriteMap }, uViewportHeight: viewportHeight, uLit: waterLit },
-    vertexShader: SPRITE_VERT,
+    uniforms: {
+      uMap: { value: opts.spriteMap },
+      uViewportHeight: viewportHeight,
+      uD: waterD,
+      uI: waterI,
+      uSunDir: { value: opts.sunDir }
+    },
+    vertexShader: /* glsl */ `
+      attribute float aSize;
+      attribute float aTile;
+      attribute float aRot;
+      attribute vec3 aAxis;
+      attribute vec3 aTan;
+      attribute float aRad;
+      uniform float uViewportHeight;
+      varying float vTile;
+      varying float vRot;
+      varying float vSize;
+      varying float vRad;
+      varying vec3 vCenter;
+      varying vec3 vAxis;
+      varying vec3 vTan;
+      void main() {
+        vTile = aTile;
+        vRot = aRot;
+        vSize = aSize;
+        vRad = aRad;
+        vec4 mv = modelViewMatrix * vec4(position, 1.0);
+        vCenter = mv.xyz;
+        vAxis = (viewMatrix * vec4(aAxis, 1.0)).xyz;
+        vTan = normalize(mat3(viewMatrix) * aTan);
+        gl_Position = projectionMatrix * mv;
+        gl_PointSize = aSize * projectionMatrix[1][1] * uViewportHeight * 0.5 / max(0.001, -mv.z);
+      }
+    `,
     fragmentShader: /* glsl */ `
-      uniform vec3 uLit;
+      uniform vec3 uD;
+      uniform vec3 uI;
+      uniform vec3 uSunDir;
+      varying float vSize;
+      varying float vRad;
+      varying vec3 vCenter;
+      varying vec3 vAxis;
+      varying vec3 vTan;
       ${SPRITE_MASK}
       void main() {
         if (!spriteInside(spriteCoord())) discard;
-        // 纯色平涂：不画暗面，团块融成一股，只留外轮廓
-        gl_FragColor = vec4(uLit, 1.0);
+        // 这个像素在视空间的位置（精灵平铺在视平面上）
+        vec3 P = vCenter + vec3((gl_PointCoord.x - 0.5) * vSize, (0.5 - gl_PointCoord.y) * vSize, 0.0);
+        // 相对整股水中轴的横向偏移（去掉沿水流方向的分量）→ 圆柱体法线
+        vec2 t2 = normalize(vTan.xy + vec2(1e-5));
+        vec2 d2 = P.xy - vAxis.xy;
+        d2 -= t2 * dot(d2, t2);
+        float x = clamp(length(d2) / vRad, 0.0, 1.0);
+        vec3 n = normalize(vec3(d2 / max(vRad, 1e-4), sqrt(max(0.0, 1.0 - x * x))));
+        // 与水柱完全相同的 Toon：three-tone 梯度（46/158/255），irradiance = 梯度 × 3 × 1/π
+        float dotNL = dot(n, normalize(mat3(viewMatrix) * uSunDir));
+        float c = dotNL * 0.5 + 0.5;
+        float band = c < 1.0 / 3.0 ? 0.1804 : (c < 2.0 / 3.0 ? 0.6196 : 1.0);
+        float irr = band * 0.9549;
+        gl_FragColor = vec4(uD * irr + uI * (1.0 - irr), 1.0);
         #include <colorspace_fragment>
       }
     `
@@ -581,9 +643,13 @@ export function createFountain(opts: {
     vel: THREE.Vector3
     s0: number
     s1: number
+    /** 出发时在抛物线上的飞行时间 */
+    t0: number
+    /** 出发处的水柱半径 */
+    r0: number
   }
   const pf: Puff[] = Array.from({ length: PUFFS }, () => ({
-    alive: false, fresh: false, def: defs[0]!, age: 0, life: 1, pos: new THREE.Vector3(), vel: new THREE.Vector3(), s0: 0, s1: 0
+    alive: false, fresh: false, def: defs[0]!, age: 0, life: 1, pos: new THREE.Vector3(), vel: new THREE.Vector3(), s0: 0, s1: 0, t0: 0, r0: 0.05
   }))
   const accs = defs.map(() => Math.random())
   let pCursor = 0
@@ -600,8 +666,8 @@ export function createFountain(opts: {
       accs[di]! -= count
       const k = spec.sizeBottom / 0.165
       for (let c = 0; c < count; c++) {
-        // 在水管末端那一段（收尖区）出发
-        const uE = spec.uEnd - 0.12 + Math.random() * 0.1
+        // 从水柱中段到末端之间出发：一开始比水柱细、藏在水柱里，往下长大冒出水柱表面 → 边缘逐渐变得蓬松
+        const uE = spec.uEnd - 0.28 + Math.random() * 0.26
         // 水管在这里正好断水 → 不发射，断口一路延续到下半段
         if (jetGapAt(d, uE, now)) continue
         const a0 = d.uToT(uE)
@@ -633,7 +699,10 @@ export function createFountain(opts: {
         p.vel.y -= G * sub
         p.age = sub
         // 大小：从水管末端直径接上，越往下越大
-        p.s0 = (tubeR(spec, uE) * 2) / 0.75 * (0.85 + Math.random() * 0.3)
+        const near = THREE.MathUtils.smoothstep(uE, spec.uEnd - 0.28, spec.uEnd - 0.05)
+        p.s0 = ((tubeR(spec, uE) * 2) / 0.75) * THREE.MathUtils.lerp(0.55, 1.0, near) * (0.85 + Math.random() * 0.3)
+        p.t0 = a0
+        p.r0 = tubeR(spec, uE)
         p.s1 = spec.sizeBottom * (0.75 + Math.random() * 0.5)
         pTile[idx] = Math.floor(Math.random() * 4)
         pRot[idx] = Math.random() * Math.PI * 2
@@ -660,12 +729,29 @@ export function createFountain(opts: {
       pPos[i * 3] = p.pos.x
       pPos[i * 3 + 1] = p.pos.y
       pPos[i * 3 + 2] = p.pos.z
-      pSize[i] = THREE.MathUtils.lerp(p.s0, p.s1, Math.min(1, p.age / p.life))
+      const f = Math.min(1, p.age / p.life)
+      pSize[i] = THREE.MathUtils.lerp(p.s0, p.s1, f)
+      // 整股水在当前飞行时刻的理想中轴与切线（不含随机散开）
+      const d = p.def
+      const T = p.t0 + p.age
+      pAxis[i * 3] = d.origin.x + d.out.x * d.vr * T
+      pAxis[i * 3 + 1] = d.origin.y + d.spec.vy0 * T - 0.5 * G * T * T
+      pAxis[i * 3 + 2] = d.origin.z + d.out.z * d.vr * T
+      const vy = d.spec.vy0 - G * T
+      const inv = 1 / Math.hypot(d.vr, vy)
+      pTan[i * 3] = d.out.x * d.vr * inv
+      pTan[i * 3 + 1] = vy * inv
+      pTan[i * 3 + 2] = d.out.z * d.vr * inv
+      // 水流半径：从出发处的水柱半径，随团块长大、散开而变粗
+      pRad[i] = Math.max(p.r0 * 1.15, pSize[i]! * 0.5) * (1 + f * 0.6)
     }
     pGeom.attributes.position!.needsUpdate = true
     pGeom.attributes.aSize!.needsUpdate = true
     pGeom.attributes.aTile!.needsUpdate = true
     pGeom.attributes.aRot!.needsUpdate = true
+    pGeom.attributes.aAxis!.needsUpdate = true
+    pGeom.attributes.aTan!.needsUpdate = true
+    pGeom.attributes.aRad!.needsUpdate = true
   }
 
   // ---------------- 水花 ----------------
@@ -758,9 +844,10 @@ export function createFountain(opts: {
     const p = opts.waterPalette
     const d = p.d.map((v, i) => v + ((p.nd ?? p.d)[i]! - v) * m)
     baseCol.setRGB(d[0]!, d[1]!, d[2]!)
-    // 团块颜色 = 水柱 Toon 受光色带（three-tone 最亮一阶：受光 0.955 + 背光 0.045），与水柱受光面同一种蓝
+    // 团块与水柱用同一对 Toon 颜色（受光 d / 背光 i，含暮色插值）
     const ii = p.i.map((v, k) => v + ((p.ni ?? p.i)[k]! - v) * m)
-    waterLit.value.setRGB(ii[0]!, ii[1]!, ii[2]!).lerp(baseCol, 0.955)
+    waterD.value.copy(baseCol)
+    waterI.value.setRGB(ii[0]!, ii[1]!, ii[2]!)
     ;(sMat.uniforms.uBase!.value as THREE.Color).copy(baseCol)
   }
   setDusk(0)
